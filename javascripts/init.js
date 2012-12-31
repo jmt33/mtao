@@ -1,5 +1,5 @@
-$(function(){
-        var message = [
+(function(){
+var message = [
             '单曲循环，其实听的是自己的心情',
         　　
         　　'寂寞是听见某个熟悉名字，不小心想起某些故事；孤独是路过我身边的影子，笑着对我说似曾相识。',
@@ -35,6 +35,5 @@ $(function(){
         ];
 
         var title= document.textContent = document.title = message[Math.round(Math.random()*21) - 1];
-            $("#project_tagline").text(title); 
-})
-
+        document.getElementById('project_tagline').innerHTML = title;
+})();
