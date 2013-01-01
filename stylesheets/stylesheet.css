@@ -204,10 +204,11 @@ ul, ol, dl {
 }
 
 ul li {
-  list-style: inside;
   padding-left: 20px;
 }
-
+ul li  a{
+  padding-left:10px;
+}
 ol li {
   list-style: decimal inside;
   padding-left: 20px;
