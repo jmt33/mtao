@@ -1,4 +1,65 @@
+
 (function(){
+var records = {
+    2013: {
+        1: [
+            {
+                href: '/document/1-1.html',
+                tag: '生活',
+                title: '热血人生'
+            },
+            {
+                href: 'document/1-20.html',
+                tag: 'PHP',
+                title: 'ubuntu 安装xhprof'
+            }
+        ],
+        2: [
+            {
+                href: 'document/2-21.html',
+                title: '重新练习了一下PHP数组',
+                tag: 'PHP'
+            }
+        ],
+        7: [
+            {
+                href: 'document/7-15.html',
+                title: 'javascript 对象模型详解',
+                tag: 'javascript'
+            },
+            {
+                href: 'demo/service-chooser-app.tar.gz',
+                title: 'Backbone Demo',
+                tag: 'javascript'
+            }
+        ]
+    },
+    2014: {
+        1: [
+            {
+                href: 'document/2014/1-23.html',
+                title: 'javascript 简单模板引擎',
+                tag: 'javascript'
+            }
+        ],
+        2: [
+            {
+                href: 'https://github.com/jmt33/repo/tree/gh-pages/demo/backbone-demo1',
+                title: 'backbone another demo',
+                tag: 'javascript'
+            }
+        ],
+        3: [
+            {
+                href: '',
+                title: '几种常用的PHP设计模式',
+                tag: 'PHP'
+            }
+        ]
+    },
+
+};
+
 var message = [
             '单曲循环，其实听的是自己的心情',
         　　
@@ -34,6 +95,61 @@ var message = [
              
         ];
 
-        var title= document.textContent = document.title = message[Math.round(Math.random()*21) - 1];
+        var title= document.textdata = document.title = message[Math.round(Math.random()*21) - 1];
         document.getElementById('project_tagline').innerHTML = title;
+
+        function pageview(data)
+        {
+            this.data = {};
+            if (data) {
+                this.data = data;
+            }
+        }
+
+
+        pageview.prototype.content = function()
+        {
+            var data = this.data;
+            var html = '';
+            if (data) {
+                for (var i in data) {
+                    html = html + '<h3 id="' + i + '">' + i + '年</h3>';
+                    for (var y in data[i]) {
+                        html = html + '<div class="month">'
+                        html = html + '<h4>' + y +'</h4>';
+                        html = html + '<p>';
+                        html = html + '<ul>';
+                        var record = data[i][y];
+                        for (var list in record) {
+                            html = html + '<li>[' + record[list].tag + '] <a href="' + record[list].href + '">' + record[list].title + '</a></li>';
+                        }
+                        html = html + '</p>';
+                        html = html + '</ul>';
+                        html = html + '</div>';
+                    }
+                    html = html + '<div class="clear"></div>';
+                }
+            }
+            return html;
+        }
+
+        pageview.prototype.nav = function()
+        {
+            var data = this.data;
+            var nav = '';
+            for (var i in data) {
+                nav = nav + '<a href="#' + i + '">' + i + '</a>';
+            }
+            return nav;
+        }
+
+       var pageview = new pageview(records)
+       var content = pageview.content();
+       var nav = pageview.nav();
+       console.log(nav);
+       //菜单渲染
+       document.getElementById('nav').innerHTML = nav;
+
+       //内容渲染
+       document.getElementById('main_content').innerHTML = content;
 })();

@@ -269,6 +269,7 @@ Full-Width Styles
 
 .outer {
   width: 100%;
+  background: #fff;
 }
 
 .inner {
@@ -429,4 +430,43 @@ Small Device Styles
     font-size: 11px;
   }
 
+}
+
+
+
+/*extend css*/
+.clear {
+  clear: both;
+}
+nav {
+  background: #e5e3e9;
+  height: 40px;
+  list-style-type: none;
+  color:#fff;
+  line-height: 40px;
+}
+
+nav a {
+  color:#333;
+  float: left;
+  margin-right: 10px;
+  display: block;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+nav a:hover {
+  background: #eee;
+}
+
+.month {
+  width:24%;
+  min-height: 200px;
+  float:left;
+  margin-right:1%;
+}
+.month ul{
+  font-size:12px;
+}
+.month ul li {
+  padding-left: 0px;
 }
