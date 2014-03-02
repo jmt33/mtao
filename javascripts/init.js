@@ -54,6 +54,11 @@ var records = {
                 href: '',
                 title: '几种常用的PHP设计模式',
                 tag: 'PHP'
+            },
+            {
+              href: 'https://github.com/jmt33/repo/demo/python/topit_me_dot.py',
+              title: 'python 采集topit.me 脚本',
+              tag: 'python'
             }
         ]
     },
@@ -92,7 +97,7 @@ var message = [
         　　'一个人，尤其是一个女人，在为另一个人等待的那刻起，她已不再真正年轻，人生开始了它的苍老。',
         　　
         　　'若此生，得不到，护不了，吾宁愿此生孤独到老。'
-             
+
         ];
 
         var title= document.textdata = document.title = message[Math.round(Math.random()*21) - 1];
