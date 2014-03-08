@@ -59,6 +59,11 @@ var records = {
               href: 'https://github.com/jmt33/repo/demo/python/topit_me_dot.py',
               title: 'python 采集topit.me 脚本',
               tag: 'python'
+            },
+            {
+                href: 'http://www.evernote.com/shard/s45/sh/cb8b4030-d970-4b7d-893e-50660fbfb3c5/ec4475accb69d0057e321eb57d1d93b4',
+                title: 'http简笔',
+                tag: 'http'
             }
         ]
     },
