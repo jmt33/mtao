@@ -1,0 +1,197 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <title>backbone demo - </title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+    <div id="header">
+        <div id="post-nav">
+            
+            <a href="/">Home</a> » <a href="/#list">list</a> » backbone demo
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="title">backbone demo</div>
+    <div id="content">
+        <div class="hlcode"><pre><span class="cp">&lt;!DOCTYPE HTML&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+  <span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">&quot;content-type&quot;</span> <span class="na">content=</span><span class="s">&quot;text/html; charset=utf-8&quot;</span><span class="nt">&gt;</span>
+
+  <span class="nt">&lt;title&gt;</span>backbone demo 1<span class="nt">&lt;/title&gt;</span>
+
+  <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&#39;http://cdnjs.cloudflare.com/ajax/libs/jquery/1.7/jquery.min.js&#39;</span><span class="nt">&gt;&lt;/script&gt;</span>
+  <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&#39;http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.2.1/underscore-min.js&#39;</span><span class="nt">&gt;&lt;/script&gt;</span>
+  <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&#39;http://cdnjs.cloudflare.com/ajax/libs/backbone.js/0.5.3/backbone-min.js&#39;</span><span class="nt">&gt;&lt;/script&gt;</span>
+  <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&#39;base.js&#39;</span> <span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+  <span class="nt">&lt;style </span><span class="na">type=</span><span class="s">&quot;text/css&quot;</span> <span class="na">src=</span><span class="s">&quot;basec.css&quot;</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span><span class="nt">&gt;&lt;/style&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+  Copyright (c) <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;http://jmt33.github.com/repo&quot;</span><span class="nt">&gt;</span>jmtao33<span class="nt">&lt;/a&gt;</span> - Source code licensed under the terms of the Apache License, Version 2.
+  <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;page&quot;</span> <span class="na">style=</span><span class="s">&quot;width:2000px;height:2000px;&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;button</span> <span class="na">id=</span><span class="s">&quot;new-shape&quot;</span><span class="nt">&gt;</span>New Shape<span class="nt">&lt;/button&gt;</span>
+  <span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</pre></div>
+
+
+<div class="hlcode"><pre><span class="nc">.shape</span><span class="p">{</span>
+    <span class="k">height</span><span class="o">:</span> <span class="m">100</span><span class="o">%</span><span class="p">;</span>
+    <span class="k">width</span><span class="o">:</span> <span class="m">100</span><span class="o">%</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nc">.hide</span> <span class="p">{</span>
+    <span class="k">display</span><span class="o">:</span> <span class="k">none</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nc">.control</span> <span class="p">{</span>
+    <span class="k">width</span><span class="o">:</span> <span class="m">16px</span><span class="p">;</span>
+    <span class="k">height</span><span class="o">:</span> <span class="m">16px</span><span class="p">;</span>
+    <span class="k">position</span><span class="o">:</span> <span class="k">absolute</span><span class="p">;</span>
+    <span class="k">bottom</span><span class="o">:</span> <span class="m">2px</span><span class="p">;</span>
+    <span class="k">cursor</span><span class="o">:</span> <span class="k">pointer</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nc">.resize</span> <span class="p">{</span>
+    <span class="k">background</span><span class="o">:</span> <span class="k">top</span> <span class="k">left</span> <span class="k">no-repeat</span> <span class="sx">url(http://cdn1.iconfinder.com/data/icons/fugue/icon/arrow-resize-135.png)</span><span class="p">;</span>
+    <span class="k">right</span><span class="o">:</span> <span class="m">5px</span><span class="p">;</span>
+    <span class="k">cursor</span><span class="o">:</span> <span class="k">nw-resize</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nc">.delete</span> <span class="p">{</span>
+    <span class="k">background</span><span class="o">:</span> <span class="k">top</span> <span class="k">left</span> <span class="k">no-repeat</span> <span class="sx">url(http://cdn3.iconfinder.com/data/icons/uidesignicons/delete.png)</span><span class="p">;</span>
+    <span class="k">right</span><span class="o">:</span> <span class="m">26px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nc">.change-color</span> <span class="p">{</span>
+    <span class="k">background</span><span class="o">:</span> <span class="k">top</span> <span class="k">left</span> <span class="k">no-repeat</span> <span class="sx">url(http://cdn1.iconfinder.com/data/icons/silk2/color_wheel.png)</span><span class="p">;</span>
+    <span class="k">right</span><span class="o">:</span> <span class="m">47px</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<div class="hlcode"><pre><span class="kd">var</span> <span class="nx">Shape</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Model</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+    <span class="nx">defaults</span><span class="o">:</span> <span class="p">{</span> <span class="nx">x</span><span class="o">:</span><span class="mi">50</span><span class="p">,</span> <span class="nx">y</span><span class="o">:</span><span class="mi">50</span><span class="p">,</span> <span class="nx">width</span><span class="o">:</span><span class="mi">150</span><span class="p">,</span> <span class="nx">height</span><span class="o">:</span><span class="mi">150</span><span class="p">,</span> <span class="nx">color</span><span class="o">:</span><span class="s1">&#39;black&#39;</span> <span class="p">},</span>
+    <span class="nx">setTopLeft</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">y</span><span class="p">)</span> <span class="p">{</span> <span class="k">this</span><span class="p">.</span><span class="nx">set</span><span class="p">({</span> <span class="nx">x</span><span class="o">:</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="o">:</span><span class="nx">y</span> <span class="p">});</span> <span class="p">},</span>
+    <span class="nx">setDim</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span><span class="nx">h</span><span class="p">)</span> <span class="p">{</span> <span class="k">this</span><span class="p">.</span><span class="nx">set</span><span class="p">({</span> <span class="nx">width</span><span class="o">:</span><span class="nx">w</span><span class="p">,</span> <span class="nx">height</span><span class="o">:</span><span class="nx">h</span> <span class="p">});</span> <span class="p">},</span>
+<span class="p">});</span>
+
+<span class="kd">var</span> <span class="nx">ShapeView</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+    <span class="nx">initialize</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+            <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#page&#39;</span><span class="p">).</span><span class="nx">mousemove</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">mousemove</span><span class="p">).</span><span class="nx">mouseup</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">mouseup</span><span class="p">);</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">model</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="s1">&#39;change&#39;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">updateView</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
+        <span class="p">},</span>
+    <span class="nx">render</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+            <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#page&#39;</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">el</span><span class="p">);</span>
+            <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">el</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="s1">&#39;&lt;div class=&quot;shape&quot;/&gt;&#39;</span>
+                                <span class="o">+</span> <span class="s1">&#39;&lt;div class=&quot;control delete hide&quot;/&gt;&#39;</span>
+                                                  <span class="o">+</span> <span class="s1">&#39;&lt;div class=&quot;control change-color hide&quot;/&gt;&#39;</span>
+                                                                    <span class="o">+</span> <span class="s1">&#39;&lt;div class=&quot;control resize hide&quot;/&gt;&#39;</span><span class="p">)</span>
+                <span class="p">.</span><span class="nx">css</span><span class="p">({</span> <span class="nx">position</span><span class="o">:</span> <span class="s1">&#39;absolute&#39;</span><span class="p">,</span> <span class="nx">padding</span><span class="o">:</span> <span class="s1">&#39;10px&#39;</span> <span class="p">});</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">updateView</span><span class="p">();</span>
+            <span class="k">return</span> <span class="k">this</span><span class="p">;</span>
+        <span class="p">},</span>
+    <span class="nx">updateView</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+            <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">el</span><span class="p">).</span><span class="nx">css</span><span class="p">({</span>
+                        <span class="nx">left</span><span class="o">:</span>       <span class="k">this</span><span class="p">.</span><span class="nx">model</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">),</span>
+                        <span class="nx">top</span><span class="o">:</span>        <span class="k">this</span><span class="p">.</span><span class="nx">model</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">),</span>
+                        <span class="nx">width</span><span class="o">:</span>      <span class="k">this</span><span class="p">.</span><span class="nx">model</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;width&#39;</span><span class="p">)</span> <span class="o">-</span> <span class="mi">10</span><span class="p">,</span>
+                        <span class="nx">height</span><span class="o">:</span>     <span class="k">this</span><span class="p">.</span><span class="nx">model</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;height&#39;</span><span class="p">)</span> <span class="o">-</span> <span class="mi">10</span> <span class="p">});</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.shape&#39;</span><span class="p">).</span><span class="nx">css</span><span class="p">({</span> <span class="nx">background</span><span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">model</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;color&#39;</span><span class="p">)</span> <span class="p">});</span>
+        <span class="p">},</span>
+    <span class="nx">events</span><span class="o">:</span> <span class="p">{</span>
+            <span class="s1">&#39;mouseenter .shape&#39;</span><span class="o">:</span> <span class="s1">&#39;hoveringStart&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;mouseleave&#39;</span><span class="o">:</span> <span class="s1">&#39;hoveringEnd&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;mousedown .shape&#39;</span><span class="o">:</span> <span class="s1">&#39;draggingStart&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;mousedown .resize&#39;</span><span class="o">:</span> <span class="s1">&#39;resizingStart&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;mousedown .change-color&#39;</span><span class="o">:</span> <span class="s1">&#39;changeColor&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;mousedown .delete&#39;</span><span class="o">:</span> <span class="s1">&#39;deleting&#39;</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="nx">hoveringStart</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.control&#39;</span><span class="p">).</span><span class="nx">removeClass</span><span class="p">(</span><span class="s1">&#39;hide&#39;</span><span class="p">);</span>
+        <span class="p">},</span>
+    <span class="nx">hoveringEnd</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.control&#39;</span><span class="p">).</span><span class="nx">addClass</span><span class="p">(</span><span class="s1">&#39;hide&#39;</span><span class="p">);</span>
+        <span class="p">},</span>
+    <span class="nx">draggingStart</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">dragging</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">initialX</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">pageX</span> <span class="o">-</span> <span class="k">this</span><span class="p">.</span><span class="nx">model</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">);</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">initialY</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">pageY</span> <span class="o">-</span> <span class="k">this</span><span class="p">.</span><span class="nx">model</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">);</span>
+            <span class="k">return</span> <span class="kc">false</span><span class="p">;</span> <span class="c1">// prevents text selection</span>
+        <span class="p">},</span>
+    <span class="nx">resizingStart</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">resizing</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+            <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+        <span class="p">},</span>
+    <span class="nx">changeColor</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">model</span><span class="p">.</span><span class="nx">set</span><span class="p">({</span> <span class="nx">color</span><span class="o">:</span> <span class="nx">prompt</span><span class="p">(</span><span class="s1">&#39;Enter color value&#39;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">model</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;color&#39;</span><span class="p">))</span> <span class="p">});</span>
+        <span class="p">},</span>
+    <span class="nx">deleting</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">model</span><span class="p">.</span><span class="nx">collection</span><span class="p">.</span><span class="nx">remove</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">model</span><span class="p">);</span>
+        <span class="p">},</span>
+    <span class="nx">mouseup</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">e</span><span class="p">.</span><span class="nx">data</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+            <span class="kd">var</span> <span class="nx">self</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">data</span><span class="p">;</span>
+            <span class="nx">self</span><span class="p">.</span><span class="nx">dragging</span> <span class="o">=</span> <span class="nx">self</span><span class="p">.</span><span class="nx">resizing</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+        <span class="p">},</span>
+    <span class="nx">mousemove</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">e</span><span class="p">.</span><span class="nx">data</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+            <span class="kd">var</span> <span class="nx">self</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">data</span><span class="p">;</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">self</span><span class="p">.</span><span class="nx">dragging</span><span class="p">)</span> <span class="p">{</span>
+                        <span class="nx">self</span><span class="p">.</span><span class="nx">model</span><span class="p">.</span><span class="nx">setTopLeft</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">pageX</span> <span class="o">-</span> <span class="nx">self</span><span class="p">.</span><span class="nx">initialX</span><span class="p">,</span> <span class="nx">e</span><span class="p">.</span><span class="nx">pageY</span> <span class="o">-</span> <span class="nx">self</span><span class="p">.</span><span class="nx">initialY</span><span class="p">);</span>
+                    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">self</span><span class="p">.</span><span class="nx">resizing</span><span class="p">)</span> <span class="p">{</span>
+                                <span class="nx">self</span><span class="p">.</span><span class="nx">model</span><span class="p">.</span><span class="nx">setDim</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">pageX</span> <span class="o">-</span> <span class="nx">self</span><span class="p">.</span><span class="nx">model</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">),</span> <span class="nx">e</span><span class="p">.</span><span class="nx">pageY</span> <span class="o">-</span> <span class="nx">self</span><span class="p">.</span><span class="nx">model</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">));</span>
+                            <span class="p">}</span>
+        <span class="p">}</span>
+<span class="p">});</span>
+
+<span class="kd">var</span> <span class="nx">Document</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Collection</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span> <span class="nx">model</span><span class="o">:</span> <span class="nx">Shape</span> <span class="p">});</span>
+
+<span class="kd">var</span> <span class="nx">DocumentView</span> <span class="o">=</span>  <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+    <span class="nx">id</span><span class="o">:</span> <span class="s1">&#39;page&#39;</span><span class="p">,</span>
+    <span class="nx">views</span><span class="o">:</span> <span class="p">{},</span>
+    <span class="nx">initialize</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">collection</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="s1">&#39;add&#39;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">added</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">collection</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="s1">&#39;remove&#39;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">removed</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
+        <span class="p">},</span>
+    <span class="nx">render</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="k">this</span><span class="p">;</span>
+        <span class="p">},</span>
+    <span class="nx">added</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">m</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">views</span><span class="p">[</span><span class="nx">m</span><span class="p">.</span><span class="nx">cid</span><span class="p">]</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ShapeView</span><span class="p">({</span>
+                        <span class="nx">model</span><span class="o">:</span> <span class="nx">m</span><span class="p">,</span>
+                        <span class="nx">id</span><span class="o">:</span><span class="s1">&#39;view_&#39;</span> <span class="o">+</span> <span class="nx">m</span><span class="p">.</span><span class="nx">cid</span>
+                    <span class="p">}).</span><span class="nx">render</span><span class="p">();</span>
+        <span class="p">},</span>
+    <span class="nx">removed</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">m</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">views</span><span class="p">[</span><span class="nx">m</span><span class="p">.</span><span class="nx">cid</span><span class="p">].</span><span class="nx">remove</span><span class="p">();</span>
+            <span class="k">delete</span> <span class="k">this</span><span class="p">.</span><span class="nx">views</span><span class="p">[</span><span class="nx">m</span><span class="p">.</span><span class="nx">cid</span><span class="p">];</span>
+        <span class="p">}</span>
+<span class="p">});</span>
+
+<span class="kd">var</span> <span class="nb">document</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Document</span><span class="p">();</span>
+<span class="kd">var</span> <span class="nx">documentView</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DocumentView</span><span class="p">({</span> <span class="nx">collection</span><span class="o">:</span> <span class="nb">document</span> <span class="p">});</span>
+<span class="nx">documentView</span><span class="p">.</span><span class="nx">render</span><span class="p">();</span>
+
+<span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#new-shape&#39;</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nb">document</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="k">new</span> <span class="nx">Shape</span><span class="p">());</span>
+<span class="p">});</span>
+</pre></div>
+    </div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2012-2014 .
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>
