@@ -49,6 +49,7 @@ class Select {}
 echo "i = $i";
 end:
 echo 'j hit 17';
+
 </code></pre>
 
 <h3>支持闭包、Lambda/Anonymous函数</h3>
@@ -139,6 +140,7 @@ $class::$action();  //输出 "gogo!"
 
 <blockquote>
   <p>此次更新的关键新特性，包括：新增traits，更精简的Array数组语法，供测试使用的内建webserver，可以闭包使用的$this指针，实例化类成员访问，<?=标记永远生效 等等……
+  
   ```
   ### traits
   trait Hello
@@ -170,6 +172,7 @@ $class::$action();  //输出 "gogo!"
   echo $o->hello(), $o->cichui(), $o->the_end();
   echo (new Hello)->hello(), (new Cichui)->cichui(), (new HelloCichui)->the_end();
   ```
+  
   >个人感觉和javascript中call方法类似
   
   ### 内建的Web-Sever
@@ -202,6 +205,7 @@ echo 'Hello cichui.com Readers!';
 访问：http://localhost:8080/index.php
 
 ### 精简的数组语法
+
 </code></pre>
 
 <p>$fruits = array('apples', 'oranges', 'bananas'); // "old" way</p>
@@ -222,6 +226,7 @@ $array = [
 <p>echo explode(‘ ‘, ‘Fang Bin Xin’)[1]; // Bin</p>
 
 <pre><code><br />### 闭包中使用$this
+
 </code></pre>
 
 <p>class Foo
@@ -258,7 +263,8 @@ new Bar(new Foo); // Hello Cichui!</p>
 
 <?=$title?>
 
-<pre><code>### 支持二进制直接量 - 没用过
+<pre><code><br />### 支持二进制直接量 - 没用过
+
 </code></pre>
 
 <p>echo 0b11111; // PHP 5.4支持二进制了
@@ -274,7 +280,9 @@ echo 037; // 八进制</p>
 ### 新增函数和类 
 
 #### boolval() 
+
 &gt;得到一个变量的布尔值
+
 </code></pre>
 
 <p>echo '0:        '.(boolval(0) ? 'true' : 'false')."\n";
@@ -285,6 +293,7 @@ echo '0.0:      '.(boolval(0.0) ? 'true' : 'false')."\n";</p>
 &gt;PBKDF2全称“Password-Based Key Derivation Function 2”，正如它的名字一样，是一种从密码派生出加密密钥的算法
 
 #### array_column()
+
 </code></pre>
 
 <p>&lt;?php<br />
@@ -295,8 +304,10 @@ foreach ($users as $user) {<br />
     $userNames[] = $user['name'];<br />
 }</p>
 
-<pre><code> #### password_hash password_verify
+<pre><code><br /> #### password_hash password_verify
+
 &gt;密码处理
+
 </code></pre>
 
 <p>&lt;?php<br />
@@ -312,6 +323,7 @@ if (password_verify($password, $hash)) {<br />
 
 <pre><code><br />### 常量引用
 &gt; “常量引用”意味着数组可以直接操作字符串和数组字面值。举两个例子:
+
 </code></pre>
 
 <p>&lt;?php<br />
@@ -325,16 +337,18 @@ function randomBool() {<br />
     return [false, true][mt_rand(0, 1)]; // direct dereference of array<br />
 }</p>
 
-<pre><code>### 调用empty()函数(和其他表达式)一起工作
+<pre><code><br />### 调用empty()函数(和其他表达式)一起工作
 &gt;php5.5之前empty()语言构造只能用在变量，而不能在其他表达式。在特定的代码像empty($this-&gt;getFriends())将会抛出一个错误。作为PHP5.5 这将成为有效的代码
 
 ### 参数跳跃
 &gt; php5.5之前多个参数时候，必须全部传递, 现在加上 $report_errors = true 不必全部传递
+
 </code></pre>
 
 <p>function create_query($where, $order_by, $join_type='', $execute = false, $report_errors = true) { ... }</p>
 
 <pre><code>### 参数标量类型提示
+
 </code></pre>
 
 <p>function foo(int $i) { ... }<br />
@@ -372,7 +386,8 @@ var_dump($timePeriod->hours);   // int(10)</p>
 
 <p>$firstNames = [foreach ($users as $user) yield $user->firstName];</p>
 
-<pre><code>等同于
+<pre><code><br />等同于
+
 </code></pre>
 
 <p>$firstNames = [];<br />
@@ -380,7 +395,8 @@ foreach ($users as $user) {<br />
     $firstNames[] = $user->firstName;<br />
 }</p>
 
-<pre><code>也可以这样过滤数组
+<pre><code><br />也可以这样过滤数组
+
 </code></pre>
 
 <p>$underageUsers = [foreach ($users as $user) if ($user->age &lt; 18) yield $user]; 
