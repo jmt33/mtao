@@ -136,7 +136,7 @@ pre code {
     -moz-box-shadow: 2px 2px 8px #aaa;
 }
 
-#container {
+#container img{
     width:100%;
     margin: 15px auto;
 }
