@@ -14,16 +14,10 @@
 				<a href='../../index.html#工具妙用'>工具妙用</a>&nbsp;»&nbsp;sublime 必杀技
 			</div>
 			<h2>Sublime Text2 必杀技</h2>
-
 <h3>插件安装器</h3>
-
 <p><code>ctrl + ~</code> 输入：</p>
-
-<pre><code>import urllib2,os;pf='Package Control.sublime-package';ipp=sublime.installed_packages_path();os.makedirs(ipp) if not os.path.exists(ipp) else None;open(os.path.join(ipp,pf),'wb').write(urllib2.urlopen('http://sublime.wbond.net/'+pf.replace(' ','%20')).read())
-</code></pre>
-
+<pre><code>import urllib2,os;pf='Package Control.sublime-package';ipp=sublime.installed_packages_path();os.makedirs(ipp) if not os.path.exists(ipp) else None;open(os.path.join(ipp,pf),'wb').write(urllib2.urlopen('http://sublime.wbond.net/'+pf.replace(' ','%20')).read())</code></pre>
 <h3>用户配置</h3>
-
 <pre><code>{
     "color_scheme": "Packages/Color Scheme - Default/Mac Classic.tmTheme",
     "font_face": "MONACO",
@@ -35,36 +29,22 @@
     ],
     "translate_tabs_to_spaces": true
 }
-
 </code></pre>
-
 <p>推荐字体<code>MONACO</code></p>
-
 <h3>ctags</h3>
-
-<pre><code>sudo apt-get install ctags
-</code></pre>
-
+<pre><code>sudo apt-get install ctags</code></pre>
 <p>在项目目录处右键生成tags</p>
-
 <p><code>shift+ctrl+鼠标左键</code>进行追踪</p>
-
 <h3>其他常用插件</h3>
-
 <blockquote>
-  <p>Zen Coding</p>
-  
-  <p>JS Format</p>
-  
-  <p>SublimeLinter 语法检查</p>
-  
-  <p>Sublime Alignment</p>
-  
-  <p>DetectSyntax
-  Sublime CodeIntel
-  Bracket Highlighter</p>
+<p>Zen Coding</p>
+<p>JS Format         </p>
+<p>SublimeLinter 语法检查</p>
+<p>Sublime Alignment</p>
+<p>DetectSyntax
+Sublime CodeIntel
+Bracket Highlighter</p>
 </blockquote>
-
         </div>
     </body>
 </html>

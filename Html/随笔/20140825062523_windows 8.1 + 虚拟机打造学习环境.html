@@ -14,118 +14,69 @@
 				<a href='../../index.html#随笔'>随笔</a>&nbsp;»&nbsp;windows 8.1 + 虚拟机打造学习环境
 			</div>
 			<h1>windows 8.1 + 虚拟机打造开发学习环境</h1>
-
 <h2>这样做的原因</h2>
-
 <p>在很早以前我是用过的windows和linux双系统，这样做有一个好处就是想用哪个系统的时候有很大的独立性，不过来回的切换麻烦-shit。</p>
-
 <p>再加上windows8.1 装双系统很是困难，我果断卸下双系统，进行虚拟机来运行。</p>
-
 <p>在进入这个阶段刚开始的时候我是用的visualBox，这个的好处就是免费方便不过用了一段时间发现很是不好用，弊端我就不说了。
 于是采用了Vmware作为我的主用虚拟机。</p>
-
 <h2>步骤</h2>
-
 <h3>安装Windows8.1系统</h3>
-
 <p>直接去微软官网上下载，我用的是专业版 Build 9600.
 安装后用激活工具激活使用。</p>
-
 <p><a href="http://www.xp510.com/xiazai/ossoft/win98tools/22233.html">激活工具下载</a></p>
-
 <h3>安装Vmware虚拟机</h3>
-
 <p>我用的Vmware 是目前最新版的10.01，网上也有很多激活码
 这里就粘上一个KEY:</p>
-
 <blockquote>
-  <p>1G4LV-FZ25P-0ZCN8-ZA3QH-8C00C</p>
+<p>1G4LV-FZ25P-0ZCN8-ZA3QH-8C00C</p>
 </blockquote>
-
 <p>至于怎样去配置，使用，不罗嗦直接Google去吧。</p>
-
 <h2>安装ubuntu 14.04</h2>
-
 <p>ubuntu14.04 作为一个官方支持维护的一个稳定版本，就选这个了。</p>
-
 <h2>windows终端连接我的ubuntu</h2>
-
 <h3>ubuntu安装</h3>
-
-<pre><code>sudo apt-get install ssh
-</code></pre>
-
+<pre><code>sudo apt-get install ssh</code></pre>
 <h3>windows 8.1</h3>
-
 <p>安装 <code>putty</code> <a href="http://dx2.xiazaiba.com/Soft/P/PUTTY_0.63_XiaZaiBa.zip">下载</a></p>
-
 <h2>搭建LNMP环境</h2>
-
 <p>具体安装步骤见这里 <a href="http://jmt33.github.io/mtao/Html/Linux/20140825062307_LNMP%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA.html">LNMP环境搭建</a></p>
-
 <h2>安装zsh</h2>
-
-<pre><code>sudo apt-get install zsh
-</code></pre>
-
+<pre><code>sudo apt-get install zsh</code></pre>
 <h2>建立你Linux ssh 与 你github通信</h2>
-
 <p>具体过程详见 <a href="">ubuntu如何方便的提交代码到github</a></p>
-
 <h2>搭建Samba服务器</h2>
-
-<pre><code>sudo apt-get install samaba
-</code></pre>
-
+<pre><code>sudo apt-get install samaba</code></pre>
 <p>在这个过程中我是用的ubuntu的软件中心进行安装，并使用samba的客户端工具进行用户配置：</p>
-
 <ul>
 <li>建立用户</li>
 <li>设置需要共享的目录，比如你的开发目录为 project，设置它并赋予一定的权限。</li>
 </ul>
-
 <blockquote>
-  <p>PS: 此过程一定要建立于你机器对应的用户才能在windows上顺利的提交代码。例如：你机器用户是mtao，那么你也相对应的建立samba用户为mtao才可以(⊙o⊙)…</p>
+<p>PS: 此过程一定要建立于你机器对应的用户才能在windows上顺利的提交代码。例如：你机器用户是mtao，那么你也相对应的建立samba用户为mtao才可以(⊙o⊙)…</p>
 </blockquote>
-
 <h2>Windows Hosts 设置虚拟机IP</h2>
-
 <p><code>C:\Windows\System32\drivers\etc\hosts</code></p>
-
 <h2>安装Vim7.4</h2>
-
-<p>[<img src="http://t12.baidu.com/it/u=4158458465,727582916&amp;fm=58" alt="" />]</p>
-
+<p>[<img alt="" src="http://t12.baidu.com/it/u=4158458465,727582916&amp;fm=58" />]</p>
 <pre><code>sudo add-apt-repository ppa:fcwu-tw/ppa
 
 sudo apt-get update
 
-sudo apt-get install vim
-</code></pre>
-
+sudo apt-get install vim</code></pre>
 <p><a href="">Vim 必杀技</a></p>
-
 <h2>Windows 安装Sublime</h2>
-
 <p>因为windows 8.1下Vim使用插件很是费劲，没少耗费我的精力，但是到最后还是无功而返。不得不避开了它选择了Sublime.</p>
-
 <p>官网下载相对应的版本，进行下载 。
-<a href="http://www.sublimetext.com/">http://www.sublimetext.com/</a></p>
-
+<a href="http://www.sublimetext.com/"><a href="http://www.sublimetext.com/">http://www.sublimetext.com/</a></a></p>
 <p><a href="">Sublime 必杀技</a></p>
-
 <hr />
-
 <p>到这里的话你就可以做这么几件事情：</p>
-
 <ul>
 <li>编辑你Ubuntu中共享开发目录中的代码</li>
 <li>使用putty管理你的ubuntu</li>
 <li>windows中浏览器访问并进行调试你的代码</li>
 </ul>
-
 <hr />
-
         </div>
     </body>
 </html>
