@@ -80,6 +80,7 @@ blockquote {
 pre {
     border: 1px solid #ccc;
     padding: 10px;
+    overflow: auto;
 }
 code {
     font-family: "Consolas", "Menlo", "Monaco", monospace, serif;
