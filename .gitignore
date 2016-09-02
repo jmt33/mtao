@@ -1,3 +1,4 @@
 vendor/
+web/node_modules/
 composer.lock
 bin/phpunit
