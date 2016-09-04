@@ -80,7 +80,7 @@
 	              null,
 	              React.createElement(
 	                "button",
-	                { type: "button", onClick: this.handleClick.bind(this), className: "btn btn-success" },
+	                { type: "button", onClick: this.handleSync.bind(this), className: "btn btn-success" },
 	                "同步"
 	              )
 	            ),
@@ -89,7 +89,7 @@
 	              null,
 	              React.createElement(
 	                "button",
-	                { type: "button", className: "btn btn-info" },
+	                { type: "button", onClick: this.handleChangeName, className: "btn btn-info" },
 	                "重命名"
 	              )
 	            ),
@@ -101,24 +101,39 @@
 	                { type: "button", className: "btn btn-warning" },
 	                "清空"
 	              )
+	            ),
+	            React.createElement(
+	              "li",
+	              null,
+	              React.createElement(Category, null)
+	            ),
+	            React.createElement(
+	              "li",
+	              null,
+	              React.createElement("input", { type: "hidden", id: "time", value: this.state != null ? this.state.time : '' })
 	            )
 	          )
 	        )
 	      );
 	    }
 	  }, {
-	    key: "handleClick",
-	    value: function handleClick(event) {
+	    key: "handleSync",
+	    value: function handleSync(event) {
 	      var title = $('#htmlArea').find('h1').eq(0).text(),
+	          _this = this,
 	          data;
 	      if (title != '') {
+
 	        data = {
 	          title: title,
+	          category: $('#category').val(),
 	          content: $('#markdown').val()
 	        };
-	        console.log(data);
+	        if (this.state && this.state.time) {
+	          data.time = this.state.time;
+	        }
 	        $.post('/api.php?action=sync', data, function (data) {
-	          console.log(data);
+	          _this.setState({ time: data });
 	        });
 	      } else {
 	        alert('请输入正确格式的文档');
@@ -129,19 +144,64 @@
 	  return Header;
 	}(React.Component);
 
-	var Markdown = function (_React$Component2) {
-	  _inherits(Markdown, _React$Component2);
+	var Category = function (_React$Component2) {
+	  _inherits(Category, _React$Component2);
+
+	  function Category() {
+	    _classCallCheck(this, Category);
+
+	    return _possibleConstructorReturn(this, (Category.__proto__ || Object.getPrototypeOf(Category)).apply(this, arguments));
+	  }
+
+	  _createClass(Category, [{
+	    key: "componentWillMount",
+	    value: function componentWillMount() {
+	      var _this = this;
+	      $.ajax({
+	        url: '/api.php?action=category',
+	        datatype: "json",
+	        async: false,
+	        type: 'get',
+	        success: function success(data) {
+	          //成功后回调
+	          _this.setState({ value: data });
+	        }
+	      });
+	    }
+	  }, {
+	    key: "render",
+	    value: function render() {
+	      var _this = this;
+	      return React.createElement(
+	        "select",
+	        { id: "category", className: "form-control" },
+	        _this.state.value.map(function (option, i) {
+	          return React.createElement(
+	            "option",
+	            { value: option },
+	            option
+	          );
+	        })
+	      );
+	    }
+	  }]);
+
+	  return Category;
+	}(React.Component);
+
+	var Markdown = function (_React$Component3) {
+	  _inherits(Markdown, _React$Component3);
 
 	  function Markdown() {
 	    _classCallCheck(this, Markdown);
 
-	    var _this2 = _possibleConstructorReturn(this, (Markdown.__proto__ || Object.getPrototypeOf(Markdown)).call(this));
+	    var _this4 = _possibleConstructorReturn(this, (Markdown.__proto__ || Object.getPrototypeOf(Markdown)).call(this));
 
-	    _this2.state = {
+	    _this4.state = {
 	      converter: new showdown.Converter(),
 	      value: "Hello, World!\n===\n---\n# Write "
 	    };
-	    return _this2;
+	    return _this4;
 	  }
 
 	  _createClass(Markdown, [{
@@ -187,8 +247,8 @@
 	  return Markdown;
 	}(React.Component);
 
-	var Footer = function (_React$Component3) {
-	  _inherits(Footer, _React$Component3);
+	var Footer = function (_React$Component4) {
+	  _inherits(Footer, _React$Component4);
 
 	  function Footer() {
 	    _classCallCheck(this, Footer);
@@ -220,8 +280,8 @@
 	  return Footer;
 	}(React.Component);
 
-	var App = function (_React$Component4) {
-	  _inherits(App, _React$Component4);
+	var App = function (_React$Component5) {
+	  _inherits(App, _React$Component5);
 
 	  function App() {
 	    _classCallCheck(this, App);

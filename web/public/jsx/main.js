@@ -7,6 +7,8 @@ class Header extends React.Component {
                     <li><button type="button" onClick = {this.handleSync.bind(this)} className="btn btn-success">同步</button></li>
                     <li><button type="button" onClick = {this.handleChangeName} className="btn btn-info">重命名</button></li>
                     <li><button type="button" className="btn btn-warning">清空</button></li>
+                    <li><Category/></li>
+                    <li><input type="hidden" id="time" value={this.state != null ? this.state.time : ''}/></li>
                 </ul>
             </nav>
         </header>
@@ -15,20 +17,54 @@ class Header extends React.Component {
 
   handleSync(event) {
     var title = $('#htmlArea').find('h1').eq(0).text(),
+        _this = this,
         data;
     if (title != '') {
+
         data = {
             title: title,
+            category: $('#category').val(),
             content: $('#markdown').val()
         };
-        console.log(data);
+        if (this.state && this.state.time) {
+            data.time = this.state.time;
+        }
         $.post('/api.php?action=sync', data, function(data) {
-          console.log(data);
+          _this.setState({time: data});
         });
     } else {
         alert('请输入正确格式的文档');
     }
   }
+}
+
+
+class Category extends React.Component {
+    componentWillMount() {
+        var _this = this;
+        $.ajax({
+                url: '/api.php?action=category',
+                datatype: "json",
+                async: false,
+                type: 'get',
+                success: function (data) {   //成功后回调
+                    _this.setState({value : data});
+                }
+        })
+    }
+    render() {
+        var _this = this;
+        return (
+            <select id="category" className="form-control">
+                {
+                    _this.state.value.map(function(option, i) {
+                        return <option value={option}>{option}</option>;
+                    })
+                }
+            </select>
+
+       );
+    }
 }
 
 class Markdown extends React.Component {
