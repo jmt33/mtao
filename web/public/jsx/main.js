@@ -20,7 +20,6 @@ class Header extends React.Component {
         _this = this,
         data;
     if (title != '') {
-
         data = {
             title: title,
             category: $('#category').val(),
@@ -30,7 +29,7 @@ class Header extends React.Component {
             data.time = this.state.time;
         }
         $.post('/api.php?action=sync', data, function(data) {
-          _this.setState({time: data});
+            _this.setState({time: data});
         });
     } else {
         alert('请输入正确格式的文档');
@@ -38,19 +37,18 @@ class Header extends React.Component {
   }
 }
 
-
 class Category extends React.Component {
     componentWillMount() {
         var _this = this;
         $.ajax({
-                url: '/api.php?action=category',
-                datatype: "json",
-                async: false,
-                type: 'get',
-                success: function (data) {   //成功后回调
-                    _this.setState({value : data});
-                }
-        })
+            url: '/api.php?action=category',
+            datatype: "json",
+            async: false,
+            type: 'get',
+            success: function (data) {   //成功后回调
+                _this.setState({value : data});
+            }
+        });
     }
     render() {
         var _this = this;
@@ -62,67 +60,68 @@ class Category extends React.Component {
                     })
                 }
             </select>
-
        );
     }
 }
 
 class Markdown extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      converter: new showdown.Converter(),
-      value: `Hello, World!\n===\n---\n# Write `,
-    };
-  }
+    constructor() {
+        super();
+        this.state = {
+            converter: new showdown.Converter(),
+            value: `Hello, World!\n===\n---\n# Write `,
+        };
+    }
 
-  createMarkup() {
-    return {__html: this.state.converter.makeHtml(this.state.value) };
-  }
+    createMarkup() {
+        return {
+            __html: this.state.converter.makeHtml(this.state.value)
+        };
+    }
 
   handleChange(event) {
     this.setState({ value: event.target.value });
   }
 
   render() {
-    return (<div className='row'>
-              <div className ="markdown-write">
-                <textarea
-                  type='text'
-                  defaultValue={this.state.value}
-                  onChange={this.handleChange.bind(this)}
-                  id='markdown'
-                  className='col-xs-12 full-height'></textarea>
-              </div>
-              <div className='markdown-previewer'>
-                <div id='htmlArea'
-                     className='col-xs-12 full-height'>
-                  <div dangerouslySetInnerHTML={this.createMarkup()} />
+    return (
+        <div className='row'>
+            <div className ="markdown-write">
+                <textarea type='text' defaultValue={this.state.value} onChange={this.handleChange.bind(this)} id='markdown' className='col-xs-12 full-height'></textarea>
+            </div>
+            <div className='markdown-previewer'>
+                <div id='htmlArea' className='col-xs-12 full-height'>
+                    <div dangerouslySetInnerHTML={this.createMarkup()} />
                 </div>
-              </div>
-            </div>);
+            </div>
+        </div>
+    );
   }
 }
 
 class Footer extends React.Component {
-  render() {
-    return (<footer className='col-xs-8 col-xs-offset-2'>
-              <hr />
-              <p className='text-center'>
-                Markdown Previewer created by <a href='http://jmt33.github.com/mtao' target='_blank' className='text-warning'>Mtao</a>
-              </p>
-            </footer>);
-  }
+    render() {
+        return (
+            <footer className='col-xs-8 col-xs-offset-2'>
+                <hr />
+                <p className='text-center'>
+                    Markdown Previewer created by <a href='http://jmt33.github.com/mtao' target='_blank' className='text-warning'>Mtao</a>
+                </p>
+            </footer>
+        );
+    }
 }
 
 class App extends React.Component {
-  render() {
-    return (<div className='container-fluid'>
-              <Header/>
-              <Markdown/>
-              <Footer/>
-            </div>);
-  }
+    render() {
+        return (
+            <div className='container-fluid'>
+                <Header/>
+                <Markdown/>
+                <Footer/>
+            </div>
+        );
+    }
 }
 
 const div = document.createElement('div');
