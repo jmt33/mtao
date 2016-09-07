@@ -26,18 +26,17 @@ $dataFun = function($dir) {
     return $data;
 };
 
+$config = [
+    'pageInfo' => [
+        'title' => 'Mtao Blog',
+        'keywords' => '',
+        'description' => ''
+    ],
+    'markdownPath' => $dir.'/Markdown/',
+    'htmlPath' => $dir.'/Html/',
+    'htmlIndexFile' => $dir.'/index.html',
+    'data' => $dataFun($dir),
+    'commentPlugin' => $commentPlugin
+];
 
-$bootstrap->setConfig(
-    [
-        'pageInfo' => [
-            'title' => 'Mtao Blog',
-            'keywords' => '',
-            'description' => ''
-        ],
-        'markdownPath' => $dir.'/Markdown/',
-        'htmlPath' => $dir.'/Html/',
-        'htmlIndexFile' => $dir.'/index.html',
-        'data' => $dataFun($dir),
-        'commentPlugin' => $commentPlugin
-    ]
-);
+$bootstrap->setConfig($config);

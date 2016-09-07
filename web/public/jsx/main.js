@@ -1,40 +1,46 @@
 class Header extends React.Component {
-  render() {
-    return (
-        <header>
-            <nav>
-                <ul className="nav navbar-top-links">
-                    <li><button type="button" onClick = {this.handleSync.bind(this)} className="btn btn-success">同步</button></li>
-                    <li><button type="button" onClick = {this.handleChangeName} className="btn btn-info">重命名</button></li>
-                    <li><button type="button" className="btn btn-warning">清空</button></li>
-                    <li><Category/></li>
-                    <li><input type="hidden" id="time" value={this.state != null ? this.state.time : ''}/></li>
-                </ul>
-            </nav>
-        </header>
-    );
-  }
-
-  handleSync(event) {
-    var title = $('#htmlArea').find('h1').eq(0).text(),
-        _this = this,
-        data;
-    if (title != '') {
-        data = {
-            title: title,
-            category: $('#category').val(),
-            content: $('#markdown').val()
-        };
-        if (this.state && this.state.time) {
-            data.time = this.state.time;
-        }
-        $.post('/api.php?action=sync', data, function(data) {
-            _this.setState({time: data});
-        });
-    } else {
-        alert('请输入正确格式的文档');
+    render() {
+        return (
+            <header>
+                <nav>
+                    <ul className="nav navbar-top-links">
+                        <li><button type="button" onClick = {this.handleSync.bind(this)} className="btn btn-success">同步</button></li>
+                        <li><button type="button" onClick = {this.handleClear.bind(this)} className="btn btn-warning">清空</button></li>
+                        <li><Category/></li>
+                        <li><input type="hidden" id="time" value={this.state != null ? this.state.time : ''}/></li>
+                    </ul>
+                </nav>
+            </header>
+        );
     }
-  }
+
+    handleClear(event) {
+        //暂使用比较low的方式
+        $('#markdown').empty();
+        $('#htmlArea div').empty();
+    }
+
+    handleSync(event) {
+        var title = $('#htmlArea').find('h1').eq(0).text(),
+            _this = this,
+            data;
+        if (title != '') {
+            data = {
+                title: title,
+                time: $('#time').val(),
+                category: $('#category').val(),
+                content: $('#markdown').val()
+            };
+            if (this.state && this.state.time) {
+                data.time = this.state.time;
+            }
+            $.post('/api.php?action=sync', data, function(data) {
+                _this.setState({time: data});
+            });
+        } else {
+            alert('请输入正确格式的文档');
+        }
+    }
 }
 
 class Category extends React.Component {
