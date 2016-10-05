@@ -26,6 +26,7 @@ class Api
         $config = Config::instance();
         $data = $config->data;
         $title = $key."_".$_POST['category']."_".$_POST['title'];
+        $htmlTitle = $key."_".$_POST['title'];
 
         if (!isset($data[$key])) {
             $key = !empty($_POST['time']) ? $_POST['time'] : date("YmdHis", time());
@@ -40,10 +41,11 @@ class Api
             Source::setMarkdownFile($title);
         } else {
             $oldTitle = $key."_".$data[$key]['category']."_".$data[$key]['title'];
+            $oldHtmlTitle = $key."_".$data[$key]['title'];
             //剪切的过程
             Source::mvMarkdownFile($oldTitle, $title);
             //删除Html
-            Source::delHtmlFile($data[$key]['category'], $oldTitle);
+            Source::delHtmlFile($data[$key]['category'], $oldHtmlTitle, $htmlTitle);
             $config->data[$key]['category'] = $_POST['category'];
             $config->data[$key]['title'] = $_POST['title'];
         }
