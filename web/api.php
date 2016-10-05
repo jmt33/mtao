@@ -65,6 +65,25 @@ class Api
         $data = $this->pwiki->getCategory();
         return json_encode($data, true);
     }
+
+    public function article()
+    {
+        $category_id = isset($_GET['category_id']) ? $_GET['category_id'] : '';
+        $config = Config::instance();
+        $data = $config->data;
+        if (empty($category_id)) {
+            $result = $data;
+        } else {
+            $result = array_filter($data, function($item) use($category_id) {
+                if ($item['category'] == $category_id) {
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+        }
+        return json_encode($result, true);
+    }
 }
 
 $api = new Api($bootstrap);

@@ -101,6 +101,11 @@
 	                        React.createElement(
 	                            "li",
 	                            null,
+	                            React.createElement(Article, null)
+	                        ),
+	                        React.createElement(
+	                            "li",
+	                            null,
 	                            React.createElement("input", { type: "hidden", id: "time", value: this.state != null ? this.state.time : '' })
 	                        )
 	                    )
@@ -148,7 +153,12 @@
 	    function Category() {
 	        _classCallCheck(this, Category);
 
-	        return _possibleConstructorReturn(this, (Category.__proto__ || Object.getPrototypeOf(Category)).apply(this, arguments));
+	        var _this3 = _possibleConstructorReturn(this, (Category.__proto__ || Object.getPrototypeOf(Category)).call(this));
+
+	        _this3.state = {
+	            article: new Article()
+	        };
+	        return _this3;
 	    }
 
 	    _createClass(Category, [{
@@ -161,10 +171,14 @@
 	                async: false,
 	                type: 'get',
 	                success: function success(data) {
-	                    //成功后回调
 	                    _this.setState({ value: data });
 	                }
 	            });
+	        }
+	    }, {
+	        key: "handleChange",
+	        value: function handleChange(event) {
+	            this.article.setState({ category_id: event.target.value });
 	        }
 	    }, {
 	        key: "render",
@@ -176,7 +190,7 @@
 	                _this.state.value.map(function (option, i) {
 	                    return React.createElement(
 	                        "option",
-	                        { value: option },
+	                        { onChange: _this.handleChange.bind(this), value: option },
 	                        option
 	                    );
 	                })
@@ -187,19 +201,88 @@
 	    return Category;
 	}(React.Component);
 
-	var Markdown = function (_React$Component3) {
-	    _inherits(Markdown, _React$Component3);
+	var Article = function (_React$Component3) {
+	    _inherits(Article, _React$Component3);
+
+	    function Article() {
+	        _classCallCheck(this, Article);
+
+	        return _possibleConstructorReturn(this, (Article.__proto__ || Object.getPrototypeOf(Article)).apply(this, arguments));
+	    }
+
+	    _createClass(Article, [{
+	        key: "componentWillMount",
+	        value: function componentWillMount() {
+	            var _this = this,
+	                category_id = _this.state === null ? '随笔' : _this.state.category_id;
+	            $.ajax({
+	                url: '/api.php?action=article&category_id=' + category_id,
+	                datatype: "json",
+	                async: false,
+	                type: 'get',
+	                success: function success(data) {
+	                    _this.setState({ data: data });
+	                }
+	            });
+	        }
+	    }, {
+	        key: "render",
+	        value: function render() {
+	            var _this = this,
+	                items = [];
+	            var _iteratorNormalCompletion = true;
+	            var _didIteratorError = false;
+	            var _iteratorError = undefined;
+
+	            try {
+	                for (var _iterator = Object.keys(_this.state.data)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	                    var i = _step.value;
+
+	                    items.push(React.createElement(
+	                        "option",
+	                        { value: i },
+	                        _this.state.data[i]['title']
+	                    ));
+	                }
+	            } catch (err) {
+	                _didIteratorError = true;
+	                _iteratorError = err;
+	            } finally {
+	                try {
+	                    if (!_iteratorNormalCompletion && _iterator.return) {
+	                        _iterator.return();
+	                    }
+	                } finally {
+	                    if (_didIteratorError) {
+	                        throw _iteratorError;
+	                    }
+	                }
+	            }
+
+	            return React.createElement(
+	                "select",
+	                { id: "article", className: "form-control" },
+	                items
+	            );
+	        }
+	    }]);
+
+	    return Article;
+	}(React.Component);
+
+	var Markdown = function (_React$Component4) {
+	    _inherits(Markdown, _React$Component4);
 
 	    function Markdown() {
 	        _classCallCheck(this, Markdown);
 
-	        var _this4 = _possibleConstructorReturn(this, (Markdown.__proto__ || Object.getPrototypeOf(Markdown)).call(this));
+	        var _this5 = _possibleConstructorReturn(this, (Markdown.__proto__ || Object.getPrototypeOf(Markdown)).call(this));
 
-	        _this4.state = {
+	        _this5.state = {
 	            converter: new showdown.Converter(),
 	            value: "Hello, World!\n===\n---\n# Write "
 	        };
-	        return _this4;
+	        return _this5;
 	    }
 
 	    _createClass(Markdown, [{
@@ -241,8 +324,8 @@
 	    return Markdown;
 	}(React.Component);
 
-	var Footer = function (_React$Component4) {
-	    _inherits(Footer, _React$Component4);
+	var Footer = function (_React$Component5) {
+	    _inherits(Footer, _React$Component5);
 
 	    function Footer() {
 	        _classCallCheck(this, Footer);
@@ -274,8 +357,8 @@
 	    return Footer;
 	}(React.Component);
 
-	var App = function (_React$Component5) {
-	    _inherits(App, _React$Component5);
+	var App = function (_React$Component6) {
+	    _inherits(App, _React$Component6);
 
 	    function App() {
 	        _classCallCheck(this, App);

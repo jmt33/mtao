@@ -7,6 +7,7 @@ class Header extends React.Component {
                         <li><button type="button" onClick = {this.handleSync.bind(this)} className="btn btn-success">同步</button></li>
                         <li><button type="button" onClick = {this.handleClear.bind(this)} className="btn btn-warning">清空</button></li>
                         <li><Category/></li>
+                        <li><Article/></li>
                         <li><input type="hidden" id="time" value={this.state != null ? this.state.time : ''}/></li>
                     </ul>
                 </nav>
@@ -44,6 +45,12 @@ class Header extends React.Component {
 }
 
 class Category extends React.Component {
+    constructor() {
+        super();
+        this.state = {
+            article: new Article()
+        };
+    }
     componentWillMount() {
         var _this = this;
         $.ajax({
@@ -51,20 +58,53 @@ class Category extends React.Component {
             datatype: "json",
             async: false,
             type: 'get',
-            success: function (data) {   //成功后回调
+            success: function (data) {
                 _this.setState({value : data});
             }
         });
     }
+
+    handleChange(event) {
+        this.article.setState({ category_id: event.target.value });
+    }
+
     render() {
         var _this = this;
         return (
             <select id="category" className="form-control">
                 {
                     _this.state.value.map(function(option, i) {
-                        return <option value={option}>{option}</option>;
+                        return <option onChange={_this.handleChange.bind(this)} value={option}>{option}</option>;
                     })
                 }
+            </select>
+       );
+    }
+}
+
+class Article extends React.Component {
+    componentWillMount() {
+        var _this = this,
+            category_id = _this.state === null ? '随笔' : _this.state.category_id;
+        $.ajax({
+            url: '/api.php?action=article&category_id=' + category_id,
+            datatype: "json",
+            async: false,
+            type: 'get',
+            success: function (data) {
+                _this.setState({data : data});
+            }
+        });
+    }
+    render() {
+        var _this = this,
+            items = [];
+        for (var i of  Object.keys(_this.state.data)) {
+            items.push(<option value={i}>{_this.state.data[i]['title']}</option>);
+        }
+        return (
+            <select id="article" className="form-control">
+                {items}
             </select>
        );
     }
