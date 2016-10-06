@@ -4,10 +4,9 @@ class Header extends React.Component {
             <header>
                 <nav>
                     <ul className="nav navbar-top-links">
+                        <Category/>
                         <li><button type="button" onClick = {this.handleSync.bind(this)} className="btn btn-success">同步</button></li>
                         <li><button type="button" onClick = {this.handleClear.bind(this)} className="btn btn-warning">清空</button></li>
-                        <li><Category/></li>
-                        <li><Article/></li>
                         <li><input type="hidden" id="time" value={this.state != null ? this.state.time : ''}/></li>
                     </ul>
                 </nav>
@@ -48,7 +47,8 @@ class Category extends React.Component {
     constructor() {
         super();
         this.state = {
-            article: new Article()
+            category_id: '随笔',
+            article: []
         };
     }
     componentWillMount() {
@@ -62,50 +62,63 @@ class Category extends React.Component {
                 _this.setState({value : data});
             }
         });
+
+        this.fetchArticle(this.state.category_id);
     }
 
     handleChange(event) {
-        this.article.setState({ category_id: event.target.value });
+        this.fetchArticle(event.target.value);
     }
 
-    render() {
+    articleChange(event) {
+        let value = event.target.value;
+        if (value != 0) {
+            $.get('/api.php?action=markdown&key=' + value, function(data) {
+                $('#markdown').val(data.content);
+                var convert  = new showdown.Converter()
+                $('#htmlArea').html(convert.makeHtml(data.content));
+            });
+        }
+    }
+
+    fetchArticle(category_id) {
         var _this = this;
-        return (
-            <select id="category" className="form-control">
-                {
-                    _this.state.value.map(function(option, i) {
-                        return <option onChange={_this.handleChange.bind(this)} value={option}>{option}</option>;
-                    })
-                }
-            </select>
-       );
-    }
-}
-
-class Article extends React.Component {
-    componentWillMount() {
-        var _this = this,
-            category_id = _this.state === null ? '随笔' : _this.state.category_id;
         $.ajax({
             url: '/api.php?action=article&category_id=' + category_id,
             datatype: "json",
             async: false,
             type: 'get',
             success: function (data) {
-                _this.setState({data : data});
+                let items = [];
+                items.push(<option value='0'>新增</option>);
+                for (var i of  Object.keys(data)) {
+                    items.push(<option value={i}>{data[i]['title']}</option>);
+                }
+                _this.setState({article : items});
             }
         });
     }
+
     render() {
-        var _this = this,
-            items = [];
-        for (var i of  Object.keys(_this.state.data)) {
-            items.push(<option value={i}>{_this.state.data[i]['title']}</option>);
-        }
+        var _this = this;
         return (
-            <select id="article" className="form-control">
-                {items}
-            </select>
+            <li>
+                <li>
+                    <select id="category" onChange={_this.handleChange.bind(_this)} className="form-control">
+                        {
+                            _this.state.value.map(function(option, i) {
+                                return <option value={option}>{option}</option>;
+                            })
+                        }
+                    </select>
+                </li>
+
+                <li>
+                    <select id="article" onChange={_this.articleChange.bind(_this)} className='form-control'>
+                        {_this.state.article}
+                    </select>
+                </li>
+            </li>
        );
     }
 }

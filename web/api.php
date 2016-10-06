@@ -84,6 +84,19 @@ class Api
         }
         return json_encode($result, true);
     }
+
+    public function markdown()
+    {
+        $key = isset($_GET['key']) ? $_GET['key'] : '';
+        $config = Config::instance();
+        $data = $config->data;
+        $content = '';
+        if (!empty($key)) {
+            $markdown = $config->markdownPath.$key."_".$data[$key]['category']."_".$data[$key]['title'].".md";
+            $content = file_get_contents($markdown);
+        }
+        return json_encode(['content' => $content], true);
+    }
 }
 
 $api = new Api($bootstrap);
