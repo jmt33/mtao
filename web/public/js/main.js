@@ -182,7 +182,7 @@
 	                $.get('/api.php?action=markdown&key=' + value, function (data) {
 	                    $('#markdown').val(data.content);
 	                    var convert = new showdown.Converter();
-	                    $('#htmlArea').html(convert.makeHtml(data.content));
+	                    pubsub.publish('articlechange', data.content);
 	                });
 	            }
 	        }
@@ -289,6 +289,20 @@
 	    }
 
 	    _createClass(Markdown, [{
+	        key: "componentDidMount",
+	        value: function componentDidMount() {
+	            var _this = this;
+	            // 订阅ScoreItem的删除事件
+	            pubsub.subscribe('articlechange', function (topics, content) {
+	                _this.setState({ value: content });
+	            });
+	        }
+	    }, {
+	        key: "change",
+	        value: function change(topics, content) {
+	            this.setState({ value: content });
+	        }
+	    }, {
 	        key: "createMarkup",
 	        value: function createMarkup() {
 	            return {

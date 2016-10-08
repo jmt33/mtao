@@ -75,8 +75,8 @@ class Category extends React.Component {
         if (value != 0) {
             $.get('/api.php?action=markdown&key=' + value, function(data) {
                 $('#markdown').val(data.content);
-                var convert  = new showdown.Converter()
-                $('#htmlArea').html(convert.makeHtml(data.content));
+                var convert  = new showdown.Converter();
+                pubsub.publish('articlechange', data.content);
             });
         }
     }
@@ -130,6 +130,17 @@ class Markdown extends React.Component {
             converter: new showdown.Converter(),
             value: `Hello, World!\n===\n---\n# Write `,
         };
+    }
+    componentDidMount() {
+        var _this = this;
+       // 订阅ScoreItem的删除事件
+       pubsub.subscribe('articlechange', function(topics, content){
+           _this.setState({value: content})
+       });
+    }
+
+    change(topics, content) {
+        this.setState({ value: content });
     }
 
     createMarkup() {
