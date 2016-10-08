@@ -1,10 +1,13 @@
 class Header extends React.Component {
     render() {
+        var _this = this;
         return (
             <header>
                 <nav>
                     <ul className="nav navbar-top-links">
-                        <Category/>
+                        <Category callback={function(time) {
+                            _this.setState({time: time});
+                        }}/>
                         <li><button type="button" onClick = {this.handleSync.bind(this)} className="btn btn-success">同步</button></li>
                         <li><button type="button" onClick = {this.handleClear.bind(this)} className="btn btn-warning">清空</button></li>
                         <li><input type="hidden" id="time" value={this.state != null ? this.state.time : ''}/></li>
@@ -35,7 +38,7 @@ class Header extends React.Component {
                 data.time = this.state.time;
             }
             $.post('/api.php?action=sync', data, function(data) {
-                _this.setState({time: data});
+                _this.setState({key: data});
             });
         } else {
             alert('请输入正确格式的文档');
@@ -71,10 +74,12 @@ class Category extends React.Component {
     }
 
     articleChange(event) {
-        let value = event.target.value;
+        let value = event.target.value,
+            _this = this;
         if (value != 0) {
             $.get('/api.php?action=markdown&key=' + value, function(data) {
                 $('#markdown').val(data.content);
+                _this.props.callback(value);
                 var convert  = new showdown.Converter();
                 pubsub.publish('articlechange', data.content);
             });
@@ -186,7 +191,7 @@ class App extends React.Component {
     render() {
         return (
             <div className='container-fluid'>
-                <Header/>
+                <Header time='2016'/>
                 <Markdown/>
                 <Footer/>
             </div>

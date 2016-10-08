@@ -66,6 +66,7 @@
 	    _createClass(Header, [{
 	        key: "render",
 	        value: function render() {
+	            var _this = this;
 	            return React.createElement(
 	                "header",
 	                null,
@@ -75,7 +76,9 @@
 	                    React.createElement(
 	                        "ul",
 	                        { className: "nav navbar-top-links" },
-	                        React.createElement(Category, null),
+	                        React.createElement(Category, { callback: function callback(time) {
+	                                _this.setState({ time: time });
+	                            } }),
 	                        React.createElement(
 	                            "li",
 	                            null,
@@ -127,7 +130,7 @@
 	                    data.time = this.state.time;
 	                }
 	                $.post('/api.php?action=sync', data, function (data) {
-	                    _this.setState({ time: data });
+	                    _this.setState({ key: data });
 	                });
 	            } else {
 	                alert('请输入正确格式的文档');
@@ -177,10 +180,12 @@
 	    }, {
 	        key: "articleChange",
 	        value: function articleChange(event) {
-	            var value = event.target.value;
+	            var value = event.target.value,
+	                _this = this;
 	            if (value != 0) {
 	                $.get('/api.php?action=markdown&key=' + value, function (data) {
 	                    $('#markdown').val(data.content);
+	                    _this.props.callback(value);
 	                    var convert = new showdown.Converter();
 	                    pubsub.publish('articlechange', data.content);
 	                });
@@ -389,7 +394,7 @@
 	            return React.createElement(
 	                "div",
 	                { className: "container-fluid" },
-	                React.createElement(Header, null),
+	                React.createElement(Header, { time: "2016" }),
 	                React.createElement(Markdown, null),
 	                React.createElement(Footer, null)
 	            );
