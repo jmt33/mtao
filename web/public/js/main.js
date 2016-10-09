@@ -131,6 +131,7 @@
 	                }
 	                $.post('/api.php?action=sync', data, function (data) {
 	                    _this.setState({ key: data });
+	                    pubsub.publish('listchange', true);
 	                });
 	            } else {
 	                alert('请输入正确格式的文档');
@@ -173,6 +174,14 @@
 	            this.fetchArticle(this.state.category_id);
 	        }
 	    }, {
+	        key: "componentDidMount",
+	        value: function componentDidMount() {
+	            var _this = this;
+	            pubsub.subscribe('listchange', function (topics, key) {
+	                _this.fetchArticle(_this.state.category_id);
+	            });
+	        }
+	    }, {
 	        key: "handleChange",
 	        value: function handleChange(event) {
 	            this.fetchArticle(event.target.value);
@@ -186,9 +195,12 @@
 	                $.get('/api.php?action=markdown&key=' + value, function (data) {
 	                    $('#markdown').val(data.content);
 	                    _this.props.callback(value);
-	                    var convert = new showdown.Converter();
 	                    pubsub.publish('articlechange', data.content);
 	                });
+	            } else {
+	                $('#markdown').val("#Hello");
+	                _this.props.callback('');
+	                pubsub.publish('articlechange', "#Hello");
 	            }
 	        }
 	    }, {
@@ -236,7 +248,9 @@
 	                        }
 	                    }
 
-	                    _this.setState({ article: items });
+	                    _this.setState({ article: items.sort(function (a, b) {
+	                            return b - a;
+	                        }) });
 	                }
 	            });
 	        }

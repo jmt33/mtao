@@ -39,6 +39,7 @@ class Header extends React.Component {
             }
             $.post('/api.php?action=sync', data, function(data) {
                 _this.setState({key: data});
+                pubsub.publish('listchange', true);
             });
         } else {
             alert('请输入正确格式的文档');
@@ -54,6 +55,7 @@ class Category extends React.Component {
             article: []
         };
     }
+
     componentWillMount() {
         var _this = this;
         $.ajax({
@@ -69,6 +71,13 @@ class Category extends React.Component {
         this.fetchArticle(this.state.category_id);
     }
 
+    componentDidMount() {
+        var _this = this;
+        pubsub.subscribe('listchange', function(topics, key) {
+            _this.fetchArticle(_this.state.category_id);
+        });
+    }
+
     handleChange(event) {
         this.fetchArticle(event.target.value);
     }
@@ -80,9 +89,12 @@ class Category extends React.Component {
             $.get('/api.php?action=markdown&key=' + value, function(data) {
                 $('#markdown').val(data.content);
                 _this.props.callback(value);
-                var convert  = new showdown.Converter();
                 pubsub.publish('articlechange', data.content);
             });
+        } else {
+            $('#markdown').val(`#Hello`);
+            _this.props.callback('');
+            pubsub.publish('articlechange', `#Hello`);
         }
     }
 
@@ -99,7 +111,9 @@ class Category extends React.Component {
                 for (var i of  Object.keys(data)) {
                     items.push(<option value={i}>{data[i]['title']}</option>);
                 }
-                _this.setState({article : items});
+                _this.setState({article : items.sort(function(a, b) {
+                    return b - a;
+                })});
             }
         });
     }
