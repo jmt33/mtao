@@ -5,12 +5,26 @@ class Header extends React.Component {
             <header>
                 <nav>
                     <ul className="nav navbar-top-links">
-                        <Category callback={function(time) {
-                            _this.setState({time: time});
-                        }}/>
-                        <li><button type="button" onClick = {this.handleSync.bind(this)} className="btn btn-success">同步</button></li>
-                        <li><button type="button" onClick = {this.handleClear.bind(this)} className="btn btn-warning">清空</button></li>
-                        <li><input type="hidden" id="time" value={this.state != null ? this.state.time : ''}/></li>
+                        <li>
+                            <button type="button" onClick = {this.handleSync.bind(this)} title="写" className="btn btn-default">
+                                <span className="glyphicon glyphicon-pencil"></span>
+                            </button>
+                        </li>
+                        <li>
+                            <button type="button" onClick = {this.handleSync.bind(this)} title="同步" className="btn btn-default">
+                                <span className="glyphicon glyphicon-refresh"></span>
+                            </button>
+                        </li>
+                        <li>
+                            <button type="button" onClick = {this.handleClear.bind(this)} title="清空" className="btn btn-default">
+                                <span className="glyphicon glyphicon-flash"></span>
+                            </button>
+                        </li>
+                        <li>
+                            <button type="button" onClick = {this.handleClear.bind(this)} title="删除" className="btn btn-default">
+                                <span className="glyphicon glyphicon-trash"></span>
+                            </button>
+                        </li>
                     </ul>
                 </nav>
             </header>
@@ -47,11 +61,12 @@ class Header extends React.Component {
     }
 }
 
+
 class Category extends React.Component {
     constructor() {
         super();
         this.state = {
-            category_id: '随笔',
+            category_id: '0',
             article: []
         };
     }
@@ -64,7 +79,7 @@ class Category extends React.Component {
             async: false,
             type: 'get',
             success: function (data) {
-                _this.setState({value : data});
+                _this.setState({value: data});
             }
         });
 
@@ -79,21 +94,22 @@ class Category extends React.Component {
     }
 
     handleChange(event) {
-        this.fetchArticle(event.target.value);
+        $(event.target).addClass('active').siblings('li').removeClass('active');
+        this.fetchArticle(event.target.getAttribute('data-id'));
     }
 
     articleChange(event) {
-        let value = event.target.value,
+        let value = event.target.getAttribute('data-key'),
             _this = this;
+        $(event.target).addClass('active').siblings('li').removeClass('active');
         if (value != 0) {
             $.get('/api.php?action=markdown&key=' + value, function(data) {
                 $('#markdown').val(data.content);
-                _this.props.callback(value);
+                localStorage.articlekey=value;
                 pubsub.publish('articlechange', data.content);
             });
         } else {
             $('#markdown').val(`#Hello`);
-            _this.props.callback('');
             pubsub.publish('articlechange', `#Hello`);
         }
     }
@@ -106,12 +122,15 @@ class Category extends React.Component {
             async: false,
             type: 'get',
             success: function (data) {
-                let items = [];
-                items.push(<option value='0'>新增</option>);
-                for (var i of  Object.keys(data)) {
-                    items.push(<option value={i}>{data[i]['title']}</option>);
+                var items = [], y = 0, keys = Object.keys(data);
+                items.push(<li>新增</li>);
+                for (var i of  keys) {
+                    var cl = y === keys.length - 1 ? 'active' : '';
+                    console.log(cl);
+                    items.push(<li data-key={i} className={cl} onClick={_this.articleChange.bind(_this)}>{data[i]['title']}</li>);
+                    y++;
                 }
-                _this.setState({article : items.sort(function(a, b) {
+                _this.setState({article: items.sort(function(a, b) {
                     return b - a;
                 })});
             }
@@ -121,23 +140,24 @@ class Category extends React.Component {
     render() {
         var _this = this;
         return (
-            <li>
-                <li>
-                    <select id="category" onChange={_this.handleChange.bind(_this)} className="form-control">
-                        {
-                            _this.state.value.map(function(option, i) {
-                                return <option value={option}>{option}</option>;
-                            })
-                        }
-                    </select>
-                </li>
-
-                <li>
-                    <select id="article" onChange={_this.articleChange.bind(_this)} className='form-control'>
-                        {_this.state.article}
-                    </select>
-                </li>
-            </li>
+            <aside>
+            <nav className = "sidenav">
+                <ul>
+                    <li className='title'>分类</li>
+                    <li className='active' onClick={_this.handleChange.bind(_this)} data-id='0'>所有</li>
+                    {
+                        _this.state.value.map(function(option, i) {
+                            return <li onClick={_this.handleChange.bind(_this)} data-id={option}>{option}</li>;
+                        })
+                    }
+                </ul>
+            </nav>
+            <nav className = "sideinfo">
+                <ul>
+                    {_this.state.article}
+                </ul>
+            </nav>
+            </aside>
        );
     }
 }
@@ -169,36 +189,20 @@ class Markdown extends React.Component {
     }
 
   handleChange(event) {
-    this.setState({ value: event.target.value });
+      localStorage.articlecontent=event.target.value;
+      this.setState({ value: event.target.value });
   }
 
   render() {
     return (
-        <div className='row'>
-            <div className ="markdown-write">
-                <textarea type='text' defaultValue={this.state.value} onChange={this.handleChange.bind(this)} id='markdown' className='col-xs-12 full-height'></textarea>
-            </div>
-            <div className='markdown-previewer'>
-                <div id='htmlArea' className='col-xs-12 full-height'>
-                    <div dangerouslySetInnerHTML={this.createMarkup()} />
-                </div>
+        <div className='markdown-container'>
+            <textarea type='text' className="markdown-write" defaultValue={this.state.value} onChange={this.handleChange.bind(this)} id='markdown'></textarea>
+            <div id='htmlArea' className='markdown-previewer'>
+                <div dangerouslySetInnerHTML={this.createMarkup()} />
             </div>
         </div>
     );
   }
-}
-
-class Footer extends React.Component {
-    render() {
-        return (
-            <footer className='col-xs-8 col-xs-offset-2'>
-                <hr />
-                <p className='text-center'>
-                    Markdown Previewer created by <a href='http://jmt33.github.com/mtao' target='_blank' className='text-warning'>Mtao</a>
-                </p>
-            </footer>
-        );
-    }
 }
 
 class App extends React.Component {
@@ -206,8 +210,8 @@ class App extends React.Component {
         return (
             <div className='container-fluid'>
                 <Header time='2016'/>
+                <Category/>
                 <Markdown/>
-                <Footer/>
             </div>
         );
     }

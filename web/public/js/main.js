@@ -76,16 +76,13 @@
 	                    React.createElement(
 	                        "ul",
 	                        { className: "nav navbar-top-links" },
-	                        React.createElement(Category, { callback: function callback(time) {
-	                                _this.setState({ time: time });
-	                            } }),
 	                        React.createElement(
 	                            "li",
 	                            null,
 	                            React.createElement(
 	                                "button",
-	                                { type: "button", onClick: this.handleSync.bind(this), className: "btn btn-success" },
-	                                "同步"
+	                                { type: "button", onClick: this.handleSync.bind(this), title: "写", className: "btn btn-default" },
+	                                React.createElement("span", { className: "glyphicon glyphicon-pencil" })
 	                            )
 	                        ),
 	                        React.createElement(
@@ -93,14 +90,27 @@
 	                            null,
 	                            React.createElement(
 	                                "button",
-	                                { type: "button", onClick: this.handleClear.bind(this), className: "btn btn-warning" },
-	                                "清空"
+	                                { type: "button", onClick: this.handleSync.bind(this), title: "同步", className: "btn btn-default" },
+	                                React.createElement("span", { className: "glyphicon glyphicon-refresh" })
 	                            )
 	                        ),
 	                        React.createElement(
 	                            "li",
 	                            null,
-	                            React.createElement("input", { type: "hidden", id: "time", value: this.state != null ? this.state.time : '' })
+	                            React.createElement(
+	                                "button",
+	                                { type: "button", onClick: this.handleClear.bind(this), title: "清空", className: "btn btn-default" },
+	                                React.createElement("span", { className: "glyphicon glyphicon-flash" })
+	                            )
+	                        ),
+	                        React.createElement(
+	                            "li",
+	                            null,
+	                            React.createElement(
+	                                "button",
+	                                { type: "button", onClick: this.handleClear.bind(this), title: "删除", className: "btn btn-default" },
+	                                React.createElement("span", { className: "glyphicon glyphicon-trash" })
+	                            )
 	                        )
 	                    )
 	                )
@@ -151,7 +161,7 @@
 	        var _this3 = _possibleConstructorReturn(this, (Category.__proto__ || Object.getPrototypeOf(Category)).call(this));
 
 	        _this3.state = {
-	            category_id: '随笔',
+	            category_id: '0',
 	            article: []
 	        };
 	        return _this3;
@@ -184,22 +194,23 @@
 	    }, {
 	        key: "handleChange",
 	        value: function handleChange(event) {
-	            this.fetchArticle(event.target.value);
+	            $(event.target).addClass('active').siblings('li').removeClass('active');
+	            this.fetchArticle(event.target.getAttribute('data-id'));
 	        }
 	    }, {
 	        key: "articleChange",
 	        value: function articleChange(event) {
-	            var value = event.target.value,
+	            var value = event.target.getAttribute('data-key'),
 	                _this = this;
+	            $(event.target).addClass('active').siblings('li').removeClass('active');
 	            if (value != 0) {
 	                $.get('/api.php?action=markdown&key=' + value, function (data) {
 	                    $('#markdown').val(data.content);
-	                    _this.props.callback(value);
+	                    localStorage.articlekey = value;
 	                    pubsub.publish('articlechange', data.content);
 	                });
 	            } else {
 	                $('#markdown').val("#Hello");
-	                _this.props.callback('');
 	                pubsub.publish('articlechange', "#Hello");
 	            }
 	        }
@@ -213,10 +224,12 @@
 	                async: false,
 	                type: 'get',
 	                success: function success(data) {
-	                    var items = [];
+	                    var items = [],
+	                        y = 0,
+	                        keys = Object.keys(data);
 	                    items.push(React.createElement(
-	                        "option",
-	                        { value: "0" },
+	                        "li",
+	                        null,
 	                        "新增"
 	                    ));
 	                    var _iteratorNormalCompletion = true;
@@ -224,14 +237,17 @@
 	                    var _iteratorError = undefined;
 
 	                    try {
-	                        for (var _iterator = Object.keys(data)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	                        for (var _iterator = keys[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
 	                            var i = _step.value;
 
+	                            var cl = y === keys.length - 1 ? 'active' : '';
+	                            console.log(cl);
 	                            items.push(React.createElement(
-	                                "option",
-	                                { value: i },
+	                                "li",
+	                                { "data-key": i, className: cl, onClick: _this.articleChange.bind(_this) },
 	                                data[i]['title']
 	                            ));
+	                            y++;
 	                        }
 	                    } catch (err) {
 	                        _didIteratorError = true;
@@ -259,29 +275,39 @@
 	        value: function render() {
 	            var _this = this;
 	            return React.createElement(
-	                "li",
+	                "aside",
 	                null,
 	                React.createElement(
-	                    "li",
-	                    null,
+	                    "nav",
+	                    { className: "sidenav" },
 	                    React.createElement(
-	                        "select",
-	                        { id: "category", onChange: _this.handleChange.bind(_this), className: "form-control" },
+	                        "ul",
+	                        null,
+	                        React.createElement(
+	                            "li",
+	                            { className: "title" },
+	                            "分类"
+	                        ),
+	                        React.createElement(
+	                            "li",
+	                            { className: "active", onClick: _this.handleChange.bind(_this), "data-id": "0" },
+	                            "所有"
+	                        ),
 	                        _this.state.value.map(function (option, i) {
 	                            return React.createElement(
-	                                "option",
-	                                { value: option },
+	                                "li",
+	                                { onClick: _this.handleChange.bind(_this), "data-id": option },
 	                                option
 	                            );
 	                        })
 	                    )
 	                ),
 	                React.createElement(
-	                    "li",
-	                    null,
+	                    "nav",
+	                    { className: "sideinfo" },
 	                    React.createElement(
-	                        "select",
-	                        { id: "article", onChange: _this.articleChange.bind(_this), className: "form-control" },
+	                        "ul",
+	                        null,
 	                        _this.state.article
 	                    )
 	                )
@@ -331,6 +357,7 @@
 	    }, {
 	        key: "handleChange",
 	        value: function handleChange(event) {
+	            localStorage.articlecontent = event.target.value;
 	            this.setState({ value: event.target.value });
 	        }
 	    }, {
@@ -338,20 +365,12 @@
 	        value: function render() {
 	            return React.createElement(
 	                "div",
-	                { className: "row" },
+	                { className: "markdown-container" },
+	                React.createElement("textarea", { type: "text", className: "markdown-write", defaultValue: this.state.value, onChange: this.handleChange.bind(this), id: "markdown" }),
 	                React.createElement(
 	                    "div",
-	                    { className: "markdown-write" },
-	                    React.createElement("textarea", { type: "text", defaultValue: this.state.value, onChange: this.handleChange.bind(this), id: "markdown", className: "col-xs-12 full-height" })
-	                ),
-	                React.createElement(
-	                    "div",
-	                    { className: "markdown-previewer" },
-	                    React.createElement(
-	                        "div",
-	                        { id: "htmlArea", className: "col-xs-12 full-height" },
-	                        React.createElement("div", { dangerouslySetInnerHTML: this.createMarkup() })
-	                    )
+	                    { id: "htmlArea", className: "markdown-previewer" },
+	                    React.createElement("div", { dangerouslySetInnerHTML: this.createMarkup() })
 	                )
 	            );
 	        }
@@ -360,41 +379,8 @@
 	    return Markdown;
 	}(React.Component);
 
-	var Footer = function (_React$Component4) {
-	    _inherits(Footer, _React$Component4);
-
-	    function Footer() {
-	        _classCallCheck(this, Footer);
-
-	        return _possibleConstructorReturn(this, (Footer.__proto__ || Object.getPrototypeOf(Footer)).apply(this, arguments));
-	    }
-
-	    _createClass(Footer, [{
-	        key: "render",
-	        value: function render() {
-	            return React.createElement(
-	                "footer",
-	                { className: "col-xs-8 col-xs-offset-2" },
-	                React.createElement("hr", null),
-	                React.createElement(
-	                    "p",
-	                    { className: "text-center" },
-	                    "Markdown Previewer created by ",
-	                    React.createElement(
-	                        "a",
-	                        { href: "http://jmt33.github.com/mtao", target: "_blank", className: "text-warning" },
-	                        "Mtao"
-	                    )
-	                )
-	            );
-	        }
-	    }]);
-
-	    return Footer;
-	}(React.Component);
-
-	var App = function (_React$Component5) {
-	    _inherits(App, _React$Component5);
+	var App = function (_React$Component4) {
+	    _inherits(App, _React$Component4);
 
 	    function App() {
 	        _classCallCheck(this, App);
@@ -409,8 +395,8 @@
 	                "div",
 	                { className: "container-fluid" },
 	                React.createElement(Header, { time: "2016" }),
-	                React.createElement(Markdown, null),
-	                React.createElement(Footer, null)
+	                React.createElement(Category, null),
+	                React.createElement(Markdown, null)
 	            );
 	        }
 	    }]);
