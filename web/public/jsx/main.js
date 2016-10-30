@@ -6,7 +6,7 @@ class Header extends React.Component {
                 <nav>
                     <ul className="nav navbar-top-links">
                         <li>
-                            <button type="button" onClick = {this.handleSync.bind(this)} title="写" className="btn btn-default">
+                            <button type="button" onClick = {this.handleWrite.bind(this)} title="写" className="btn btn-default">
                                 <span className="glyphicon glyphicon-pencil"></span>
                             </button>
                         </li>
@@ -33,19 +33,33 @@ class Header extends React.Component {
 
     handleClear(event) {
         //暂使用比较low的方式
-        $('#markdown').empty();
+        $('#markdown').val('');
         $('#htmlArea div').empty();
+    }
+
+    handleWrite(event) {
+        $('.sideinfo ul li').removeClass('active');
+        pubsub.publish('newarticle', true);
+        this.handleClear(event);
     }
 
     handleSync(event) {
         var title = $('#htmlArea').find('h1').eq(0).text(),
             _this = this,
+            category = '',
+            articleKey = '',
             data;
         if (title != '') {
+            category = $('.sidenav .active').text();
+            if (category == 0) {
+                alert('必须选中分类');
+                return false;
+            }
+            articleKey = $('.sideinfo .active').attr('data-key');
             data = {
                 title: title,
-                time: $('#time').val(),
-                category: $('#category').val(),
+                time: articleKey,
+                category: category,
                 content: $('#markdown').val()
             };
             if (this.state && this.state.time) {
@@ -91,6 +105,15 @@ class Category extends React.Component {
         pubsub.subscribe('listchange', function(topics, key) {
             _this.fetchArticle(_this.state.category_id);
         });
+
+        pubsub.subscribe('newarticle', function(topics, key) {
+            _this.state.article.unshift(
+                <li data-key='' onClick={_this.articleChange.bind(_this)}> ss</li>
+            );
+            _this.setState({
+                article: _this.state.article
+            });
+        });
     }
 
     handleChange(event) {
@@ -122,19 +145,20 @@ class Category extends React.Component {
             async: false,
             type: 'get',
             success: function (data) {
-                var items = [], y = 0, keys = Object.keys(data);
-                items.push(<li>新增</li>);
+                var items = [],
+                    keys = Object.keys(data);
                 for (var i of  keys) {
-                    var cl = y === keys.length - 1 ? 'active' : '';
-                    console.log(cl);
-                    items.push(<li data-key={i} className={cl} onClick={_this.articleChange.bind(_this)}>{data[i]['title']}</li>);
-                    y++;
+                    items.push(<li data-key={i} onClick={_this.articleChange.bind(_this)}>{data[i]['title']}</li>);
                 }
                 _this.setState({article: items.sort(function(a, b) {
                     return b - a;
                 })});
             }
         });
+    }
+
+    componentDidUpdate() {
+        $('.sideinfo li:first').addClass('active');
     }
 
     render() {

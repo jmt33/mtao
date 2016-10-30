@@ -81,7 +81,7 @@
 	                            null,
 	                            React.createElement(
 	                                "button",
-	                                { type: "button", onClick: this.handleSync.bind(this), title: "写", className: "btn btn-default" },
+	                                { type: "button", onClick: this.handleWrite.bind(this), title: "写", className: "btn btn-default" },
 	                                React.createElement("span", { className: "glyphicon glyphicon-pencil" })
 	                            )
 	                        ),
@@ -120,20 +120,35 @@
 	        key: "handleClear",
 	        value: function handleClear(event) {
 	            //暂使用比较low的方式
-	            $('#markdown').empty();
+	            $('#markdown').val('');
 	            $('#htmlArea div').empty();
+	        }
+	    }, {
+	        key: "handleWrite",
+	        value: function handleWrite(event) {
+	            $('.sideinfo ul li').removeClass('active');
+	            pubsub.publish('newarticle', true);
+	            this.handleClear(event);
 	        }
 	    }, {
 	        key: "handleSync",
 	        value: function handleSync(event) {
 	            var title = $('#htmlArea').find('h1').eq(0).text(),
 	                _this = this,
+	                category = '',
+	                articleKey = '',
 	                data;
 	            if (title != '') {
+	                category = $('.sidenav .active').text();
+	                if (category == 0) {
+	                    alert('必须选中分类');
+	                    return false;
+	                }
+	                articleKey = $('.sideinfo .active').attr('data-key');
 	                data = {
 	                    title: title,
-	                    time: $('#time').val(),
-	                    category: $('#category').val(),
+	                    time: articleKey,
+	                    category: category,
 	                    content: $('#markdown').val()
 	                };
 	                if (this.state && this.state.time) {
@@ -190,6 +205,17 @@
 	            pubsub.subscribe('listchange', function (topics, key) {
 	                _this.fetchArticle(_this.state.category_id);
 	            });
+
+	            pubsub.subscribe('newarticle', function (topics, key) {
+	                _this.state.article.unshift(React.createElement(
+	                    "li",
+	                    { "data-key": "", onClick: _this.articleChange.bind(_this) },
+	                    " ss"
+	                ));
+	                _this.setState({
+	                    article: _this.state.article
+	                });
+	            });
 	        }
 	    }, {
 	        key: "handleChange",
@@ -225,13 +251,7 @@
 	                type: 'get',
 	                success: function success(data) {
 	                    var items = [],
-	                        y = 0,
 	                        keys = Object.keys(data);
-	                    items.push(React.createElement(
-	                        "li",
-	                        null,
-	                        "新增"
-	                    ));
 	                    var _iteratorNormalCompletion = true;
 	                    var _didIteratorError = false;
 	                    var _iteratorError = undefined;
@@ -240,14 +260,11 @@
 	                        for (var _iterator = keys[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
 	                            var i = _step.value;
 
-	                            var cl = y === keys.length - 1 ? 'active' : '';
-	                            console.log(cl);
 	                            items.push(React.createElement(
 	                                "li",
-	                                { "data-key": i, className: cl, onClick: _this.articleChange.bind(_this) },
+	                                { "data-key": i, onClick: _this.articleChange.bind(_this) },
 	                                data[i]['title']
 	                            ));
-	                            y++;
 	                        }
 	                    } catch (err) {
 	                        _didIteratorError = true;
@@ -269,6 +286,11 @@
 	                        }) });
 	                }
 	            });
+	        }
+	    }, {
+	        key: "componentDidUpdate",
+	        value: function componentDidUpdate() {
+	            $('.sideinfo li:first').addClass('active');
 	        }
 	    }, {
 	        key: "render",
