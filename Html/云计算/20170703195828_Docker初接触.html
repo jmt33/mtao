@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset=utf-8>
+        <title>Docker初接触 - 云计算</title>
+        <link href="http://jmt33.github.io/mtao/static/css/tango.css" rel="stylesheet"></link>
+        <link href="http://jmt33.github.io/mtao/static/css/style.css" rel="stylesheet"></link>
+    </head>
+    <body>
+        <div id="container">
+            
+			<div id='post-nav'>
+				<a href='../../index.html'>Home</a>&nbsp;»&nbsp;
+				<a href='../../index.html#云计算'>云计算</a>&nbsp;»&nbsp;Docker初接触
+			</div>
+			<h1>Docker</h1>
+<p>集装箱（像一个集装箱）、标准化（操作标准化）、隔离（网络、进程、磁盘）</p>
+<p>镜像、容器、仓库（BUILD、SHIP RUN）</p>
+<h2>docker解决什么问题</h2>
+<ul>
+<li>容器即服务，可以运行多种不同的复杂环境</li>
+<li>开发人员可以专注代码本身</li>
+<li><h2>运维人员可以快速部署、复制，高效的管理</h2>
+<h2>Docker镜像</h2>
+</li>
+<li>联合文件系统，实现文件的分层</li>
+</ul>
+<h2>Docker 容器</h2>
+<p>容器的本质就是一个进程，镜像可以生成多个容器，镜像可以修改，容器不可以</p>
+<h2>Docker 仓库</h2>
+<ul>
+<li>hub.docker.com</li>
+<li>c.163.com</li>
+</ul>
+<h2>Docker 初体验</h2>
+<h3>拉取镜像</h3>
+<ul>
+<li>docker pull [OPTIONS] NAME[:TAG]</li>
+</ul>
+<h3>查看镜像列表</h3>
+<ul>
+<li>docker images [OPTIONS][REPOSITORY[:TAG]]</li>
+</ul>
+<h3>运行</h3>
+<ul>
+<li>docker run [OPTIONS]IMAGE[:TAG][COMMAND][ARG...]</li>
+</ul>
+<h3>停止</h3>
+<p>docker stop [OPTIONS] CONTAINER [CONTAINER...]</p>
+<h3>查看正在运行的镜像</h3>
+<ul>
+<li>docker ps</li>
+</ul>
+<h3>在一个运行的容器中运行一个命令</h3>
+<ul>
+<li>docker exec [OPTIONS] CONTAINER COMMAND [ARG...]</li>
+</ul>
+<h3>进入正在运行的Docker</h3>
+<ul>
+<li>docker exec -it <docker_name> /bin/bash</li>
+</ul>
+<h2>Docker 运行Nginx</h2>
+<ul>
+<li>持久运行的容器</li>
+<li>前台挂起&amp;后台运行</li>
+</ul>
+<h2>Docker 网络</h2>
+<ul>
+<li>网络类型：隔离性，Bridge、Host、None</li>
+<li>Bridge 端口映射，容器内在主机上访问，映射到主机端口，访问主机即是访问容器</li>
+</ul>
+<h3>端口映射</h3>
+<ul>
+<li>docker run -d -p 8080:80 hub.c.163.com/library/nginx:latest</li>
+</ul>
+<h3>端口随机映射</h3>
+<ul>
+<li>docker run -d -P hub.c.163.com/library/nginx:latest</li>
+</ul>
+<h3>查看网络状态</h3>
+<ul>
+<li>netstat -na|grep 8080</li>
+</ul>
+<h2>制作自己的镜像</h2>
+<ul>
+<li>Dockerfile</li>
+<li>docker build</li>
+<li>jpress: <a href="http://jpress.io/">http://jpress.io/</a></li>
+</ul>
+<h3>编写dockerfile文件</h3>
+<pre><code>from hub.c.163.com/library/tomcat:latest
+MAINTAINER mtao 1125851000@qq.com
+COPY jpress.war /usr/local/tomcat/webapps
+</code></pre>
+<h3>build 自己的镜像</h3>
+<p>docker build -t jpress:latest .</p>
+<h3>运营jpress</h3>
+<p>docker run -d -p 8888:8080 jpress</p>
+<h3>运营Mysql镜像</h3>
+<p>docker run  -p 3306:3306  -e MYSQL_ROOT_PASSWORD=12345678 -e MYSQL_DATABASE=jpress -d hub.c.163.com/library/mysql:latest</p>
+
+        </div>
+		<div id="uyan_frame"></div><script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2101665"></script>
+    </body>
+</html>

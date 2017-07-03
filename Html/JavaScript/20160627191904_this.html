@@ -16,26 +16,30 @@
 			<h1>this</h1>
 <p>本身代表函数生成时的内部对象，只能在函数内部使用，随着函数使用场合的不同this的值会发生变化。但有个总的原则this指的是调用函数的那个对象。</p>
 <pre><code>var H = {
-    run: function() {
-        var _this = this;
-            //对象：这里指的是对象H
-    },
-    go: function() {
-        window.setTimeout(function(){
-            var _this = this;
-            //回调函数：这里的this是全局对象
-        })
-    }
+	run: function() {
+		var _this = this;
+			//对象：这里指的是对象H
+	},
+	go: function() {
+		window.setTimeout(function(){
+			var _this = this;
+			//回调函数：这里的this是全局对象
+		})
+	}
 }
 
 function a()
 {
-    this.x = 1;
-    //构造函数，这里this指的是新生成的对象
+	this.x = 1;
+	//构造函数，这里this指的是新生成的对象
 }
 
 //bind 指定函数的对象 EMSCRIPT 5中才出现
+
+
+
 </code></pre>
+
         </div>
 		<div id="uyan_frame"></div><script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2101665"></script>
     </body>

@@ -14,8 +14,7 @@
 				<a href='../../index.html#Mongodb'>Mongodb</a>&nbsp;»&nbsp;Mongodb高级
 			</div>
 			<h1>第三部分 Mongodb-高级</h1>
-<blockquote>
-<p>高级查询，聚合分析</p>
+<blockquote><p>高级查询，聚合分析</p>
 </blockquote>
 <h2>一、高级查询</h2>
 <h3><code>$and</code> <code>$or</code></h3>
@@ -26,88 +25,101 @@
         {state:'MA'},
         {city:'CHICOPEE'}
     ]
-})</code></pre>
+})
+</code></pre>
 <h3>数组内容查询</h3>
 <p>Y坐标是<em>42.070206</em>的数据</p>
 <pre><code>db.getCollection('zips').find({
     loc: 42.070206
-});</code></pre>
+});
+</code></pre>
 <h3>内嵌文档查询</h3>
 <p>先组内嵌文档装一个数据</p>
 <pre><code>db.user.insert(
-    {
-        name: 'kit',
-        family: {
-            mather: 'Joan',
-            father: 'Fred'
-        },
-        age: 22,
-        city: "CHESTER",
-        sex: 'boy'
-    }
-)</code></pre>
+	{
+		name: 'kit',
+		family: {
+			mather: 'Joan',
+			father: 'Fred'
+		},
+		age: 22,
+		city: "CHESTER",
+		sex: 'boy'
+	}
+)
+</code></pre>
 <p>下面来进入范例，查询name是kit的爸爸名字叫Fred的人（这个例子有些太跑偏）</p>
 <pre><code>db.user.find(
-    {
-        name: 'kit',
-        'family.father': 'Fred'
-    }
-)</code></pre>
+	{
+		name: 'kit',
+		'family.father': 'Fred'
+	}
+)
+</code></pre>
 <p>对于内嵌文档的查询一定要加入引号</p>
 <h3>正则查询</h3>
 <h3>like</h3>
 <p>查找含有AGG的城市数据</p>
 <pre><code>db.getCollection('zips').find({
     city: /AGG/
-})</code></pre>
+})
+</code></pre>
 <p>查找结尾是AGG的城市数据</p>
 <pre><code>db.getCollection('zips').find({
     city: /AGG$/
-})</code></pre>
+})
+</code></pre>
 <h3>表达式修正符</h3>
 <p>这个也是正则表达式通用手法。查找结尾是AGG或者是agg的城市数据</p>
 <pre><code>db.getCollection('zips').find({
     city: /agg$/,
     $option: "$i"
-})</code></pre>
+})
+</code></pre>
 <h3>联合查询(跨越数据库)</h3>
 <h4>手工关联</h4>
 <p>查找城市为CHESTER的用户信息，首先将城市为CHESTER的信息查询出来</p>
 <pre><code>use zips;
-zip=db.user.findOne({city:'CHESTER'})</code></pre>
+zip=db.user.findOne({city:'CHESTER'})
+</code></pre>
 <p>通过地区对象zip来获取用户数据</p>
 <pre><code>use user;
 for (var user=db.user.find({city:zip.city}); user.hasNext();) {
-    printjson(user.next());
-}</code></pre>
+	printjson(user.next());
+}
+</code></pre>
 <h4>DBRef方式关联</h4>
 <p>两个Collection之间定义一个关联关系，我们来实现以上操作。</p>
 <h5>Step1 - 首先要从数据插入的时候做起</h5>
 <pre><code>use zips;
-zip=db.zips.findOne({city:'CHESTER'});</code></pre>
+zip=db.zips.findOne({city:'CHESTER'});
+</code></pre>
 <h5>Step2 - 新建用户信息做关联</h5>
 <pre><code>use user;
 db.user.insert(
-    {
-        name: 'lucy',
-        family: {
-            mather: 'Joan',
-            father: 'Fred'
-        },
-        age: 29,
-        city: zip,
-        sex: 'girl'
-    }
-)</code></pre>
+	{
+		name: 'lucy',
+		family: {
+			mather: 'Joan',
+			father: 'Fred'
+		},
+		age: 29,
+		city: zip,
+		sex: 'girl'
+	}
+)
+</code></pre>
 <h5>Step3 - 通过用户查询该用户下的地区</h5>
-<pre><code>db.user.find({name:'lucy'})[0].city</code></pre>
+<pre><code>db.user.find({name:'lucy'})[0].city
+</code></pre>
 <h3>游标和存储过程</h3>
 <p>MongoDB中find()函数返回一个游标，客户端通过对游标进行一些设置就能对查询结果进行有效地控制，如可以限制查询得到的结果数量、跳过部分结果、或对结果集按任意键进行排序等。</p>
 <pre><code>var cursor = db.user.find();
 while(cursor.hasNext()) {
-    var doc = cursor.next();
-    printjson(doc);
-}</code></pre>
+	var doc = cursor.next();
+	printjson(doc);
+}
+</code></pre>
 <ul>
 <li>limit</li>
 <li>skip</li>
@@ -117,94 +129,45 @@ while(cursor.hasNext()) {
 <h3>概述</h3>
 <p>Mongodb聚合分析分析框架，旨在替代MapReduce的慢和抽象，group的不方便开发而成。在启业云平台中单应用分析就是运用它实现而成。</p>
 <h3>语义分析</h3>
-<pre><code>db.collection.aggregate(pipeline, options)</code></pre>
+<pre><code>db.collection.aggregate(pipeline, options)
+</code></pre>
 <h3>聚合管道操作符</h3>
 <table>
 <thead>
-<tr>
-<th>名称</th>
-<th>介绍</th>
-</tr>
+<tr><th>名称 </th><th>介绍</th></tr>
 </thead>
 <tbody>
-<tr>
-<td>$project</td>
-<td>重新塑造每个文档流，例如改变字段名称、增加字段名称、删除字段名称</td>
-</tr>
-<tr>
-<td>$match</td>
-<td>过滤每个文档流(相当于sql中where)</td>
-</tr>
-<tr>
-<td>$redact</td>
-<td>根据字段所处的document结构的级别，对文档进行“修剪”（记住修建，它的特性$project同样可以实现）</td>
-</tr>
-<tr>
-<td>$limit、$skip、$sort</td>
-<td>同Query中的limit、skip、$sort限定符。</td>
-</tr>
-<tr>
-<td>$unwind</td>
-<td>将指定的数组结构拆解成多条document</td>
-</tr>
-<tr>
-<td>$out</td>
-<td>将聚合分析的结果写入指定的collection中(做不实时的应用很棒！)</td>
-</tr>
-<tr>
-<td>$group</td>
-<td>设定分组字段。_id是必须的，其值是group操作的key</td>
-</tr>
+<tr><td>$project </td><td>重新塑造每个文档流，例如改变字段名称、增加字段名称、删除字段名称</td></tr>
+<tr><td>$match </td><td>过滤每个文档流(相当于sql中where)</td></tr>
+<tr><td>$redact </td><td>根据字段所处的document结构的级别，对文档进行“修剪”（记住修建，它的特性$project同样可以实现）</td></tr>
+<tr><td>$limit、$skip、$sort </td><td>同Query中的limit、skip、$sort限定符。</td></tr>
+<tr><td>$unwind </td><td>将指定的数组结构拆解成多条document</td></tr>
+<tr><td>$out </td><td>将聚合分析的结果写入指定的collection中(做不实时的应用很棒！)</td></tr>
+<tr><td>$group </td><td>设定分组字段。_id是必须的，其值是group操作的key</td></tr>
 </tbody>
 </table>
 <h3>$group 下的操作符</h3>
 <table>
 <thead>
-<tr>
-<th>名称</th>
-<th>介绍</th>
-</tr>
+<tr><th>名称 </th><th>介绍</th></tr>
 </thead>
 <tbody>
-<tr>
-<td>$sum</td>
-<td>对每个group指定字段进行累加计算</td>
-</tr>
-<tr>
-<td>$avg</td>
-<td>对每个group进行“平均值”，忽略非数字的值。</td>
-</tr>
-<tr>
-<td>$first</td>
-<td>返回每个group的第一条数据，顺序有$sort决定，如果没有排序，默认为文档的自然存储顺序。</td>
-</tr>
-<tr>
-<td>$last</td>
-<td>返回每个group的最后一条数据，顺序有$sort决定，如果没有排序，默认为文档的自然存储顺序。</td>
-</tr>
-<tr>
-<td>$max、$min</td>
-<td>获取每个group中最大、最小值。</td>
-</tr>
-<tr>
-<td>$push</td>
-<td>将指定的表达式的值添加到一个数组中，注意最终返回的document尺寸不要超过16M。</td>
-</tr>
-<tr>
-<td>$addToSet</td>
-<td>将表达式的值添加到一个集合中（无重复值），注意最终分那会的document尺寸不要超过16M。</td>
-</tr>
-<tr>
-<td>$geoNear</td>
-<td>用于地理位置数据分析，附近的XXX。</td>
-</tr>
+<tr><td>$sum </td><td>对每个group指定字段进行累加计算</td></tr>
+<tr><td>$avg </td><td>对每个group进行“平均值”，忽略非数字的值。</td></tr>
+<tr><td>$first </td><td>返回每个group的第一条数据，顺序有$sort决定，如果没有排序，默认为文档的自然存储顺序。</td></tr>
+<tr><td>$last </td><td>返回每个group的最后一条数据，顺序有$sort决定，如果没有排序，默认为文档的自然存储顺序。</td></tr>
+<tr><td>$max、$min </td><td>获取每个group中最大、最小值。</td></tr>
+<tr><td>$push </td><td>将指定的表达式的值添加到一个数组中，注意最终返回的document尺寸不要超过16M。</td></tr>
+<tr><td>$addToSet </td><td>将表达式的值添加到一个集合中（无重复值），注意最终分那会的document尺寸不要超过16M。</td></tr>
+<tr><td>$geoNear </td><td>用于地理位置数据分析，附近的XXX。</td></tr>
 </tbody>
 </table>
 <h3>简单的</h3>
 <pre><code>db.zips.aggregate([
-    {$match: { pop : { $gt : 7000, $lte : 90000 } }},
-    {$group: { _id: null, count: { $sum: 1 } }}
-]);</code></pre>
+	{$match: { pop : { $gt : 7000, $lte : 90000 } }},
+	{$group: { _id: null, count: { $sum: 1 } }}
+]);
+</code></pre>
 <h3>我们的</h3>
 <pre><code>[
     {
@@ -295,7 +258,8 @@ while(cursor.hasNext()) {
             }
         }
     }
-]</code></pre>
+]
+</code></pre>
 <h2>三、MapReduce</h2>
 <h3>概述</h3>
 <ul>
@@ -304,19 +268,20 @@ while(cursor.hasNext()) {
 </ul>
 <h3>语义分析</h3>
 <pre><code>db.collection.mapReduce(
-    &lt;map&gt;,
-    &lt;reduce&gt;,
-    {
-      out: &lt;collection&gt;,
-      query: &lt;document&gt;,
-      sort: &lt;document&gt;,
-      limit: &lt;number&gt;,
-      finalize: &lt;function&gt;,
-      scope: &lt;document&gt;,
-      jsMode: &lt;boolean&gt;,
-      verbose: &lt;boolean&gt;
-    }
-)</code></pre>
+	&lt;map&gt;,
+	&lt;reduce&gt;,
+	{
+	  out: &lt;collection&gt;,
+	  query: &lt;document&gt;,
+	  sort: &lt;document&gt;,
+	  limit: &lt;number&gt;,
+	  finalize: &lt;function&gt;,
+	  scope: &lt;document&gt;,
+	  jsMode: &lt;boolean&gt;,
+	  verbose: &lt;boolean&gt;
+	}
+)
+</code></pre>
 <h3>example</h3>
 <pre><code>db.getCollection('zips').mapReduce(
    function() {
@@ -328,17 +293,19 @@ while(cursor.hasNext()) {
    {
         out: "zip_demo"
    }
-)</code></pre>
+)
+</code></pre>
 <h2>四、PHP扩展</h2>
 <p>Mongodb PHP扩展提供了Mongodb最常用的API操作。如果安装可以参照Mongodb-安装篇。
-从这里你可以得到扩展文档的详尽信息http://php.net/manual/zh/book.mongo.php</p>
+从这里你可以得到扩展文档的详尽信息<a href="http://php.net/manual/zh/book.mongo.php">http://php.net/manual/zh/book.mongo.php</a></p>
 <h3>连接一个数据库</h3>
 <pre><code class="language-php">&lt;?php
-    //连接到mongodb
-    $m = MongoClient();
-    //选择一个数据库
-    $db = $m-&gt;user;
-?&gt;</code></pre>
+	//连接到mongodb
+	$m = MongoClient();
+	//选择一个数据库
+	$db = $m-&gt;user;
+?&gt;
+</code></pre>
 <p>贴上平台的核心类方法</p>
 <pre><code class="language-php">&lt;?php
 class Connection
@@ -365,7 +332,8 @@ class Connection
             return static::$db[$dsn];
         }
     }
-}</code></pre>
+}
+</code></pre>
 <h3>创建一个集合</h3>
 <pre><code class="language-php">&lt;?php
    // 连接到mongodb
@@ -373,10 +341,11 @@ class Connection
    // 选择一个数据库
    $db = $m-&gt;user;
    $collection = $db-&gt;createCollection("company");
-?&gt;</code></pre>
+?&gt;
+</code></pre>
 <h3>查找文档</h3>
 <p>使用find() 方法来读取集合中的文档。</p>
-<pre><code class="language-php">    // 连接到mongodb
+<pre><code class="language-php">	// 连接到mongodb
    $m = new MongoClient();
    // 选择一个数据库
    $db = $m-&gt;user;
@@ -385,10 +354,11 @@ class Connection
    // 迭代显示文档标题
    foreach ($cursor as $document) {
       echo $document["name"] . "\n";
-   }</code></pre>
+   }
+</code></pre>
 <h3>更新文档</h3>
 <p>使用update来更新文档</p>
-<pre><code class="language-php">    // 连接到mongodb
+<pre><code class="language-php">	// 连接到mongodb
    $m = new MongoClient();
    // 选择一个数据库
    $db = $m-&gt;user;
@@ -400,7 +370,8 @@ class Connection
 
    foreach ($cursor as $document) {
       print_r($document);
-   }</code></pre>
+   }
+</code></pre>
 <h3>删除文档</h3>
 <pre><code class="language-php">&lt;?php
    // 连接到mongodb
@@ -417,7 +388,8 @@ class Connection
    foreach ($cursor as $document) {
       echo $document["name"] . "\n";
    }
-?&gt;</code></pre>
+?&gt;
+</code></pre>
 <h3>聚合分析</h3>
 <pre><code class="language-php">&lt;?php
 // 连接到mongodb
@@ -426,30 +398,32 @@ $m = new MongoClient();
 $db = $m-&gt;zips;
 $collection = $db-&gt;zips;
 $data = $collection-&gt;aggregate(
-    [
-        [
-            '$match'=&gt;[
-                'pop'=&gt; [
-                    '$gt'=&gt; 7000,
-                    '$lte' =&gt; 90000
-                 ]
-            ]
-        ],
-        [
-            '$group'=&gt; [
-                '_id'=&gt; null,
-                'count'=&gt; [
-                    '$sum'=&gt;1
-                ]
-            ]
-        ]
-    ]
+	[
+		[
+			'$match'=&gt;[
+				'pop'=&gt; [
+					'$gt'=&gt; 7000,
+					'$lte' =&gt; 90000
+			 	]
+			]
+		],
+		[
+			'$group'=&gt; [
+				'_id'=&gt; null,
+				'count'=&gt; [
+					'$sum'=&gt;1
+				]
+			]
+		]
+	]
 );
 print_r($data['result']);
-?&gt;</code></pre>
+?&gt;
+</code></pre>
 <h3>总结</h3>
 <p>从上可以看出PHP扩展所提供操作Mongodb的API与其内部实现基本相似。你只需要注意的是JSON对象如何转变为PHP数组即可。</p>
 <p>关于是否使用ORM以及一些封装库，我的想法是先把最简单的东西用起来，之后再是引入。</p>
+
         </div>
 		<div id="uyan_frame"></div><script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2101665"></script>
     </body>

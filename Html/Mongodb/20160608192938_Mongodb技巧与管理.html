@@ -14,71 +14,80 @@
 				<a href='../../index.html#Mongodb'>Mongodb</a>&nbsp;»&nbsp;Mongodb技巧与管理
 			</div>
 			<h1>第四部分 Mongodb-技巧与管理</h1>
-<blockquote>
-<p>奇淫技巧</p>
+<blockquote><p>奇淫技巧</p>
 </blockquote>
 <h2>一、调试</h2>
 <p>我们Mongodb客户端使用PHP，按照常规的调试方法无非就是<code>print_r()</code> <code>var_dump</code>,如果遇到简单的应用倒是无妨，可遇到复杂的，每次刷新页面打开浏览器终端，查看结果，一次次的刷新，一秒秒过去，等待着结果是否感到很烦躁？这里教你一招</p>
-<pre><code class="language-php">aggregate($params);</code></pre>
+<pre><code class="language-php">aggregate($params);
+</code></pre>
 <p>上面的$params是聚合分析输入的一坨参数，问题出在这里，那么我们</p>
 <pre><code class="language-php">print_r(json_encode($params, true));
 die();
-aggregate($params);</code></pre>
+aggregate($params);
+</code></pre>
 <p>假如你使用的是Robomongo GUI 客户端，把打印的结果转移到这里，刷新问题解决！</p>
 <h2>二、数据迁移</h2>
 <h3>备份</h3>
 <h3>语义解析</h3>
 <pre><code class="language-shell">mongodump
-    --help
-    -h, --host=&lt;hostname&gt;
-    -u, --username=&lt;username&gt;                       username for authentication
-    -p, --password=&lt;password&gt;                       password for authentication
-    -d, --db=&lt;database-name&gt;                        database to use
-    -c, --collection=&lt;collection-name&gt;              collection to use
-    -o, --out=&lt;filename&gt;                            output file; if not specified
-    -q, --query=&lt;json&gt;                              query filter, as a JSON string</code></pre>
+	--help
+	-h, --host=&lt;hostname&gt;
+	-u, --username=&lt;username&gt;                       username for authentication
+	-p, --password=&lt;password&gt;                       password for authentication
+	-d, --db=&lt;database-name&gt;                        database to use
+	-c, --collection=&lt;collection-name&gt;              collection to use
+	-o, --out=&lt;filename&gt;                            output file; if not specified
+	-q, --query=&lt;json&gt;                              query filter, as a JSON string
+</code></pre>
 <h3>example</h3>
-<pre><code class="language-shell">mongodump -d user -o /data/backup</code></pre>
+<pre><code class="language-shell">mongodump -d user -o /data/backup
+</code></pre>
 <h3>恢复</h3>
 <pre><code class="language-shell">mongostore
-    --help
-    -h, --host=&lt;hostname&gt;
-    -u, --username=&lt;username&gt;                       username for authentication
-    -p, --password=&lt;password&gt;                       password for authentication
-    -d, --db=&lt;database-name&gt;                        database to use
-    -c, --collection=&lt;collection-name&gt;              collection to use
-    --drop                                                  if collection exsit drop it
-    -o, --out=&lt;filename&gt;                            output file; if not specified
-    -q, --query=&lt;json&gt;                              query filter, as a JSON string</code></pre>
+	--help
+	-h, --host=&lt;hostname&gt;
+	-u, --username=&lt;username&gt;                       username for authentication
+	-p, --password=&lt;password&gt;                       password for authentication
+	-d, --db=&lt;database-name&gt;                        database to use
+	-c, --collection=&lt;collection-name&gt;              collection to use
+	--drop							                      if collection exsit drop it
+	-o, --out=&lt;filename&gt;                            output file; if not specified
+	-q, --query=&lt;json&gt;                              query filter, as a JSON string
+</code></pre>
 <h3>example</h3>
-<pre><code class="language-shell">mongorestore -d user --drop data/backup/user/</code></pre>
+<pre><code class="language-shell">mongorestore -d user --drop data/backup/user/
+</code></pre>
 <h3>导出cvs或者CSV</h3>
 <h4>语义分析</h4>
 <pre><code class="language-shell">mongoexport
-    --help
-    -h, --host=&lt;hostname&gt;
-    -u, --username=&lt;username&gt;                       username for authentication
-    -p, --password=&lt;password&gt;                       password for authentication
-    -d, --db=&lt;database-name&gt;                        database to use
-    -c, --collection=&lt;collection-name&gt;              collection to use
-    -o, --out=&lt;filename&gt;                            output file; if not specified
-    -q, --query=&lt;json&gt;                              query filter, as a JSON string</code></pre>
+	--help
+	-h, --host=&lt;hostname&gt;
+	-u, --username=&lt;username&gt;                       username for authentication
+	-p, --password=&lt;password&gt;                       password for authentication
+	-d, --db=&lt;database-name&gt;                        database to use
+	-c, --collection=&lt;collection-name&gt;              collection to use
+	-o, --out=&lt;filename&gt;                            output file; if not specified
+	-q, --query=&lt;json&gt;                              query filter, as a JSON string
+</code></pre>
 <p>更多参阅 <a href="https://docs.mongodb.com/manual/reference/program/mongoexport/">https://docs.mongodb.com/manual/reference/program/mongoexport/</a></p>
 <h4>example</h4>
 <p>导出db是user，collection是user的数据</p>
-<pre><code class="language-shell">mongoexport --db user --collection user --out ~/user.json</code></pre>
+<pre><code class="language-shell">mongoexport --db user --collection user --out ~/user.json
+</code></pre>
 <h3>导入JSON或者CSV</h3>
 <h4>语义分析</h4>
 <pre><code class="language-shell">mongoexport
-    --help
-    -h, --host=&lt;hostname&gt;
-    -u, --username=&lt;username&gt;                       username for authentication
-    -p, --password=&lt;password&gt;                       password for authentication
-    -d, --db=&lt;database-name&gt;                        database to use
-    -c, --collection=&lt;collection-name&gt;              collection to use</code></pre>
+	--help
+	-h, --host=&lt;hostname&gt;
+	-u, --username=&lt;username&gt;                       username for authentication
+	-p, --password=&lt;password&gt;                       password for authentication
+	-d, --db=&lt;database-name&gt;                        database to use
+	-c, --collection=&lt;collection-name&gt;              collection to use
+</code></pre>
 <p>更多参阅 <a href="https://docs.mongodb.com/manual/reference/program/mongoimport/">https://docs.mongodb.com/manual/reference/program/mongoimport/</a></p>
 <h4>example</h4>
-<pre><code class="language-shell">mongoimport --db zips --collection zips ~/Downloads/zips.json</code></pre>
+<pre><code class="language-shell">mongoimport --db zips --collection zips ~/Downloads/zips.json
+</code></pre>
 <h2>三、性能优化</h2>
 <h3>索引函数</h3>
 <ul>
@@ -90,92 +99,103 @@ aggregate($params);</code></pre>
 </ul>
 <h3>索引分类(按照官网说法来)</h3>
 <h4>单字段索引</h4>
-<pre><code>db.zips.ensureIndex({pop: 1});</code></pre>
+<pre><code>db.zips.ensureIndex({pop: 1});
+</code></pre>
 <h4>复合索引</h4>
-<pre><code>db.zips.ensureIndex({city: 1, state: 1});</code></pre>
+<pre><code>db.zips.ensureIndex({city: 1, state: 1});
+</code></pre>
 <h4>子文档索引</h4>
-<pre><code>db.user.ensureIndex({familly.father: 1});</code></pre>
+<pre><code>db.user.ensureIndex({familly.father: 1});
+</code></pre>
 <h4>空间索引（2d索引，2dsphere几何球体索引）</h4>
 <ul>
 <li>2d 平面坐标索引，适用于基于平面的坐标计算。也支持球面距离计算，不过官方推荐使用2dsphere索引。</li>
 <li>2dsphere 几何球体索引，适用于球面几何运算</li>
 </ul>
-<pre><code>db.zips.ensureIndex({loc:'2d'});</code></pre>
+<pre><code>db.zips.ensureIndex({loc:'2d'});
+</code></pre>
 <h3>索引类型</h3>
 <h4>唯一索引</h4>
-<pre><code>db.zips.ensureIndex({state: 1}, {unique: true});</code></pre>
+<pre><code>db.zips.ensureIndex({state: 1}, {unique: true});
+</code></pre>
 <h4>稀疏索引（动态属性索引）</h4>
-<pre><code>db.zips.ensureIndex({state: 1}, {sparse: true});</code></pre>
+<pre><code>db.zips.ensureIndex({state: 1}, {sparse: true});
+</code></pre>
 <p>加入有一些文档不存在state属性，那么不予显示该文档。</p>
 <h3>维护索引</h3>
 <h4>使用explain</h4>
 <pre><code>db.getCollection('zips').find({
     city: 'AGAWAM'
-}).explain()</code></pre>
+}).explain()
+</code></pre>
 <h4>查看collection下索引</h4>
-<pre><code>db.zips.getIndexes();</code></pre>
+<pre><code>db.zips.getIndexes();
+</code></pre>
 <h2>四、性能监控</h2>
 <h3>serverStatus</h3>
-<pre><code>db.runCommand({serverStatus: 1});</code></pre>
+<pre><code>db.runCommand({serverStatus: 1});
+</code></pre>
 <p>serverStatus命令的输出内容较为丰富。统计的信息包含错误、B树访问率、打开连接数、以及总的插入、更新、查询和删除。下面是一段节选后的命令输出：</p>
 <pre><code> {
-    "host" : "MtaoMacBook-Pro.local",
-    "advisoryHostFQDNs" : [
-        "duforddemacbook-pro.local"
-    ],
-    "version" : "3.2.6",
-    "process" : "mongod",
-    "pid" : NumberLong(486),
-    "uptime" : 17094,
-    "uptimeMillis" : NumberLong(17094108),
-    "uptimeEstimate" : 4284,
-    "localTime" : ISODate("2016-05-20T05:14:40.232Z"),
-    "asserts" : {
-        "regular" : 0,
-        "warning" : 0,
-        "msg" : 0,
-        "user" : 6,
-        "rollovers" : 0
-    },
-    "connections" : {
-        "current" : 14,
-        "available" : 3262,
-        "totalCreated" : NumberLong(43)
-    },
-    "extra_info" : {
-        "note" : "fields vary by platform",
-        "page_faults" : 3116
-    },
-    "globalLock" : {
-        "totalTime" : NumberLong("17094093000"),
-        "currentQueue" : {
-            "total" : 0,
-            "readers" : 0,
-            "writers" : 0
-        },
-        "activeClients" : {
-            "total" : 21,
-            "readers" : 0,
-            "writers" : 0
-        }
-    },
-    "writeBacksQueued" : false,
-    "mem" : {
-        "bits" : 64,
-        "resident" : 108, //所占物理内存数量
-        "virtual" : 2586, //虚拟内存字节数
-        "supported" : true,
-        "mapped" : 0,
-        "mappedWithJournal" : 0
-    },
-    ....
-    },
-    "ok" : 1
-}</code></pre>
+	"host" : "MtaoMacBook-Pro.local",
+	"advisoryHostFQDNs" : [
+		"duforddemacbook-pro.local"
+	],
+	"version" : "3.2.6",
+	"process" : "mongod",
+	"pid" : NumberLong(486),
+	"uptime" : 17094,
+	"uptimeMillis" : NumberLong(17094108),
+	"uptimeEstimate" : 4284,
+	"localTime" : ISODate("2016-05-20T05:14:40.232Z"),
+	"asserts" : {
+		"regular" : 0,
+		"warning" : 0,
+		"msg" : 0,
+		"user" : 6,
+		"rollovers" : 0
+	},
+	"connections" : {
+		"current" : 14,
+		"available" : 3262,
+		"totalCreated" : NumberLong(43)
+	},
+	"extra_info" : {
+		"note" : "fields vary by platform",
+		"page_faults" : 3116
+	},
+	"globalLock" : {
+		"totalTime" : NumberLong("17094093000"),
+		"currentQueue" : {
+			"total" : 0,
+			"readers" : 0,
+			"writers" : 0
+		},
+		"activeClients" : {
+			"total" : 21,
+			"readers" : 0,
+			"writers" : 0
+		}
+	},
+	"writeBacksQueued" : false,
+	"mem" : {
+		"bits" : 64,
+		"resident" : 108, //所占物理内存数量
+		"virtual" : 2586, //虚拟内存字节数
+		"supported" : true,
+		"mapped" : 0,
+		"mappedWithJournal" : 0
+	},
+	....
+	},
+	"ok" : 1
+}
+</code></pre>
 <p>globalLock部分很重要，揭示了服务器花在写锁上的总时间，currentQueue是表示具体的瓶颈表述。
 mem部分显示了mongod进程是如何使用内存的</p>
 <h3>top</h3>
-<pre><code>db.runCommand({top:1});</code></pre>
+<pre><code>db.runCommand({top:1});
+</code></pre>
 <p>top命令会显示每个数据库的操作计数器。如果应用使用了多个物理数据库，想看看平均耗时，那么这是个很有用的命令。</p>
 <h3>db.currentOp()</h3>
 <p>当前正在做什么</p>
@@ -199,8 +219,9 @@ mem部分显示了mongod进程是如何使用内存的</p>
 <li>config server，存储元数据，为mongos服务将数据分散到shard</li>
 <li>mongos 接受前端请求，进行对应消息路由</li>
 </ul>
-<hr />
+<hr>
 <p><strong>（未完待续）</strong></p>
+
         </div>
 		<div id="uyan_frame"></div><script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2101665"></script>
     </body>

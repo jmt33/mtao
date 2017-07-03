@@ -18,7 +18,8 @@
 <p>对象是由 new 运算符加上要实例化的对象的名字创建的。例如，下面的代码创建 Object 对象的实例：</p>
 <pre><code>var obj = new Object();
 alert(typeof obj); //object
-alert(typeof Object); //function</code></pre>
+alert(typeof Object); //function
+</code></pre>
 <h2>constructor</h2>
 <p>对创建对象的函数的引用（指针）。对于 Object 对象，该指针指向原始的 Object() 函数。</p>
 <h2>prototype</h2>
@@ -34,10 +35,9 @@ Object 对象还具有几个方法：</p>
 <p>返回对象的原始字符串表示。对于 Object 对象，ECMA-262 没有定义这个值，所以不同的 ECMAScript 实现具有不同的值。</p>
 <h2>valueOf()</h2>
 <p>返回最适合该对象的原始值。对于许多对象，该方法返回的值都与 ToString() 的返回值相同。</p>
-<blockquote>
-<p>Object 对象中的所有属性和方法都会出现在其他对象中，所以理解了 Object 对象，就可以更好地理解其他对象。</p>
-<p>javascript 中所有对象已经自动被做了引用</p>
+<blockquote><p>Object 对象中的所有属性和方法都会出现在其他对象中，所以理解了 Object 对象，就可以更好地理解其他对象。</p>
 </blockquote>
+<p>&gt;javascript 中所有对象已经自动被做了引用</p>
 <ul>
 <li>String</li>
 <li>Number</li>
@@ -45,11 +45,11 @@ Object 对象还具有几个方法：</p>
 <li>Array</li>
 <li>RegExp</li>
 </ul>
-<blockquote>
-<p>所有的全局函数都是 Global 对象中的方法，</p>
+<blockquote><p>所有的全局函数都是 Global 对象中的方法，</p>
 <pre><code>// Global.isNaN(); 
 // 不用明确指定
-isNan();</code></pre>
+isNan();
+</code></pre>
 </blockquote>
 <h2>函数创建:</h2>
 <p>在javascript中函数就是类</p>
@@ -60,14 +60,15 @@ function fn1()
 }
 
 //第二种方式 匿名函数，一个表达式
-var n = function() {};</code></pre>
+var n = function() {};
+</code></pre>
 <h2>函数表达式</h2>
 <pre><code>a=function(b){};
 a(b);
 //等同于
-(function(b){})(b) //匿名函数立即执行</code></pre>
-<blockquote>
-<p>直到函数真正运行后才能调用</p>
+(function(b){})(b) //匿名函数立即执行
+</code></pre>
+<blockquote><p>直到函数真正运行后才能调用</p>
 </blockquote>
 <h2>函数参数:</h2>
 <pre><code>function fun2()
@@ -80,7 +81,8 @@ a(b);
     }
 }
 
-fun2(1,2,3);</code></pre>
+fun2(1,2,3);
+</code></pre>
 <h2>函数递归:</h2>
 <pre><code>//算出n的阶乘
 function digui(n) {
@@ -93,10 +95,11 @@ function digui(n) {
 }
 
 digui(2);
+
 </code></pre>
 <h2>函数的属性：</h2>
 <pre><code>function fun4(a, b, c) {
-
+    
 }
 //length 属性
 fun4.length
@@ -111,7 +114,8 @@ function fun6() {
     func5();
 }
 
-fun6(); //输出 函数fun6,因为 fun6调用了它</code></pre>
+fun6(); //输出 函数fun6,因为 fun6调用了它
+</code></pre>
 <h2>函数的闭包：</h2>
 <p>不被计算的变量函数，也就是说，函数可以使用函数之外使用的变量</p>
 <pre><code>//一个简单的闭包
@@ -120,14 +124,16 @@ function msg()
 {
     alert(ms);
 }
-msg();</code></pre>
+msg();
+</code></pre>
 <h2>函数的嵌套</h2>
 <pre><code>function test1() {
     function test2() {
         alert('外面访问不到我');
     }    
 }
-test2(); 报错；可以理解为局部变量</code></pre>
+test2(); 报错；可以理解为局部变量
+</code></pre>
 <pre><code>//复杂的闭包调用
 function each() {
     var i = 0;
@@ -138,6 +144,7 @@ function each() {
 
 var fn = each();
 fn(); //10
+
 </code></pre>
 <pre><code>//闭包内存泄露写法
 
@@ -179,10 +186,12 @@ var result = fnTest(23, 24);
 var a = false;
 //经过很多处理来更改a的值。。。。。。。
 
+
 //我用它的时候再进行调用，不用的时候不调用
 if (a) {
     result();    
-}</code></pre>
+}
+</code></pre>
 <h2>对象：</h2>
 <pre><code>var fun = function fun1() {
 }
@@ -193,6 +202,7 @@ alert(fun); //function
 alert(new fun()); //object 变成了对象
 //构造函数特点
 //不要使用 return
+
 </code></pre>
 <p>所有全局变量都是window对象的属性</p>
 <pre><code>function demo(name, age) {
@@ -207,10 +217,10 @@ new demo() //自动创建一个对象，this指向本对象
 var obj = {};
 obj.name = "mtao";
 obj.method = demo;
-obj.method(); //this执行obj对象</code></pre>
+obj.method(); //this执行obj对象
+</code></pre>
 <h2>对象继承：</h2>
-<blockquote>
-<p>构造函数A的prototype属性是一个对象
+<blockquote><p>构造函数A的prototype属性是一个对象
 这个对象具有的所有属性，A的实例也具有</p>
 </blockquote>
 <pre><code>function Demo() {};
@@ -221,6 +231,7 @@ var d = new Demo();
 // alert(d.name); //undefined
 Demo.prototype.name = 'mtao';
 alert(d.name); //mtao
+
 </code></pre>
 <p>简单继承</p>
 <pre><code>function fun1()
@@ -234,7 +245,8 @@ function fun2()
 }
 fun2.prototype = new fun1();
 var fun = new fun2();
-alert(fun.name); //mtao</code></pre>
+alert(fun.name); //mtao
+</code></pre>
 <p>改变this指针</p>
 <pre><code>function fun1()
 {
@@ -243,7 +255,8 @@ alert(fun.name); //mtao</code></pre>
 var o = {};
 o.fun = fun1;
 o.fun();
-alert(o.name);</code></pre>
+alert(o.name);
+</code></pre>
 <p>等同于</p>
 <pre><code>//这里用call 方法写
 function fun1(a, b) {
@@ -255,7 +268,8 @@ fun1.call(o, '1', '2');
 fun1.apply(o, [1,2]);
 //apply(this指向的对象，...数组参数)
 
-alert(o.name);</code></pre>
+alert(o.name);
+</code></pre>
 <pre><code>//object 是所有类的根，是最基本的对象
 alert(Demo instanceof Object);
 // Array
@@ -280,29 +294,31 @@ String.prototype.trim = function()
 var x = ' sd dfg   ';
 alert('|'+x.trim()+'|');
 
+
 //arguments 继承数组join方法
 function msg() {
     //用call来调用
     alert([].join.call(arguments, '\n'));    
 }
-msg('adf', 12, 32, 14);</code></pre>
+msg('adf', 12, 32, 14);
+</code></pre>
 <p>函数方法覆盖</p>
 <pre><code>var fn = new Object();
 Object.prototype.toString = function() {
     alert('ddd');
 };
-alert("" + fn);</code></pre>
+alert("" + fn);
+</code></pre>
 <pre><code>var str = new String();
 alert(str instanceof String);
 var a = [];
 alert(a instanceof Array); //判断是不是数组构造函数的
 //isPrototypeOf 判断prototype是不是某个对象的
-alert</code></pre>
+alert
+</code></pre>
 <h2>面向对象特性在js中运用：</h2>
 <h2>封装</h2>
-<blockquote>
-<p>相关的信息存储在对象的能力</p>
-</blockquote>
+<p>&gt;相关的信息存储在对象的能力</p>
 <pre><code>//闭包模拟私有
 function demo(name, age)
 {
@@ -325,21 +341,19 @@ function demo(name, age)
     {
         age=a;
     };
-}</code></pre>
+}
+</code></pre>
 <h2>聚集</h2>
-<blockquote>
-<p>把一个对象存储在另一个对象的能力</p>
+<blockquote><p>把一个对象存储在另一个对象的能力</p>
 </blockquote>
 <h2>继承</h2>
-<blockquote>
-<p>由另一个类得来类的属性和方法的能力</p>
-</blockquote>
+<p>&gt;由另一个类得来类的属性和方法的能力</p>
 <h2>多态</h2>
-<blockquote>
-<p>编写能以多种方法运行的函数或方法的能力</p>
-<pre><code>//arguments 运用</code></pre>
+<p>&gt;编写能以多种方法运行的函数或方法的能力</p>
+<pre><code>//arguments 运用
+</code></pre>
 <p>...................................</p>
-</blockquote>
+
         </div>
 		<div id="uyan_frame"></div><script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2101665"></script>
     </body>

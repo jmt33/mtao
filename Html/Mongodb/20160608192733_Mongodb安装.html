@@ -17,6 +17,7 @@
 <h2>一、安装Mongodb到系统</h2>
 <h3>第一步：加入公共密钥</h3>
 <pre><code>sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927
+
 </code></pre>
 <h3>第二步：加入软件源</h3>
 <pre><code class="language-bash">
@@ -24,21 +25,27 @@
 echo "deb http://repo.mongodb.org/apt/ubuntu precise/mongodb-org/3.2 multiverse" |sudo tee /etc/apt/sources.list.d/mongodb-org-3.2.list 
 # Ubuntu 14.04 
 echo "deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.2 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.2.list
+
+
 </code></pre>
 <h3>第三步：更新系统软件源</h3>
-<pre><code class="language-bash">sudo apt-get update</code></pre>
+<pre><code class="language-bash">sudo apt-get update
+</code></pre>
 <h3>第四步：安装Mongodb软件包</h3>
 <pre><code class="language-bash">
 sudo apt-get install -y mongodb-org=3.2.4 mongodb-org-server=3.2.4 mongodb-org-shell=3.2.4 mongodb-org-mongos=3.2.4 mongodb-org-tools=3.2.4
+
 </code></pre>
 <h3>第五步：创建针对数据库的用户（这一步骤在接下来的部署脚本中加入后会省去）</h3>
 <pre><code>&gt; mongo # 命令行方式进入mongodb客户端
 &gt; use qycloud #新建一个qycloud数据库,这里你也可以设定你自己的mongodb数据库名字
 &gt; db.createUser({user:'root',pwd:'root',roles:[]}) # 针对qycloud数据库创建用户和其密码
-&gt; db.auth('root','root') 验证帐号是否可用</code></pre>
+&gt; db.auth('root','root') 验证帐号是否可用
+</code></pre>
 <h2>二、平台初始化</h2>
 <h3>第一步：安装PHP扩展</h3>
-<pre><code>sudo pecl install mongo</code></pre>
+<pre><code>sudo pecl install mongo
+</code></pre>
 <h3>第二步：设置Mongodb数据库信息</h3>
 <p>编辑<code>config/development/database.php</code>加入</p>
 <pre><code>    'servers' =&gt; ［
@@ -50,11 +57,14 @@ sudo apt-get install -y mongodb-org=3.2.4 mongodb-org-server=3.2.4 mongodb-org-s
             'user'     =&gt; 'root',
             'password' =&gt; 'root'
         ),
-     ］</code></pre>
+     ］
+</code></pre>
 <h3>第三步：重置Mysql中的数据到mongodb</h3>
-<pre><code class="language-bash">./bin/phing convert_mongodb</code></pre>
+<pre><code class="language-bash">./bin/phing convert_mongodb
+</code></pre>
 <h2>三、参考</h2>
 <p><a href="https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/">https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/</a> Mongodb社区版本安装</p>
+
         </div>
 		<div id="uyan_frame"></div><script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2101665"></script>
     </body>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset=utf-8>
+        <title>kafka初接触 - 云计算</title>
+        <link href="http://jmt33.github.io/mtao/static/css/tango.css" rel="stylesheet"></link>
+        <link href="http://jmt33.github.io/mtao/static/css/style.css" rel="stylesheet"></link>
+    </head>
+    <body>
+        <div id="container">
+            
+			<div id='post-nav'>
+				<a href='../../index.html'>Home</a>&nbsp;»&nbsp;
+				<a href='../../index.html#云计算'>云计算</a>&nbsp;»&nbsp;kafka初接触
+			</div>
+			<h1>kafka</h1>
+<p>在我们大量使用分布式数据库、分布式计算集群的时候，是否会遇到这样一些问题：
+我想分析一下用户行为（pageviews），以便我能设计出更好的额广告位；
+我想对用户的搜索关键词进行统计，分析出当前的流行趋势
+有些数据，存数据库浪费，直接存硬盘操作效率又低</p>
+<p>高水平扩展、高吞吐能力</p>
+<p>顺序读写代替随机读写，两者相差将近10000倍，免去寻道时间</p>
+<h2>相关概念</h2>
+<p>AMQP协议
+消费者：从消息队列中请求消息的客户端应用程序；
+生产者：向broker发布消息的客户端应用程序；
+AMQP服务器端：用来接收生产者发送的消息并将这些消息路由给服务器中的队列；</p>
+<p>主题：一个主题类似于新闻中的体育、娱乐、教育等分类概念，在实际工程中通常一个业务一个主题；
+分区：一个topic中的消息数据安装多个愤青组织，分区是kafka消息队列组织的最小单位，一个愤青可以看作是一个FIFO的队列；</p>
+<h2>安装</h2>
+<h3>安装java1.8</h3>
+<p>kafka依赖java1.8+，所以必须保证系统安装。</p>
+<p>Download：<a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html">http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html</a></p>
+<h3>下载kafka</h3>
+<p><a href="http://apache.fayea.com/kafka/0.10.2.1/kafka_2.12-0.10.2.1.tgz">http://apache.fayea.com/kafka/0.10.2.1/kafka_2.12-0.10.2.1.tgz</a></p>
+<h2>操作</h2>
+<h3>start zookeeper</h3>
+<p>bin/zookeeper-server-start.sh config/zookeeper.properties</p>
+<h3>start kafka server</h3>
+<p>bin/kafka-server-start.sh config/server.properties</p>
+<h3>create a topic</h3>
+<p>bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic test</p>
+<h3>show topic bin/kafka-topics.sh --list --zookeeper localhost:2181</h3>
+<h3>send some message</h3>
+<p>bin/kafka-console-producer.sh --broker-list localhost:9092 --topic test</p>
+<h3>Start a consumer</h3>
+<p>bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test --from-beginning</p>
+<h2>监控</h2>
+<h2>分区消费模型</h2>
+<p>生产和消费一对一的关系，offset较为重要</p>
+<h2>组消费模型</h2>
+<p>订阅式消费，以组定义进行消费</p>
+
+        </div>
+		<div id="uyan_frame"></div><script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2101665"></script>
+    </body>
+</html>

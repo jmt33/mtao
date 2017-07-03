@@ -14,8 +14,7 @@
 				<a href='../../index.html#Mongodb'>Mongodb</a>&nbsp;»&nbsp;Mongodb基础
 			</div>
 			<h1>第二部分 Mongodb-基础</h1>
-<blockquote>
-<p>概述Mongodb理论和基本操作。</p>
+<blockquote><p>概述Mongodb理论和基本操作。</p>
 </blockquote>
 <h2>一、为复杂应用而生的数据库</h2>
 <p>文档型Nosql数据库，可以让你在开发过程中畅顺无比。对于大数据量、高并发、弱事务的互联网应用，可以应对自如。其特性包括动态查询、二级索引（非聚簇索引）、 快速的原子更新和复杂的聚合,还支持基于自动故障转移的复制和用于水平扩展的自动分片。</p>
@@ -66,48 +65,16 @@
 <h2>四、对比Mysql</h2>
 <table>
 <thead>
-<tr>
-<th>Mysql</th>
-<th>Mongodb</th>
-<th>解释说明</th>
-</tr>
+<tr><th>Mysql </th><th>Mongodb </th><th>解释说明</th></tr>
 </thead>
 <tbody>
-<tr>
-<td>database</td>
-<td>database</td>
-<td>数据库</td>
-</tr>
-<tr>
-<td>table</td>
-<td>collection</td>
-<td>数据库表/集合</td>
-</tr>
-<tr>
-<td>row</td>
-<td>document</td>
-<td>数据记录行/文档</td>
-</tr>
-<tr>
-<td>column</td>
-<td>field</td>
-<td>数据字段/域</td>
-</tr>
-<tr>
-<td>index</td>
-<td>index</td>
-<td>索引</td>
-</tr>
-<tr>
-<td>table joins</td>
-<td> </td>
-<td>表连接,MongoDB不支持</td>
-</tr>
-<tr>
-<td>primary key</td>
-<td>primary key</td>
-<td>主键,MongoDB自动将_id字段设置为主键</td>
-</tr>
+<tr><td>database</td><td>database</td><td>数据库</td></tr>
+<tr><td>table</td><td>collection</td><td>数据库表/集合</td></tr>
+<tr><td>row</td><td>document</td><td>数据记录行/文档</td></tr>
+<tr><td>column</td><td>field</td><td>数据字段/域</td></tr>
+<tr><td>index</td><td>index</td><td>索引</td></tr>
+<tr><td>table joins</td><td> </td><td>表连接,MongoDB不支持</td></tr>
+<tr><td>primary key</td><td>primary key</td><td>主键,MongoDB自动将_id字段设置为主键</td></tr>
 </tbody>
 </table>
 <h2>五、数据类型</h2>
@@ -146,180 +113,127 @@
 <h3>Regular expression</h3>
 <p>正则表达式类型。用于存储正则表达式。</p>
 <h2>命令行 - javascript shell</h2>
-<pre><code>mongo</code></pre>
+<pre><code>mongo
+</code></pre>
 <h2>六、常用操作</h2>
 <h3>创建数据库</h3>
 <h4>创建一个名字为mydb的数据库，语义如下</h4>
 <pre><code>use mydb
-switched to db mydb</code></pre>
+switched to db mydb
+</code></pre>
 <h4>使用db检查当前选定数据库</h4>
 <pre><code>db
-mydb</code></pre>
+mydb
+</code></pre>
 <h4>使用命令<code>show dbs</code>来检查数据库列表</h4>
 <pre><code>show dbs
 local     0.78125GB
-test      0.23012GB</code></pre>
+test      0.23012GB
+</code></pre>
 <h3>删除数据库</h3>
 <p>如果你想删除刚刚创建的mydb数据库</p>
 <pre><code>use mydb
 switched to db mydb
 db.dropDatabase()
-{ "dropped" : "mydb", "ok" : 1 }</code></pre>
+{ "dropped" : "mydb", "ok" : 1 }
+</code></pre>
 <h3>创建集合</h3>
 <h4>语法格式</h4>
-<pre><code>db.createCollection(name, options)</code></pre>
+<pre><code>db.createCollection(name, options)
+</code></pre>
 <p>在该命令中，<code>name</code> 是所要创建的集合名称。<code>options</code> 是一个用来指定集合配置的文档。</p>
 <table>
 <thead>
-<tr>
-<th>参数</th>
-<th>类型</th>
-<th>描述</th>
-</tr>
+<tr><th>参数 </th><th>类型 </th><th>描述</th></tr>
 </thead>
 <tbody>
-<tr>
-<td>name</td>
-<td>字符串</td>
-<td>所要创建的集合名称</td>
-</tr>
-<tr>
-<td>options</td>
-<td>文档</td>
-<td>可选。指定有关内存大小及索引的选项</td>
-</tr>
+<tr><td>name </td><td>字符串 </td><td>所要创建的集合名称</td></tr>
+<tr><td>options </td><td>文档 </td><td>可选。指定有关内存大小及索引的选项</td></tr>
 </tbody>
 </table>
 <p>参数 options 是可选的，所以你必须指定的只有集合名称。下表列出了所有可用选项：</p>
 <table>
 <thead>
-<tr>
-<th>字段</th>
-<th>类型</th>
-<th>描述</th>
-</tr>
+<tr><th>字段 </th><th>类型 </th><th>描述</th></tr>
 </thead>
 <tbody>
-<tr>
-<td>capped</td>
-<td>布尔</td>
-<td>（可选）如果为 true，则创建固定集合。固定集合是指有着固定大小的集合，当达到最大值时，它会自动覆盖最早的文档。<em>当该值为 true 时，必须指定 size 参数。</em></td>
-</tr>
-<tr>
-<td>autoIndexID</td>
-<td>布尔</td>
-<td>（可选）如为 true，自动在 _id 字段创建索引。默认为 false。</td>
-</tr>
-<tr>
-<td>size</td>
-<td>数值</td>
-<td>（可选）为固定集合指定一个最大值（以字节计）。</td>
-</tr>
+<tr><td>capped </td><td>布尔 </td><td>（可选）如果为 true，则创建固定集合。固定集合是指有着固定大小的集合，当达到最大值时，它会自动覆盖最早的文档。<em>当该值为 true 时，必须指定 size 参数。</em></td></tr>
+<tr><td>autoIndexID </td><td>布尔 </td><td>（可选）如为 true，自动在 _id 字段创建索引。默认为 false。</td></tr>
+<tr><td>size </td><td>数值 </td><td>（可选）为固定集合指定一个最大值（以字节计）。</td></tr>
+<tr><td>如果 capped 为 true，也需要指定该字段。</td></tr>
+<tr><td>max </td><td>数值 </td><td>（可选）指定固定集合中包含文档的最大数量</td></tr>
 </tbody>
 </table>
-<p>如果 capped 为 true，也需要指定该字段。
-max | 数值 | （可选）指定固定集合中包含文档的最大数量</p>
 <h4>范例</h4>
 <p>不带参数的</p>
 <pre><code>use test
 switched to db test
 db.createCollection("user")
-{ "ok" : 1 }</code></pre>
+{ "ok" : 1 }
+</code></pre>
 <p>带参数的</p>
 <pre><code>db.createCollection("user", { capped : true, autoIndexID : true, size : 6142800, max : 10000 } )
-{ "ok" : 1 }</code></pre>
+{ "ok" : 1 }
+</code></pre>
 <h3>删除集合</h3>
 <h4>语法格式</h4>
-<pre><code>db.COLLECTION_NAME.drop()</code></pre>
+<pre><code>db.COLLECTION_NAME.drop()
+</code></pre>
 <h4>范例</h4>
 <pre><code> use mydb
- db.user.drop()</code></pre>
+ db.user.drop()
+</code></pre>
 <h3>新增</h3>
 <h4>语法格式</h4>
-<pre><code>db.COLLECTION_NAME.insert(document)</code></pre>
+<pre><code>db.COLLECTION_NAME.insert(document)
+</code></pre>
 <h4>范例</h4>
 <p>一条</p>
-<pre><code>db.user.insert({name:'mtao', sex:'boy', age:20})</code></pre>
+<pre><code>db.user.insert({name:'mtao', sex:'boy', age:20})
+</code></pre>
 <p>多条</p>
-<pre><code>db.user.insert([{name:'tom', sex:'boy', age:30}, {name:'allen', sex:'girl',age:45}])</code></pre>
+<pre><code>db.user.insert([{name:'tom', sex:'boy', age:30}, {name:'allen', sex:'girl',age:45}])
+</code></pre>
 <h3>修改</h3>
 <h4>语法格式</h4>
-<pre><code>db.COLLECTION_NAME.update(SELECTIOIN_CRITERIA, UPDATED_DATA)</code></pre>
+<pre><code>db.COLLECTION_NAME.update(SELECTIOIN_CRITERIA, UPDATED_DATA)
+</code></pre>
 <h4>范例</h4>
 <p>只更新单条</p>
-<pre><code>db.user.update({title:'mtao'},{'$set':{age:33}})</code></pre>
+<pre><code>db.user.update({title:'mtao'},{'$set':{age:33}})
+</code></pre>
 <p>更新多条</p>
-<pre><code>db.user.update({title:'mtao'},{'$set':{sex:'boy'}},{multi:true})</code></pre>
+<pre><code>db.user.update({title:'mtao'},{'$set':{sex:'boy'}},{multi:true})
+</code></pre>
 <h3>查询</h3>
 <h4>语法格式</h4>
-<pre><code>db.COLLECTION_NAME.find()</code></pre>
+<pre><code>db.COLLECTION_NAME.find()
+</code></pre>
 <p>如果你想使用<code>pretty</code>方法</p>
-<pre><code>db.COLLECTION_NAME.find().pretty()</code></pre>
+<pre><code>db.COLLECTION_NAME.find().pretty()
+</code></pre>
 <h4>范例</h4>
 <p>显示所有</p>
-<pre><code>db.user.find()</code></pre>
+<pre><code>db.user.find()
+</code></pre>
 <h4>简单的条件查询</h4>
 <table>
 <thead>
-<tr>
-<th>操作</th>
-<th>格式</th>
-<th>范例</th>
-<th>RDBMS/Mysql中的类似语句</th>
-</tr>
+<tr><th>操作 </th><th>格式 </th><th>范例 </th><th>RDBMS/Mysql中的类似语句</th></tr>
 </thead>
 <tbody>
-<tr>
-<td>等于</td>
-<td>{<key>:<value>}</td>
-<td>db.user.find({"name":"mtao"}).pretty()</td>
-<td>where name = 'mtao'</td>
-</tr>
-<tr>
-<td>小于</td>
-<td>{<key>:{$lt:<value>}}</td>
-<td>db.user.find({"sex":{$lt:30}}).pretty()</td>
-<td>where sex &lt; 30</td>
-</tr>
-<tr>
-<td>小于或等于</td>
-<td>{<key>:{$lte:<value>}}</td>
-<td>db.user.find({"sex":{$lte:30}}).pretty()</td>
-<td>where sex &lt;= 30</td>
-</tr>
-<tr>
-<td>大于</td>
-<td>{<key>:{$gt:<value>}}</td>
-<td>db.user.find({"sex":{$gt:20}}).pretty()</td>
-<td>where sex > 20</td>
-</tr>
-<tr>
-<td>大于或等于</td>
-<td>{<key>:{$gte:<value>}}</td>
-<td>db.user.find({"sex":{$gte:20}}).pretty()</td>
-<td>where sex >= 20</td>
-</tr>
-<tr>
-<td>不等于</td>
-<td>{<key>:{$ne:<value>}}</td>
-<td>db.user.find({"sex":{$ne:20}}).pretty()</td>
-<td>where sex != 20</td>
-</tr>
-<tr>
-<td>包含</td>
-<td>{<key>:{$in:<value>}}</td>
-<td>db.user.find({"$in":{"likes":['dog','Cat']}}).pretty()</td>
-<td>where likes IN ('dog', 'cat')</td>
-</tr>
-<tr>
-<td>不包含</td>
-<td>{<key>:{$in:<value>}}</td>
-<td>db.user.find({"$nin":{"likes":['dog','Cat']}}).pretty()</td>
-<td>where likes NOT IN ('dog', 'cat')</td>
-</tr>
+<tr><td>等于 </td><td>{<key>:<value>} </td><td>db.user.find({"name":"mtao"}).pretty()</td><td>where name = 'mtao'</td></tr>
+<tr><td>小于 </td><td>{<key>:{$lt:<value>}} </td><td>db.user.find({"sex":{$lt:30}}).pretty() </td><td>where sex &lt; 30</td></tr>
+<tr><td>小于或等于 </td><td>{<key>:{$lte:<value>}} </td><td>db.user.find({"sex":{$lte:30}}).pretty() </td><td>where sex &lt;= 30</td></tr>
+<tr><td>大于 </td><td>{<key>:{$gt:<value>}} </td><td>db.user.find({"sex":{$gt:20}}).pretty() </td><td>where sex &gt; 20</td></tr>
+<tr><td>大于或等于 </td><td>{<key>:{$gte:<value>}} </td><td>db.user.find({"sex":{$gte:20}}).pretty() </td><td>where sex &gt;= 20</td></tr>
+<tr><td>不等于 </td><td>{<key>:{$ne:<value>}} </td><td>db.user.find({"sex":{$ne:20}}).pretty() </td><td>where sex != 20</td></tr>
+<tr><td>包含 </td><td>{<key>:{$in:<value>}} </td><td>db.user.find({"$in":{"likes":['dog','Cat']}}).pretty() </td><td>where likes IN ('dog', 'cat')</td></tr>
+<tr><td>不包含 </td><td>{<key>:{$in:<value>}} </td><td>db.user.find({"$nin":{"likes":['dog','Cat']}}).pretty() </td><td>where likes NOT IN ('dog', 'cat')</td></tr>
 </tbody>
 </table>
 <h2>注意事项</h2>
+
         </div>
 		<div id="uyan_frame"></div><script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2101665"></script>
     </body>

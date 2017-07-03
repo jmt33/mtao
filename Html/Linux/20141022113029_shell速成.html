@@ -15,12 +15,10 @@
 			</div>
 			<h2>shell简介</h2>
 <h3>shell的概念</h3>
-<blockquote>
-<p>命令解释器，计算机沟通交流的媒介</p>
+<blockquote><p>命令解释器，计算机沟通交流的媒介</p>
 </blockquote>
 <h3>常见的shell</h3>
-<blockquote>
-<p>常见的shell包括 bash-linux的标准shell   sh 早期shell  csh ksh tcsh unix</p>
+<blockquote><p>常见的shell包括 bash-linux的标准shell   sh 早期shell  csh ksh tcsh unix</p>
 </blockquote>
 <pre><code class="language-shell"># /etc/shells: valid login shells
 /bin/sh
@@ -28,12 +26,14 @@
 /bin/bash
 /bin/rbash
 /bin/zsh
-/usr/bin/zsh</code></pre>
+/usr/bin/zsh
+</code></pre>
 <h3>shell脚本</h3>
 <h4>一个简单的hello world</h4>
 <pre><code>#!/bin/bash
 
-echo "Hello World"</code></pre>
+echo "Hello World"
+</code></pre>
 <p>脚本执行：</p>
 <ul>
 <li>1、加可执行权限 ./hello.sh</li>
@@ -42,14 +42,12 @@ echo "Hello World"</code></pre>
 <p>平时用第一种方式较多</p>
 <h4>bash常见功能</h4>
 <h5>历史命令</h5>
-<blockquote>
-<p>history</p>
-</blockquote>
+<p>&gt;history</p>
 <h5>别名</h5>
-<blockquote>
-<p>.bashrc</p>
+<blockquote><p>.bashrc</p>
 </blockquote>
-<pre><code>alias ls="ls --color=never"</code></pre>
+<pre><code>alias ls="ls --color=never"
+</code></pre>
 <h5>输出重定向</h5>
 <pre><code># 把ls得出的结果输入到a文件
 ls &gt; a
@@ -70,14 +68,17 @@ ls  &amp;&gt;aa
 ls  &gt;&gt; aa  2&gt;&gt;bb
 
 #错误和正确都输入到aa，可以追加
-ls  &gt;&gt;  aa  2&gt;&amp;1</code></pre>
+ls  &gt;&gt;  aa  2&gt;&amp;1
+</code></pre>
 <h5>多命令执行</h5>
-<blockquote>
-<p>命令1  ；  命令2 ； 命令3  命令123顺序执行。之间没有任何关</p>
-<p>命令1  &amp;&amp;  命令2 命令1正确执行后，命令2才会执行</p>
-<p>命令1  ||  命令2 命令1执行不正确，命令2才会执行</p>
+<blockquote><p>命令1  ；  命令2 ； 命令3  命令123顺序执行。之间没有任何关</p>
 </blockquote>
-<pre><code>ls aa &amp;&amp; echo "cunzai" || echo "bu cunzai! </code></pre>
+<blockquote><p>命令1  &amp;&amp;  命令2 命令1正确执行后，命令2才会执行</p>
+</blockquote>
+<blockquote><p>命令1  ||  命令2 命令1执行不正确，命令2才会执行</p>
+</blockquote>
+<pre><code>ls aa &amp;&amp; echo "cunzai" || echo "bu cunzai! 
+</code></pre>
 <h5>管道符</h5>
 <pre><code># 命令1  |  命令2 命令1的执行结果，作为命令2的执行条件
 # 查询监听的端口号，并查看80
@@ -85,21 +86,21 @@ netstat -tlun | grep 80
 
 # 分屏显示ls内容
 ls  -l  /etc/  |  more              
-ls -l /etc/ | grep yum</code></pre>
+ls -l /etc/ | grep yum
+</code></pre>
 <h3>变量</h3>
 <h4>本地变量</h4>
-<blockquote>
-<p>声明 变量名=变量值 注意：=号左右不能有空格 a=2
+<blockquote><p>声明 变量名=变量值 注意：=号左右不能有空格 a=2
 调用 echo $变量名字</p>
 </blockquote>
 <h4>环境变量</h4>
-<blockquote>
-<p>声明：export 变量名=变量值
+<blockquote><p>声明：export 变量名=变量值
 export aa
 set 查看所有变量
 env 查看环境变量
 export 查看环境变量</p>
-<p>查看：set
+</blockquote>
+<blockquote><p>查看：set
 设置类型：declare -i整型
 删除：unset 变量名</p>
 </blockquote>
@@ -115,52 +116,52 @@ echo `ls`
 ---&gt;123456
 9）环境变量一定设为大写
 
-echo $PATH</code></pre>
+echo $PATH
+</code></pre>
 <p>让脚本不在用路径 [临时生效]</p>
 <pre><code>PATH="$PATH":/home/mtao/shell 
 # 在系统默认路径后，追加/home/mtao/shell 目
-# 录作为命令查找路径</code></pre>
+# 录作为命令查找路径
+</code></pre>
 <h5>环境变量配置文件</h5>
-<blockquote>
-<p>/etc/profile</p>
-<p>/etc/bashrc 所有用户生效</p>
-<p>~/.bashrc</p>
-<p>~/.bash_profile 只对指定用户生效</p>
+<blockquote><p>/etc/profile</p>
+</blockquote>
+<blockquote><p>/etc/bashrc 所有用户生效</p>
+</blockquote>
+<blockquote><p>~/.bashrc</p>
+</blockquote>
+<blockquote><p>~/.bash_profile 只对指定用户生效</p>
 </blockquote>
 <h4>位置参数变量</h4>
-<blockquote>
-<p>$0 命令自己</p>
-<p>$1 第一个参数</p>
-<p>$2 第二个参数</p>
-<p>$3 第三个参数</p>
-</blockquote>
+<p>&gt;$0 命令自己</p>
+<p>&gt;$1 第一个参数</p>
+<p>&gt;$2 第二个参数</p>
+<p>&gt;$3 第三个参数</p>
 <h4>预定义变量</h4>
-<blockquote>
-<p>$? 上一个命令的返回值。 0 上一个命令正确执行 非 0</p>
-<p>上一个命令不正确</p>
-<p>$# 统计命令之后的参数个数</p>
-<p>$* 返回所有参数</p>
+<blockquote><p>$? 上一个命令的返回值。 0 上一个命令正确执行 非 0</p>
+</blockquote>
+<blockquote><p>上一个命令不正确</p>
+</blockquote>
+<blockquote><p>$# 统计命令之后的参数个数</p>
+</blockquote>
+<blockquote><p>$* 返回所有参数</p>
 </blockquote>
 <h5>read</h5>
-<blockquote>
-<p>read -p “提示信息” -t 等待时间 变量名</p>
-</blockquote>
+<p>&gt;read -p “提示信息” -t 等待时间 变量名</p>
 <pre><code>#!/bin/bash
 read -p "please input num1:" -t 30 test1
 read -p "input num2:" -t 30 test2
 sum=$(( $test1 + $test2))
-echo “num1 + num2 = $sum”</code></pre>
+echo “num1 + num2 = $sum”
+</code></pre>
 <h4>数值运算</h4>
-<blockquote>
-<p>1）declare 方法</p>
-</blockquote>
+<p>&gt;1）declare 方法</p>
 <pre><code>num1=123
 num2=456
-declare -i sum=$num1+$num2</code></pre>
-<blockquote>
-<p>sum=$(( $num1 + $num2 )</p>
-<p>sum=$(expr $num1 + $num2) 注意+左右必须空格</p>
-</blockquote>
+declare -i sum=$num1+$num2
+</code></pre>
+<p>&gt;sum=$(( $num1 + $num2 )</p>
+<p>&gt;sum=$(expr $num1 + $num2) 注意+左右必须空格</p>
 <h3>条件测试  - <code>这个其实挺方便</code></h3>
 <h4>测试文件类型</h4>
 <pre><code>test -e 文件名 测试文件是否存在，存在为真
@@ -168,33 +169,39 @@ declare -i sum=$num1+$num2</code></pre>
 test -f 文件名 判断是否是普通文件
 test -d 文件名 判断是否为目录
 test -b 文件名 判断是否为块设备文件
-test -c 文件名 字符设备文件</code></pre>
+test -c 文件名 字符设备文件
+</code></pre>
 <h4>测试文件权限</h4>
 <pre><code>test -r 文件名 判断是否有可读权限
 test -w 文件名 可写
 test -x 文件名 执行
-test -s 文件名 判断是否为非空白，有内容为真</code></pre>
+test -s 文件名 判断是否为非空白，有内容为真
+</code></pre>
 <h4>两个文档比较</h4>
 <pre><code>[ file1 -nt file2 ] file1 是否比 file2 新
 [ file1 -ot file2 ] file1 是否比 file2 旧
-[ file1 -ef file2 ] file1 与 file2 是否是链接文件</code></pre>
+[ file1 -ef file2 ] file1 与 file2 是否是链接文件
+</code></pre>
 <h4>两个数值之间判断</h4>
 <pre><code>[ n1 -eq n2 ] n1 和 n2 是否相等
 [ n1 -ne n2 ] n1 和 n2 是否不等
 [ n1 -gt n2 ] n1 大于 n2
 [ n1 -lt n2 ] n1 小于 n2
 [ n1 -ge n2 ] n1 大于等于 n2
-[ n1 -le n2 ] n1 小于等于 n2</code></pre>
+[ n1 -le n2 ] n1 小于等于 n2
+</code></pre>
 <h4>判断字符串</h4>
 <pre><code>[ -z 字符串 ] 判断字符串是否为空
 [ 字符串 1 == 字符串 2 ] 判断字串 1 是否与字串 2 相等
 [ $aa == $bb ] &amp;&amp; echo 1 || echo 2
-[ 字符串 1 != 字符串 2 ] 判断字串是否不等</code></pre>
+[ 字符串 1 != 字符串 2 ] 判断字串是否不等
+</code></pre>
 <h4>多重判断</h4>
 <pre><code>-a 逻辑与
 [ -z $file -a -e $file ]
 -o 逻辑或
-! 逻辑非</code></pre>
+! 逻辑非
+</code></pre>
 <h4>Demo</h4>
 <pre><code>#!/bin/bash
 echo -e "nide wenjian shifou cunzai? wenjian quanxian shi shenme? \n\n"
@@ -218,7 +225,8 @@ echo -e "the filename is : $filename \n"
 echo -e "filetype is : $filetype \n"
 #打印文件类型
 echo -e "permision is : $perm \n"
-#打印文件权限</code></pre>
+#打印文件权限
+</code></pre>
 <h3>流程控制</h3>
 <h4>简介</h4>
 <h4>Demo1 如果/boot 分区的空间使用超过 80%，则输出警告</h4>
@@ -227,7 +235,8 @@ RATE=`df -hT | grep "/boot" | awk '{print $6}' | cut -d "%" -f1 `
 if [ $RATE -gt 80 ]
 then
 echo "Warning,/boot DISK is full!"
-fi</code></pre>
+fi
+</code></pre>
 <h4>Demo2 判断 httpd 服务是否启动，如果没有启动则启动</h4>
 <pre><code>#!/bin/bash
 http=`netstat -tlun | awk '{print $4 "\n"}' | grep ":80$"`
@@ -238,7 +247,8 @@ echo "httpd meiyou qidong!"
 /etc/rc.d/init.d/httpd start
 else
 echo "httpd runing"
-fi</code></pre>
+fi
+</code></pre>
 <h4>Demo3 判断输入的字符</h4>
 <pre><code>#!/bin/bash
 echo "if you want to beijing ,please input 1"
@@ -256,13 +266,15 @@ then
 echo "chengdu!!!"
 else
 echo "error,please input 1 or 2 or 3."
-fi</code></pre>
+fi
+</code></pre>
 <h4>Demo4 循环</h4>
 <pre><code>#!/bin/bash
 for time in morning noon afternoon evening
 do
 echo $time
-done</code></pre>
+done
+</code></pre>
 <h4>Demo5 输入目录名，显示目录下所有内容</h4>
 <pre><code>#!/bin/bash
 read -p "please input a filename!" -t 30 filename
@@ -286,7 +298,8 @@ file=`ls $filename`
 for test in $file
 do
 echo $test
-done</code></pre>
+done
+</code></pre>
 <h4>Demo6 数值加加循环</h4>
 <pre><code>#/bin/bash
 s=0
@@ -294,12 +307,14 @@ for ((i=1;i&lt;=100;i=i+1))
 do
 s=$(($s+$i))
 done
-echo $s</code></pre>
+echo $s
+</code></pre>
 <h4>while 循环语句</h4>
 <pre><code>while 命令或表达式
 do
 命令列表
-done</code></pre>
+done
+</code></pre>
 <h4>批量添加用户</h4>
 <pre><code>#!/bin/bash
 i=1
@@ -308,14 +323,16 @@ do
 useradd stu$i
 echo "123456" | passwd --stdin stu$i &amp;&gt; /dev/null
 i=`expr $i + 1`
-done</code></pre>
+done
+</code></pre>
 <h4>批量删除用户</h4>
 <pre><code>#!/bin/bash
 aa=`cat /etc/passwd | grep "/bin/bash"|grep -v "root"|cut -d ":" -f 1`
 for i in $aa
 do
 userdel -r $i
-done</code></pre>
+done
+</code></pre>
 <h4>批量添加</h4>
 <pre><code>#!/bin/bash
 aa=10
@@ -324,7 +341,8 @@ do
 useradd stu$i
 echo "123456" | passwd --stdin stu$i &amp;&gt; /dev/null
 echo $i
-done</code></pre>
+done
+</code></pre>
 <h4>打印选择列表，输出选择</h4>
 <pre><code>#!/bin/bash
 echo -e "shanghai: 1\n"
@@ -344,7 +362,9 @@ echo "chengdu!!!"
 *)
 echo "qing chongxin shuru!"
 ;;
-esac</code></pre>
+esac
+</code></pre>
+
         </div>
 		<div id="uyan_frame"></div><script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2101665"></script>
     </body>
