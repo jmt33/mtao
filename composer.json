@@ -1,7 +1,8 @@
 {
 	"require": {
 		"php": ">=5.4.0",
-        "jmt33/pwiki": "dev-master",
-        "symfony/console": "2.7.x-dev"
-	}
+        "jmt33/pwiki": "dev-master"
+	},
+	"minimum-stability": "dev",
+	"prefer-stable": true
 }

@@ -3,7 +3,7 @@
 $dir = __DIR__;
 include_once $dir."/vendor/autoload.php";
 
-$bootstrap = new \Pwiki\Bootstrap();
+
 $commentPlugin = "<div id=\"uyan_frame\"></div><script type=\"text/javascript\" src=\"http://v2.uyan.cc/code/uyan.js?uid=2101665\"></script>";
 
 $dataFun = function($dir) {
@@ -38,5 +38,4 @@ $config = [
     'data' => $dataFun($dir),
     'commentPlugin' => $commentPlugin
 ];
-
-$bootstrap->setConfig($config);
+$bootstrap = new \Pwiki\Pwiki($config);
