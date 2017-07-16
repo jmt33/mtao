@@ -5,6 +5,7 @@
         <title>七个JavaScript实用技巧 - JavaScript</title>
         <link href="http://jmt33.github.io/mtao/static/css/tango.css" rel="stylesheet"></link>
         <link href="http://jmt33.github.io/mtao/static/css/style.css" rel="stylesheet"></link>
+		<link href="http://jmt33.github.io/mtao/static/css/prism.css" rel="stylesheet"></link>
     </head>
     <body>
         <div id="container">
@@ -17,16 +18,16 @@
 <p>看清javascript强大之处，解决你可能曾经被你认为是障碍的东西</p>
 <h2>1.) 相等</h2>
 <p>值类型（或字符串）当有相同值是是相等的。引用类型相等需要有相同的引用。（我们假设你没有重载==运算符，或实现你自己的等值运算和GetHashCode方法）我很惊讶为什么JavaScript有两个等值运算符：==和===。最初我的大部分代码都是用的==，所以我并不知道当我运行如下代码的时候JavaScript为我做了什么：</p>
-<pre><code>var x = 1;
+<pre><code class="language-javascript">var x = 1;
 
 if(x == "1") {
     console.log("YAY! They're equal!");
 }
 </code></pre>
-<p>这是黑暗魔法吗？整数1是如何和字符串”1”相等的？</p>
+<p>这是黑暗魔法吗？ 整数1是如何和字符串”1”相等的？</p>
 <p>在JavaScript中，有相等（==）和严格相等（===）之说。相等运算符将强制转换两边的操作数为相同类型后执行严格相等比较。所以在上面的例子中，字符串”1”会被转换为整数1，这个过程在幕后进行，然后与变量x进行比较。</p>
 <p>严格相等不进行类型转换。如果操作数类型不同（如整数和字符串），那么他们不全等（严格相等）。</p>
-<pre><code>var x = 1;
+<pre><code class="language-javascript">var x = 1;
 
 // 严格平等，类型必须相同
 if(x === "1") {
@@ -39,7 +40,7 @@ if(x === 1) {
 </code></pre>
 <p>你可能正在考虑可能发生强制类型转换而引起的各种恐怖问题——假设你的引用中发生了这种转换，可能导致你非常困难找到问题出在哪里。这并不奇怪，这也是为什么经验丰富的JavaScript开发者总是建议使用严格相等。</p>
 <h2>2.) 点号 vs 括号</h2>
-<pre><code>var doSomething = function(doWhat) {
+<pre><code class="language-javascript">var doSomething = function(doWhat) {
     switch(doWhat) {
         case "doThisThing":
             // more code...
@@ -58,7 +59,7 @@ if(x === 1) {
 }
 </code></pre>
 <p>可以转化为这样</p>
-<pre><code>var thingsWeCanDo = {
+<pre><code class="language-javascript">var thingsWeCanDo = {
     doThisThing      : function() { /* behavior */ },
     doThatThing      : function() { /* behavior */ },
     doThisOtherThing : function() { /* behavior */ },
@@ -75,7 +76,7 @@ var doSomething = function(doWhat) {
 <p>默认情况下，直到某些原因改变了执行上下文，否则this的值都指向全局对象。在浏览器中，那将会是window对象（或在node.js中为global）。</p>
 <h3>第二——方法中的this值</h3>
 <p>当你有一个对象，其有一个函数成员，父对象调用这方法，this的值将指向父对象。例如：</p>
-<pre><code>var marty = {
+<pre><code class="language-javascript">var marty = {
     firstName: "Marty",
     lastName: "McFly",
     timeTravel: function(year) {
@@ -87,7 +88,7 @@ marty.timeTravel(1955);
 // Marty McFly is time traveling to 1955
 </code></pre>
 <p>你可能已经知道你能引用marty对象的timeTravel方法并且创建一个其他对象的新引用。这实际上是JavaScript非常强大的特色——使我们能够在不同的实例上引用行为（调用函数）。</p>
-<pre><code>var doc = {
+<pre><code class="language-javascript">var doc = {
     firstName: "Emmett",
     lastName: "Brown",
 }
@@ -144,7 +145,7 @@ console.log(marty.firstName + " " + marty.lastName);
 </code></pre>
 <p>现在它可以传送Einstein 了：</p>
 <pre><code>var einstein = {
-    firstName: "Einstein", 
+    firstName: "Einstein",
     lastName: "(the dog)"
 };
 
@@ -205,7 +206,7 @@ someFn();
 (function(){return 'Hello World!'}());
 </code></pre>
 <h2>7.) ‘typeof’操作符和’Object.prototype.toString’</h2>
-<pre><code>typeof {foo: 'bar'};
+<pre><code class="language-javascript">typeof {foo: 'bar'};
 // object
 typeof ['foo', 'bar'];
 // object
@@ -215,7 +216,7 @@ typeof /foo|bar/;
 // object
 </code></pre>
 <p>还好——至少我们可以将字符串和对象，数组，正则表达式区分开，对吗？幸运的是，我们可以得到更准确的类型信息，我们有其他不同的方法。我们将使用Object.prototype.toString方法，并且应用我们前面提到的call方法：</p>
-<pre><code>Object.prototype.toString.call({foo: 'bar'});
+<pre><code class="language-javascript">Object.prototype.toString.call({foo: 'bar'});
 // [object Object]
 Object.prototype.toString.call(['foo', 'bar']);
 //[object Array]
@@ -229,4 +230,5 @@ Object.prototype.toString.call(/foo|bar/);
         </div>
 		<div id="uyan_frame"></div><script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2101665"></script>
     </body>
+	<script src="http://jmt33.github.io/mtao/static/js/prism.js"></script>
 </html>

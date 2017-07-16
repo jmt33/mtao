@@ -6,7 +6,7 @@
 
 值类型（或字符串）当有相同值是是相等的。引用类型相等需要有相同的引用。（我们假设你没有重载==运算符，或实现你自己的等值运算和GetHashCode方法）我很惊讶为什么JavaScript有两个等值运算符：==和===。最初我的大部分代码都是用的==，所以我并不知道当我运行如下代码的时候JavaScript为我做了什么：
 
-```
+```javascript
 var x = 1;
 
 if(x == "1") {
@@ -14,13 +14,13 @@ if(x == "1") {
 }
 ```
 
-这是黑暗魔法吗？整数1是如何和字符串”1”相等的？
+这是黑暗魔法吗？ 整数1是如何和字符串”1”相等的？
 
 在JavaScript中，有相等（==）和严格相等（===）之说。相等运算符将强制转换两边的操作数为相同类型后执行严格相等比较。所以在上面的例子中，字符串”1”会被转换为整数1，这个过程在幕后进行，然后与变量x进行比较。
 
 严格相等不进行类型转换。如果操作数类型不同（如整数和字符串），那么他们不全等（严格相等）。
 
-```
+```javascript
 var x = 1;
 
 // 严格平等，类型必须相同
@@ -37,7 +37,7 @@ if(x === 1) {
 
 ## 2.) 点号 vs 括号
 
-```
+```javascript
 var doSomething = function(doWhat) {
     switch(doWhat) {
         case "doThisThing":
@@ -59,7 +59,7 @@ var doSomething = function(doWhat) {
 
 可以转化为这样
 
-```
+```javascript
 var thingsWeCanDo = {
     doThisThing      : function() { /* behavior */ },
     doThatThing      : function() { /* behavior */ },
@@ -82,7 +82,7 @@ var doSomething = function(doWhat) {
 ### 第二——方法中的this值
 当你有一个对象，其有一个函数成员，父对象调用这方法，this的值将指向父对象。例如：
 
-```
+```javascript
 var marty = {
     firstName: "Marty",
     lastName: "McFly",
@@ -96,7 +96,7 @@ marty.timeTravel(1955);
 ```
 你可能已经知道你能引用marty对象的timeTravel方法并且创建一个其他对象的新引用。这实际上是JavaScript非常强大的特色——使我们能够在不同的实例上引用行为（调用函数）。
 
-```
+```javascript
 var doc = {
     firstName: "Emmett",
     lastName: "Brown",
@@ -178,7 +178,7 @@ doc.timeTravelFor = function(instance, year) {
 现在它可以传送Einstein 了：
 ```
 var einstein = {
-    firstName: "Einstein", 
+    firstName: "Einstein",
     lastName: "(the dog)"
 };
 
@@ -204,7 +204,7 @@ flux.addEventListener("click", marty.goHome.bind(marty));
 bind函数实际上会返回一个新函数，新函数的this值根据你提供的参数设置。如果你需要支持低版本浏览器（例如：ie9以下版本），你可能需要bind函数的shim（或者，如果你使用jQuery你可以用$.proxy代替，underscore和lodash都提供_.bind方法）。
 
 > 记住重要一点，如果你直接使用原型上的bind方法，它将创建一个实例方法，这将绕过原型方法的优点。这不是错误，做到心里清楚就行了。我写了关于这个问题得更多信息在这里。
- 
+
 
 ## 4.) 函数表达式vs函数声明
 
@@ -265,7 +265,7 @@ var marty = {
 
 ## 7.) ‘typeof’操作符和’Object.prototype.toString’
 
-```
+```javascript
 typeof {foo: 'bar'};
 // object
 typeof ['foo', 'bar'];
@@ -278,7 +278,7 @@ typeof /foo|bar/;
 
 还好——至少我们可以将字符串和对象，数组，正则表达式区分开，对吗？幸运的是，我们可以得到更准确的类型信息，我们有其他不同的方法。我们将使用Object.prototype.toString方法，并且应用我们前面提到的call方法：
 
-```
+```javascript
 Object.prototype.toString.call({foo: 'bar'});
 // [object Object]
 Object.prototype.toString.call(['foo', 'bar']);
@@ -290,4 +290,3 @@ Object.prototype.toString.call(/foo|bar/);
 ```
 
 为什么我们要使用Object.prototype上的toString方法？因为第三方库或你自己的代码可能重写实例的toString方法。通过Object.prototype，我们可以强制实现实例原来的toString行为。
-
