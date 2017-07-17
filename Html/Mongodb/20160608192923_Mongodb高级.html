@@ -20,7 +20,7 @@
 <h2>一、高级查询</h2>
 <h3><code>$and</code> <code>$or</code></h3>
 <p>人口大于15336，州是MA或者城市是CHICOPEE的数据</p>
-<pre><code>db.getCollection('zips').find({
+<pre><code class="language-php">db.getCollection('zips').find({
     pop: {$gt:15336},
     $or:[
         {state:'MA'},
@@ -30,13 +30,13 @@
 </code></pre>
 <h3>数组内容查询</h3>
 <p>Y坐标是<em>42.070206</em>的数据</p>
-<pre><code>db.getCollection('zips').find({
+<pre><code class="language-php">db.getCollection('zips').find({
     loc: 42.070206
 });
 </code></pre>
 <h3>内嵌文档查询</h3>
 <p>先组内嵌文档装一个数据</p>
-<pre><code>db.user.insert(
+<pre><code class="language-php">db.user.insert(
 	{
 		name: 'kit',
 		family: {
@@ -50,7 +50,7 @@
 )
 </code></pre>
 <p>下面来进入范例，查询name是kit的爸爸名字叫Fred的人（这个例子有些太跑偏）</p>
-<pre><code>db.user.find(
+<pre><code class="language-php">db.user.find(
 	{
 		name: 'kit',
 		'family.father': 'Fred'
@@ -61,18 +61,18 @@
 <h3>正则查询</h3>
 <h3>like</h3>
 <p>查找含有AGG的城市数据</p>
-<pre><code>db.getCollection('zips').find({
+<pre><code class="language-php">db.getCollection('zips').find({
     city: /AGG/
 })
 </code></pre>
 <p>查找结尾是AGG的城市数据</p>
-<pre><code>db.getCollection('zips').find({
+<pre><code class="language-php">db.getCollection('zips').find({
     city: /AGG$/
 })
 </code></pre>
 <h3>表达式修正符</h3>
 <p>这个也是正则表达式通用手法。查找结尾是AGG或者是agg的城市数据</p>
-<pre><code>db.getCollection('zips').find({
+<pre><code class="language-php">db.getCollection('zips').find({
     city: /agg$/,
     $option: "$i"
 })
@@ -80,11 +80,11 @@
 <h3>联合查询(跨越数据库)</h3>
 <h4>手工关联</h4>
 <p>查找城市为CHESTER的用户信息，首先将城市为CHESTER的信息查询出来</p>
-<pre><code>use zips;
+<pre><code class="language-php">use zips;
 zip=db.user.findOne({city:'CHESTER'})
 </code></pre>
 <p>通过地区对象zip来获取用户数据</p>
-<pre><code>use user;
+<pre><code class="language-php">use user;
 for (var user=db.user.find({city:zip.city}); user.hasNext();) {
 	printjson(user.next());
 }
@@ -92,11 +92,11 @@ for (var user=db.user.find({city:zip.city}); user.hasNext();) {
 <h4>DBRef方式关联</h4>
 <p>两个Collection之间定义一个关联关系，我们来实现以上操作。</p>
 <h5>Step1 - 首先要从数据插入的时候做起</h5>
-<pre><code>use zips;
+<pre><code class="language-php">use zips;
 zip=db.zips.findOne({city:'CHESTER'});
 </code></pre>
 <h5>Step2 - 新建用户信息做关联</h5>
-<pre><code>use user;
+<pre><code class="language-php">use user;
 db.user.insert(
 	{
 		name: 'lucy',
@@ -111,11 +111,11 @@ db.user.insert(
 )
 </code></pre>
 <h5>Step3 - 通过用户查询该用户下的地区</h5>
-<pre><code>db.user.find({name:'lucy'})[0].city
+<pre><code class="language-php">db.user.find({name:'lucy'})[0].city
 </code></pre>
 <h3>游标和存储过程</h3>
 <p>MongoDB中find()函数返回一个游标，客户端通过对游标进行一些设置就能对查询结果进行有效地控制，如可以限制查询得到的结果数量、跳过部分结果、或对结果集按任意键进行排序等。</p>
-<pre><code>var cursor = db.user.find();
+<pre><code class="language-php">var cursor = db.user.find();
 while(cursor.hasNext()) {
 	var doc = cursor.next();
 	printjson(doc);
@@ -130,7 +130,7 @@ while(cursor.hasNext()) {
 <h3>概述</h3>
 <p>Mongodb聚合分析分析框架，旨在替代MapReduce的慢和抽象，group的不方便开发而成。在启业云平台中单应用分析就是运用它实现而成。</p>
 <h3>语义分析</h3>
-<pre><code>db.collection.aggregate(pipeline, options)
+<pre><code class="language-php">db.collection.aggregate(pipeline, options)
 </code></pre>
 <h3>聚合管道操作符</h3>
 <table>

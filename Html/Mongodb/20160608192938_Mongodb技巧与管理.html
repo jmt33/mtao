@@ -30,7 +30,7 @@ aggregate($params);
 <h2>二、数据迁移</h2>
 <h3>备份</h3>
 <h3>语义解析</h3>
-<pre><code class="language-shell">mongodump
+<pre><code class="language-bash">mongodump
 	--help
 	-h, --host=&lt;hostname&gt;
 	-u, --username=&lt;username&gt;                       username for authentication
@@ -41,10 +41,10 @@ aggregate($params);
 	-q, --query=&lt;json&gt;                              query filter, as a JSON string
 </code></pre>
 <h3>example</h3>
-<pre><code class="language-shell">mongodump -d user -o /data/backup
+<pre><code class="language-bash">mongodump -d user -o /data/backup
 </code></pre>
 <h3>恢复</h3>
-<pre><code class="language-shell">mongostore
+<pre><code class="language-bash">mongostore
 	--help
 	-h, --host=&lt;hostname&gt;
 	-u, --username=&lt;username&gt;                       username for authentication
@@ -56,11 +56,11 @@ aggregate($params);
 	-q, --query=&lt;json&gt;                              query filter, as a JSON string
 </code></pre>
 <h3>example</h3>
-<pre><code class="language-shell">mongorestore -d user --drop data/backup/user/
+<pre><code class="language-bash">mongorestore -d user --drop data/backup/user/
 </code></pre>
 <h3>导出cvs或者CSV</h3>
 <h4>语义分析</h4>
-<pre><code class="language-shell">mongoexport
+<pre><code class="language-bash">mongoexport
 	--help
 	-h, --host=&lt;hostname&gt;
 	-u, --username=&lt;username&gt;                       username for authentication
@@ -73,11 +73,11 @@ aggregate($params);
 <p>更多参阅 <a href="https://docs.mongodb.com/manual/reference/program/mongoexport/">https://docs.mongodb.com/manual/reference/program/mongoexport/</a></p>
 <h4>example</h4>
 <p>导出db是user，collection是user的数据</p>
-<pre><code class="language-shell">mongoexport --db user --collection user --out ~/user.json
+<pre><code class="language-bash">mongoexport --db user --collection user --out ~/user.json
 </code></pre>
 <h3>导入JSON或者CSV</h3>
 <h4>语义分析</h4>
-<pre><code class="language-shell">mongoexport
+<pre><code class="language-bash">mongoexport
 	--help
 	-h, --host=&lt;hostname&gt;
 	-u, --username=&lt;username&gt;                       username for authentication
@@ -87,7 +87,7 @@ aggregate($params);
 </code></pre>
 <p>更多参阅 <a href="https://docs.mongodb.com/manual/reference/program/mongoimport/">https://docs.mongodb.com/manual/reference/program/mongoimport/</a></p>
 <h4>example</h4>
-<pre><code class="language-shell">mongoimport --db zips --collection zips ~/Downloads/zips.json
+<pre><code class="language-bash">mongoimport --db zips --collection zips ~/Downloads/zips.json
 </code></pre>
 <h2>三、性能优化</h2>
 <h3>索引函数</h3>
