@@ -26,7 +26,9 @@ a::selection{background:rgba(255,255,0,0.3);color:#0645ad}
 p{
 margin:1em 0;
 }
-
+iframe {
+    border: 1px solid green;
+}
 img{
 max-width:100%;
 }
