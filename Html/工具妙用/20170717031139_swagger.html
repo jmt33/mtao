@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset=utf-8>
+        <title>swagger - 工具妙用</title>
+        <link href="http://jmt33.github.io/mtao/static/css/tango.css" rel="stylesheet"></link>
+        <link href="http://jmt33.github.io/mtao/static/css/style.css" rel="stylesheet"></link>
+		<link href="http://jmt33.github.io/mtao/static/css/prism.css" rel="stylesheet"></link>
+    </head>
+    <body>
+        <div id="container">
+            
+			<div id='post-nav'>
+				<a href='../../index.html'>Home</a>&nbsp;»&nbsp;
+				<a href='../../index.html#工具妙用'>工具妙用</a>&nbsp;»&nbsp;swagger
+			</div>
+			<h1>swagger</h1>
+<h2>swagger 能帮助我们做那些事情</h2>
+<ul>
+<li>后端人员：规范约束自身Api，新手可以快速学习和尝试;</li>
+<li>测试人员：多了一种测试手段。可以从横向的把控质量;</li>
+<li>前端人员：设定契约，减少沟通，减少扯皮;</li>
+</ul>
+<h2>官方帮助手册&amp;工具</h2>
+<p><a href="https://swagger.io/docs/specification/what-is-swagger/">https://swagger.io/docs/specification/what-is-swagger/</a> 手册</p>
+<p><a href="http://editor.swagger.io">http://editor.swagger.io</a>   语法测试工具</p>
+<p><img src="http://ot84cmvmf.bkt.clouddn.com/swagger-editor.png" alt="swagger-ui"></p>
+<pre><code class="language-bash">    git clone https://github.com/swagger-api/swagger-editor.git
+    cd swagger-editor
+    npm start
+</code></pre>
+<p><a href="https://swagger.io/swagger-ui/">https://swagger.io/swagger-ui/</a> UI工具</p>
+<p><img src="http://ot84cmvmf.bkt.clouddn.com/swaggerui2.png" alt="swagger-ui"></p>
+<h2>PHP 如何编写？</h2>
+<p><a href="https://github.com/zircote/swagger-php">https://github.com/zircote/swagger-php</a></p>
+<h3>注释添加</h3>
+<pre><code class="language-php">/**
+ * @SWG\Info(title="My First API", version="0.1")
+ */
+
+/**
+ * @SWG\Get(
+ *     path="/api/resource.json",
+ *     @SWG\Response(response="200", description="An example resource")
+ * )
+ */
+</code></pre>
+<h3>解析</h3>
+<pre><code class="language-php">require("vendor/autoload.php");
+$swagger = \Swagger\scan('/path/to/project');
+header('Content-Type: application/json');
+echo $swagger;
+</code></pre>
+<p><code>\Swagger\scan</code> 是swagger php 组件的核心方法，
+输入参数：当前项目路径，可以是字符串或数组，遍历路径下所有方法的注释，组合生成符合swagger规范的数据。</p>
+
+        </div>
+		<div id="uyan_frame"></div><script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2101665"></script>
+    </body>
+	<script src="http://jmt33.github.io/mtao/static/js/prism.js"></script>
+</html>
