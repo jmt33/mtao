@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset=utf-8>
+        <title>Chrome应用开发心得 - 工具妙用</title>
+        <link href="http://jmt33.github.io/mtao/static/css/tango.css" rel="stylesheet"></link>
+        <link href="http://jmt33.github.io/mtao/static/css/style.css" rel="stylesheet"></link>
+		<link href="http://jmt33.github.io/mtao/static/css/prism.css" rel="stylesheet"></link>
+    </head>
+    <body>
+        <div id="container">
+            
+			<div id='post-nav'>
+				<a href='../../index.html'>Home</a>&nbsp;»&nbsp;
+				<a href='../../index.html#工具妙用'>工具妙用</a>&nbsp;»&nbsp;Chrome应用开发心得
+			</div>
+			<h1>Chrome 应用开发</h1>
+<h2>写在之前</h2>
+<h2>第一步：创建清单文件</h2>
+<blockquote><p>每一个扩展程序、可安装的网络应用以及主题背景都有一个 JSON 格式的清单文件，名为 manifest.json，提供重要信息。
+务必讲图片放置在指定目录中</p>
+</blockquote>
+<pre><code class="language-javascript">{
+  "name": "Hello World!",
+  "description": "我的第一个 Chrome 应用。",
+  "version": "0.1",
+  "manifest_version": 2,
+  "app": {
+    "background": {
+      "scripts": ["background.js"]
+    }
+  },
+  "icons": { "16": "1.png", "128": "2.png" }
+}
+</code></pre>
+<h3>第二步：创建后台脚本</h3>
+<p>&gt;接着创建一个新文件 background.js，包含如下内容：</p>
+<pre><code class="language-javascript">chrome.app.runtime.onLaunched.addListener(function() {
+  chrome.app.window.create('window.html', {
+    'bounds': {
+      'width': 400,
+      'height': 500
+    }
+  });
+});
+</code></pre>
+<p>在以上示例代码中，onLaunched 事件将会在用户启动应用时产生，接着它立刻为应用打开一个指定宽度与高度的窗口。您的后台脚本可以包含额外的监听器、窗口、传递消息及执行数据，这些都由事件页面使用，以管理应用。</p>
+<h3>第三步：创建窗口页面</h3>
+<p>创建您的window.html文件：</p>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div&gt;Test Chrome App!&lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<h3>第四步：执行您的应用</h3>
+<h4>启用标志</h4>
+<ul>
+<li>进入 chrome://flags。</li>
+<li>找到“实验性扩展程序 API”，并单击“启用”链接。</li>
+<li>重新启动 Chrome 浏览器。</li>
+</ul>
+<h4>加载您的应用</h4>
+<p>选择工具 -&gt; 扩展程序</p>
+
+        </div>
+		<div id="uyan_frame"></div><script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2101665"></script>
+    </body>
+	<script src="http://jmt33.github.io/mtao/static/js/prism.js"></script>
+</html>

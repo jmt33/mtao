@@ -85,6 +85,7 @@ class Category extends React.Component {
         };
     }
 
+    //组件出现前
     componentWillMount() {
         var _this = this;
         $.ajax({
@@ -100,6 +101,7 @@ class Category extends React.Component {
         this.fetchArticle(this.state.category_id);
     }
 
+    //
     componentDidMount() {
         var _this = this;
         pubsub.subscribe('listchange', function(topics, key) {
