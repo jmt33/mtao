@@ -15,7 +15,7 @@
 				<a href='../../index.html#PHP'>PHP</a>&nbsp;»&nbsp;PHP7在项目中的实践
 			</div>
 			<h1>PHP7在项目中的实践</h1>
-<h2>成果上线经历的几个阶段</h2>
+<h2>成功上线经历的几个阶段</h2>
 <p>在<code>PHP7</code>未出欲出之际，对于它已经是“如雷贯耳”，什么提升性能数倍，什么让<code>PHP</code>变成强类型云云。共事的小伙伴们都是些前沿技术追崇者，一心想把它引入到自身的项目中，于是开始了漫长的尝试，分为以下几个阶段：</p>
 <h3>第一阶段：观察</h3>
 <p>PHP7诞生期，作为一个旁观者看网上同仁们的使用概况，并立下军令状，201x年xx月xx日务必完成对于PHP7的升级；</p>
@@ -23,7 +23,7 @@
 <p>遇到瓶颈，<code>Mongodb</code>扩展是我们迈不过去的一个大坑。</p>
 <h3>第三阶段：灰心</h3>
 <p>好多瓶颈，由于PHP7打破向下兼容的定律，很多扩展也变得不支持，而他们迟迟没有升级解决方案，让小伙伴们瞬间沉入谷底，对于能否升级PHP7表示深深的怀疑。</p>
-<p>![无奈](ot84cmvmf.bkt.clouddn.com/20170928213446_R88r8K_无奈.jpeg)</p>
+<p><img src="ot84cmvmf.bkt.clouddn.com/20170928213446_R88r8K_无奈.jpeg"></p>
 <h3>第四阶段：开花</h3>
 <p>相对于第一阶段已经过去2～3年的时间，PHP7已经成熟普及在了大街小巷，升级它的欲望不由自主的再次升起。一个下午搜寻了各大英文资料，并进行了多次验证实验，结果是美好的，终于让PHP7在项目中不需要很多改动的情况下运行起来了。</p>
 <p>以下是项目中遇到的问题以及解决办法：</p>
@@ -55,24 +55,21 @@
 总之，这样一折腾又是2个多月过去啦。</li>
 </ul>
 <p>以下是研发双环境解决办法（ubuntu14.04）：</p>
-<p>＞小技巧：观察是否使用此源，可查看　/et/php/ 下是否具有　5.6/  7.0/  7.1/　目录，如果具有，说明使用了这个源．</p>
-<p><strong>第➀步</strong></p>
-<pre><code>sudo add-apt-repository ppa:ondrej/php # 下面所有的操作都是根据这个源而来的，如果具有其他的php软件源可进行卸载，后再去安装此源
+<p>&gt;小技巧：观察是否使用此源，可查看　/et/php/ 下是否具有　5.6/  7.0/  7.1/　目录，如果具有，说明使用了这个源．</p>
+<p><strong>➀</strong></p>
+<pre><code class="language-bash">sudo add-apt-repository ppa:ondrej/php # 下面所有的操作都是根据这个源而来的，如果具有其他的php软件源可进行卸载，后再去安装此源
 sudo apt-get update
 sudo apt-get purge php5 php5-cli php5-common php5-dev php5-fpm
 sudo apt-get install php5.6 php5.6-dev php5.6-fpm php5.6-mbstring php5.6-mysql php-xml php5.6-xml php-mongo php-redis php5.6-zip
 </code></pre>
-<p><strong>第➁步</strong></p>
-<pre><code>sudo apt-get install php7.0 php7.0-dev php-mongodb php7.0-fpm php7.0-mbstring php7.0-mysql  php-pear php7.0-xml php7.0-zip
-
+<p><strong>➁</strong></p>
+<pre><code class="language-bash">sudo apt-get install php7.0 php7.0-dev php-mongodb php7.0-fpm php7.0-mbstring php7.0-mysql  php-pear php7.0-xml php7.0-zip
 sudo pecl install redis #遇到提示，请输入：yes，一路狂奔
 sudo apt-get install php7.0-zip
 sudo apt-get install php7.0-curl
 sudo apt-get install php-imagick
 sudo ln -sf /etc/php/7.0/mods-available/redis.ini /etc/php/7.0/fpm/conf.d/20-redis.ini
-
 sudo ln -sf /etc/php/7.0/mods-available/redis.ini /etc/php/7.0/cli/conf.d/20-redis.ini
-
 sudo service php7.0-fpm restart
 </code></pre>
 <p><strong>第三步</strong></p>
@@ -134,7 +131,7 @@ if (isset($_SERVER['argv']) &amp;&amp;
 </code></pre>
 <h3>第六阶段，结果</h3>
 <p>终于经过小伙伴们的层层努力，PHP7迭代顺利升级到线上，开花结果；</p>
-<p><img src="ot84cmvmf.bkt.clouddn.com/20170928213446_q8IkT5_开心.jpeg" alt="开心"></p>
+<p><img src="ot84cmvmf.bkt.clouddn.com/20170928213446_q8IkT5_开心.jpeg"></p>
 <h2>预计进行引入的几个特性</h2>
 <h3>异常捕获机制优化，防止错误冒泡</h3>
 <h3>强类型</h3>
