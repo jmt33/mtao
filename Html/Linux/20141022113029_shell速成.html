@@ -21,7 +21,7 @@
 <h3>常见的shell</h3>
 <blockquote><p>常见的shell包括 bash-linux的标准shell   sh 早期shell  csh ksh tcsh unix</p>
 </blockquote>
-<pre><code class="language-shell"># /etc/shells: valid login shells
+<pre><code class="language-bash"># /etc/shells: valid login shells
 /bin/sh
 /bin/dash
 /bin/bash
@@ -47,10 +47,10 @@ echo "Hello World"
 <h5>别名</h5>
 <blockquote><p>.bashrc</p>
 </blockquote>
-<pre><code>alias ls="ls --color=never"
+<pre><code class="language-bash">alias ls="ls --color=never"
 </code></pre>
 <h5>输出重定向</h5>
-<pre><code># 把ls得出的结果输入到a文件
+<pre><code class="language-bash"># 把ls得出的结果输入到a文件
 ls &gt; a
 
 #把ls得出的结果追加到a文件
@@ -78,10 +78,10 @@ ls  &gt;&gt;  aa  2&gt;&amp;1
 </blockquote>
 <blockquote><p>命令1  ||  命令2 命令1执行不正确，命令2才会执行</p>
 </blockquote>
-<pre><code>ls aa &amp;&amp; echo "cunzai" || echo "bu cunzai! 
+<pre><code class="language-bash">ls aa &amp;&amp; echo "cunzai" || echo "bu cunzai! 
 </code></pre>
 <h5>管道符</h5>
-<pre><code># 命令1  |  命令2 命令1的执行结果，作为命令2的执行条件
+<pre><code class="language-bash"># 命令1  |  命令2 命令1的执行结果，作为命令2的执行条件
 # 查询监听的端口号，并查看80
 netstat -tlun | grep 80
 
@@ -105,7 +105,7 @@ export 查看环境变量</p>
 设置类型：declare -i整型
 删除：unset 变量名</p>
 </blockquote>
-<pre><code>1）变量以等号连接值，等号不能有空格
+<pre><code class="language-bash">1）变量以等号连接值，等号不能有空格
 2）变量名由数字和字母和下划线组成，不能以数字开头
 3）变量值中有空格，用引号括起来
 4）双引号内，有特殊字符。如$
@@ -120,7 +120,7 @@ echo `ls`
 echo $PATH
 </code></pre>
 <p>让脚本不在用路径 [临时生效]</p>
-<pre><code>PATH="$PATH":/home/mtao/shell 
+<pre><code class="language-bash">PATH="$PATH":/home/mtao/shell 
 # 在系统默认路径后，追加/home/mtao/shell 目
 # 录作为命令查找路径
 </code></pre>
@@ -149,7 +149,7 @@ echo $PATH
 </blockquote>
 <h5>read</h5>
 <p>&gt;read -p “提示信息” -t 等待时间 变量名</p>
-<pre><code>#!/bin/bash
+<pre><code class="language-bash">#!/bin/bash
 read -p "please input num1:" -t 30 test1
 read -p "input num2:" -t 30 test2
 sum=$(( $test1 + $test2))
@@ -157,7 +157,7 @@ echo “num1 + num2 = $sum”
 </code></pre>
 <h4>数值运算</h4>
 <p>&gt;1）declare 方法</p>
-<pre><code>num1=123
+<pre><code class="language-bash">num1=123
 num2=456
 declare -i sum=$num1+$num2
 </code></pre>
@@ -165,7 +165,7 @@ declare -i sum=$num1+$num2
 <p>&gt;sum=$(expr $num1 + $num2) 注意+左右必须空格</p>
 <h3>条件测试  - <code>这个其实挺方便</code></h3>
 <h4>测试文件类型</h4>
-<pre><code>test -e 文件名 测试文件是否存在，存在为真
+<pre><code class="language-bash">test -e 文件名 测试文件是否存在，存在为真
 [ -e 文件名 ] 注意：[]中必须有空格
 test -f 文件名 判断是否是普通文件
 test -d 文件名 判断是否为目录
@@ -173,18 +173,18 @@ test -b 文件名 判断是否为块设备文件
 test -c 文件名 字符设备文件
 </code></pre>
 <h4>测试文件权限</h4>
-<pre><code>test -r 文件名 判断是否有可读权限
+<pre><code class="language-bash">test -r 文件名 判断是否有可读权限
 test -w 文件名 可写
 test -x 文件名 执行
 test -s 文件名 判断是否为非空白，有内容为真
 </code></pre>
 <h4>两个文档比较</h4>
-<pre><code>[ file1 -nt file2 ] file1 是否比 file2 新
+<pre><code class="language-bash">[ file1 -nt file2 ] file1 是否比 file2 新
 [ file1 -ot file2 ] file1 是否比 file2 旧
 [ file1 -ef file2 ] file1 与 file2 是否是链接文件
 </code></pre>
 <h4>两个数值之间判断</h4>
-<pre><code>[ n1 -eq n2 ] n1 和 n2 是否相等
+<pre><code class="language-bash">[ n1 -eq n2 ] n1 和 n2 是否相等
 [ n1 -ne n2 ] n1 和 n2 是否不等
 [ n1 -gt n2 ] n1 大于 n2
 [ n1 -lt n2 ] n1 小于 n2
@@ -192,19 +192,19 @@ test -s 文件名 判断是否为非空白，有内容为真
 [ n1 -le n2 ] n1 小于等于 n2
 </code></pre>
 <h4>判断字符串</h4>
-<pre><code>[ -z 字符串 ] 判断字符串是否为空
+<pre><code class="language-bash">[ -z 字符串 ] 判断字符串是否为空
 [ 字符串 1 == 字符串 2 ] 判断字串 1 是否与字串 2 相等
 [ $aa == $bb ] &amp;&amp; echo 1 || echo 2
 [ 字符串 1 != 字符串 2 ] 判断字串是否不等
 </code></pre>
 <h4>多重判断</h4>
-<pre><code>-a 逻辑与
+<pre><code class="language-bash">-a 逻辑与
 [ -z $file -a -e $file ]
 -o 逻辑或
 ! 逻辑非
 </code></pre>
 <h4>Demo</h4>
-<pre><code>#!/bin/bash
+<pre><code class="language-bash">#!/bin/bash
 echo -e "nide wenjian shifou cunzai? wenjian quanxian shi shenme? \n\n"
 read -p "please input filename:" -t 30 filename
 test -z $filename &amp;&amp; echo "please input filename!!" &amp;&amp; exit 1
@@ -231,7 +231,7 @@ echo -e "permision is : $perm \n"
 <h3>流程控制</h3>
 <h4>简介</h4>
 <h4>Demo1 如果/boot 分区的空间使用超过 80%，则输出警告</h4>
-<pre><code>#!/bin/bash
+<pre><code class="language-bash">#!/bin/bash
 RATE=`df -hT | grep "/boot" | awk '{print $6}' | cut -d "%" -f1 `
 if [ $RATE -gt 80 ]
 then
@@ -239,7 +239,7 @@ echo "Warning,/boot DISK is full!"
 fi
 </code></pre>
 <h4>Demo2 判断 httpd 服务是否启动，如果没有启动则启动</h4>
-<pre><code>#!/bin/bash
+<pre><code class="language-bash">#!/bin/bash
 http=`netstat -tlun | awk '{print $4 "\n"}' | grep ":80$"`
 (或 http=$( ps aux | grep httpd | grep -v grep))
 if [ -z "$http" ]
@@ -251,7 +251,7 @@ echo "httpd runing"
 fi
 </code></pre>
 <h4>Demo3 判断输入的字符</h4>
-<pre><code>#!/bin/bash
+<pre><code class="language-bash">#!/bin/bash
 echo "if you want to beijing ,please input 1"
 echo "if you want to shanghai ,please input 2"
 echo "if you want to chengdu ,please input 3"
@@ -270,14 +270,14 @@ echo "error,please input 1 or 2 or 3."
 fi
 </code></pre>
 <h4>Demo4 循环</h4>
-<pre><code>#!/bin/bash
+<pre><code class="language-bash">#!/bin/bash
 for time in morning noon afternoon evening
 do
 echo $time
 done
 </code></pre>
 <h4>Demo5 输入目录名，显示目录下所有内容</h4>
-<pre><code>#!/bin/bash
+<pre><code class="language-bash">#!/bin/bash
 read -p "please input a filename!" -t 30 filename
 if [ -z $filename ];then
 echo "please input!!!!!!"
@@ -302,7 +302,7 @@ echo $test
 done
 </code></pre>
 <h4>Demo6 数值加加循环</h4>
-<pre><code>#/bin/bash
+<pre><code class="language-bash">#/bin/bash
 s=0
 for ((i=1;i&lt;=100;i=i+1))
 do
@@ -311,13 +311,13 @@ done
 echo $s
 </code></pre>
 <h4>while 循环语句</h4>
-<pre><code>while 命令或表达式
+<pre><code class="language-bash">while 命令或表达式
 do
 命令列表
 done
 </code></pre>
 <h4>批量添加用户</h4>
-<pre><code>#!/bin/bash
+<pre><code class="language-bash">#!/bin/bash
 i=1
 while [ $i -le 20 ]
 do
@@ -327,7 +327,7 @@ i=`expr $i + 1`
 done
 </code></pre>
 <h4>批量删除用户</h4>
-<pre><code>#!/bin/bash
+<pre><code class="language-bash">#!/bin/bash
 aa=`cat /etc/passwd | grep "/bin/bash"|grep -v "root"|cut -d ":" -f 1`
 for i in $aa
 do
@@ -335,7 +335,7 @@ userdel -r $i
 done
 </code></pre>
 <h4>批量添加</h4>
-<pre><code>#!/bin/bash
+<pre><code class="language-bash">#!/bin/bash
 aa=10
 for ((i=1;i&lt;=$aa;i=i+1))
 do
@@ -345,7 +345,7 @@ echo $i
 done
 </code></pre>
 <h4>打印选择列表，输出选择</h4>
-<pre><code>#!/bin/bash
+<pre><code class="language-bash">#!/bin/bash
 echo -e "shanghai: 1\n"
 echo -e "beijing: 2\n"
 echo -e "chengdu: 3\n"

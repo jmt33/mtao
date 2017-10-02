@@ -23,7 +23,7 @@
 <h3>5.将脚本放在页面的底部</h3>
 <h3>6.避免在For语句内声明变量</h3>
 <h3>7.构建字符串的最优方法</h3>
-<pre><code>var arr = ['item 1', 'item 2', 'item 3', ...];  
+<pre><code class="language-javascript">var arr = ['item 1', 'item 2', 'item 3', ...];  
 var list = '&lt;ul&gt;&lt;li&gt;' + arr.join('&lt;/li&gt;&lt;li&gt;') + '&lt;/li&gt;&lt;/ul&gt;';
 </code></pre>
 <h3>8.减少全局变量</h3>
@@ -37,7 +37,7 @@ var list = '&lt;ul&gt;&lt;li&gt;' + arr.join('&lt;/li&gt;&lt;li&gt;') + '&lt;/li
 <h3>17.谨记，不要省略分号</h3>
 <h3>18.”For in”语句</h3>
 <p>当遍历对象的属性时，你可能会发现还会检索方法函数。为了解决这个问题，总在你的代码里包裹在一个if语句来过滤信息。</p>
-<pre><code>for(key in object) {  
+<pre><code class="language-javascript">for(key in object) {  
    if(object.hasOwnProperty(key) {  
       ...then do something...  
    }  
@@ -45,7 +45,7 @@ var list = '&lt;ul&gt;&lt;li&gt;' + arr.join('&lt;/li&gt;&lt;li&gt;') + '&lt;/li
 </code></pre>
 <h3>19.使用Firebug的”timer”功能优化你的代码</h3>
 <p>在寻找一个快速、简单的方法来确定操作需要多长时间吗？使用Firebug的“timer”功能来记录结果。</p>
-<pre><code>function TimeTracker(){  
+<pre><code class="language-javascript">function TimeTracker(){  
  console.time("MyTimer");  
  for(x=5000; x &gt; 0; x--){}  
  console.timeEnd("MyTimer");  
@@ -62,7 +62,7 @@ var list = '&lt;ul&gt;&lt;li&gt;' + arr.join('&lt;/li&gt;&lt;li&gt;') + '&lt;/li
 <p>和调用一个函数类似，它很简单的使一个函数在页面加载或父函数被调用时自动运行。简单的将你的函数用圆括号包裹起来，然后添加一个额外的设置，这本质上就是调用函数。</p>
 </li>
 </ul>
-<pre><code>(function doSomething() {  
+<pre><code class="language-javascript">(function doSomething() {  
    return {  
       name: 'jeff',  
       lastName: 'way'  
@@ -75,7 +75,7 @@ var list = '&lt;ul&gt;&lt;li&gt;' + arr.join('&lt;/li&gt;&lt;li&gt;') + '&lt;/li
 <h3>23.道格拉斯的 JSON.Parse</h3>
 <p>尽管JavaScript 2（ES5)已经内置了JSON 解析器。但在撰写本文时，我们仍然需要自己实现（兼容性）。道格拉斯（Douglas Crockford），JSON之父，已经创建了一个你可以直接使用的解析器。这里可以下载（链接已坏，可以在这里查看相关信息<a href="http://www.json.org/）。">http://www.json.org/）。</a></p>
 <p>只需简单导入脚本，您将获得一个新的全局JSON对象，然后可以用来解析您的json文件。</p>
-<pre><code>var response = JSON.parse(xhr.responseText);  
+<pre><code class="language-javascript">var response = JSON.parse(xhr.responseText);  
   
 var container = document.getElementById('container');  
 for(var i = 0, len = response.length; i &lt; len; i++) {  
@@ -94,7 +94,7 @@ for(var i = 0, len = response.length; i &lt; len; i++) {
 <h3>选择短路求值</h3>
 <h3>选择捷径</h3>
 <p>精简代码的其中一种方式是利用编码捷径。</p>
-<pre><code>// 糟糕
+<pre><code class="language-javascript">// 糟糕
 
 if(collection.length &gt; 0){..}
 
@@ -104,7 +104,7 @@ if(collection.length){..}
 </code></pre>
 <h3>繁重的操作中分离元素</h3>
 <p>如果你打算对DOM元素做大量操作（连续设置多个属性或css样式），建议首先分离元素然后在添加。</p>
-<pre><code>// 糟糕
+<pre><code class="language-javascript">// 糟糕
 
 var 
     $container = $("#container"),
@@ -128,7 +128,7 @@ $container.append($element);
 </code></pre>
 <h3>熟记技巧</h3>
 <p>你可能对使用jQuery中的方法缺少经验,一定要查看的文档，可能会有一个更好或更快的方法来使用它。</p>
-<pre><code>// 糟糕
+<pre><code class="language-javascript">// 糟糕
 
 $('#id').data(key,value);
 
@@ -139,7 +139,7 @@ $.data('#id',key,value);
 <h3>使用子查询缓存的父元素</h3>
 <h3>避免通用选择符</h3>
 <p>将通用选择符放到后代选择符中，性能非常糟糕。</p>
-<pre><code>// 糟糕
+<pre><code class="language-javascript">// 糟糕
 
 $('.container &gt; *'); 
 
@@ -149,7 +149,7 @@ $('.container').children();
 </code></pre>
 <h3>避免隐式通用选择符</h3>
 <p>通用选择符有时是隐式的，不容易发现。</p>
-<pre><code>// 糟糕
+<pre><code class="language-javascript">// 糟糕
 
 $('.someclass :radio'); 
 
@@ -159,7 +159,7 @@ $('.someclass input:radio');
 </code></pre>
 <h3>优化选择符</h3>
 <p>例如，Id选择符应该是唯一的，所以没有必要添加额外的选择符。</p>
-<pre><code>// 糟糕
+<pre><code class="language-javascript">// 糟糕
 
 $('div#myid'); 
 $('div#footer a.myLink');
@@ -173,7 +173,7 @@ $('#footer .myLink');
 <p>新版本通常更好：更轻量级，更高效。显然，你需要考虑你要支持的代码的兼容性。例如，2.0版本不支持ie 6/7/8。</p>
 <h3>摒弃弃用方法</h3>
 <p>关注每个新版本的废弃方法是非常重要的并尽量避免使用这些方法。</p>
-<pre><code>// 糟糕 - live 已经废弃
+<pre><code class="language-javascript">// 糟糕 - live 已经废弃
 
 $('#stuff').live('click', function() {
   console.log('hooray');

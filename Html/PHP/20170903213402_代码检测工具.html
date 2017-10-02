@@ -16,11 +16,43 @@
 			</div>
 			<h1>代码检测工具</h1>
 <h2>为何而要有代码检测？</h2>
-<h2>几种检测工具</h2>
-<h3>PHP CodeSniffer</h3>
-<h3>PHP -l</h3>
-<h3>PHPMD</h3>
+<p>程序员的自我规范</p>
+<p>在每个高要求的程序员心中都会有一套"自我规范"，比如：</p>
+<ul>
+<li>流程控制语句一定要有换行</li>
+<li>变量命名用小驼峰</li>
+<li>不适用的变量一定要销毁</li>
+<li>一个文件不能超过1000行</li>
+<li>一个方法长度不能超过200行</li>
+<li>一个方法的复杂度不应太高</li>
+<li>等等</li>
+</ul>
+<p>这些切实有效的规范也会作为他们团队的行为准则，不得越过，务必按照执行。</p>
+<p>但是执行的过程真的是那么容易做到每个人都遵守吗?</p>
+<p>我所了解的答案是："一个再高执行力的团队，在每天的代码海洋中游走，只靠口头的约束，是难以达成契约"。</p>
+<p>违反契约后的结果和绩效惩罚势必会让团队更加陷入恐慌。</p>
+<p>正所谓：杂乱的事情规范化，规范的事情制度化，制度的事情流程化。那么团队是否可以把代码检测做成流程化、工具化的东西？</p>
+<p>下面介绍几款在我们团队中使用的一些工具组件，以及方式方法，它们会让上述规范执行变得<code>so easy</code>。</p>
+<h2>PHP CodeSniffer</h2>
+<blockquote><p>确保你的代码简洁一致的必不可少的开发工具</p>
+</blockquote>
+<p><a href="https://github.com/squizlabs/PHP_CodeSniffer">https://github.com/squizlabs/PHP_CodeSniffer</a></p>
+<h2>PHP -l</h2>
+<blockquote><p>PHP 自带检测语法错误工具</p>
+</blockquote>
+<h2>PHPMD</h2>
+<blockquote><p>PHP代码质量检测，以行业内最佳实践来对你的代码进行审查</p>
+</blockquote>
+<p><a href="https://github.com/phpmd/phpmd">https://github.com/phpmd/phpmd</a></p>
 <h2>如何更好的集成</h2>
+<p>利用 <code>git hook</code> 在团队研发人员 git仓库中加入hook进行检测当前提交变动代码（如果你想更加的工具化可以在中心仓库进行检测）</p>
+<p>以下是我们根据项目特点，整合出的一个工具包，已经在团队实践超过4年。</p>
+<p><a href="https://github.com/qycloud/git_code_sniffer_hooks">https://github.com/qycloud/git_code_sniffer_hooks</a></p>
+<h2>注意：</h2>
+<ul>
+<li>上述只是用PHP语言的工具进行举例，其他语言同理，也有很多检测工具提供；</li>
+<li>可以对于团队特点进行自定义工具包</li>
+</ul>
 
         </div>
 		<div id="uyan_frame"></div><script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2101665"></script>

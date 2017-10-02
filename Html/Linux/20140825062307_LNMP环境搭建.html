@@ -17,7 +17,7 @@
 			<h1>LNMP环境搭建</h1>
 <p>@(示例笔记本)[nginx|php|linux]</p>
 <h2>辅助工具</h2>
-<pre><code>sudo apt-get install vim curl zsh
+<pre><code class="language-bash">sudo apt-get install vim curl zsh
 </code></pre>
 <h2>LNMP安装</h2>
 <pre><code class="language-shell">sudo apt-get install nginx php5 php5-xdebug php5-gd php5-curl php5-memcached php5-mysql php5-fpm mysql-server mysql-client php-pear redis-server
@@ -31,17 +31,17 @@ sudo add-apt-repository ppa:ondrej/php5-oldstable
 sudo apt-get update &amp;&amp; sudo apt-get dist-upgrade
 </code></pre>
 <h3>安php-redis 扩展</h3>
-<pre><code>pecl install redis
+<pre><code class="language-bash">pecl install redis
 </code></pre>
 <h4>php.ini中加入配置</h4>
 <p>&gt;两个文件 /etc/php5/fpm/php.ini and /etc/php5/cli/php.ini</p>
-<pre><code>extensition=redis.so
+<pre><code class="language-bash">extensition=redis.so
 </code></pre>
 <h3>安装 memcached [按需要安装saas环境目前已经不需要]</h3>
-<pre><code class="language-shell">sudo apt-get install memcached
+<pre><code class="language-bash">sudo apt-get install memcached
 </code></pre>
 <h3>安装依赖</h3>
-<pre><code class="language-shell">mkdir ~/bin
+<pre><code class="language-bash">mkdir ~/bin
 
 curl -sS https://getcomposer.org/installer | php -- --install-dir=/home/mtao/bin
 </code></pre>
@@ -157,13 +157,13 @@ server {
 }
 </code></pre>
 <h3>启用配置</h3>
-<pre><code class="language-shell">sudo ln -s /etc/nginx/sites-available/www.mtao.aysaas.com /etc/nginx/sites-enabled/
+<pre><code class="language-bash">sudo ln -s /etc/nginx/sites-available/www.mtao.aysaas.com /etc/nginx/sites-enabled/
 </code></pre>
 <h3>重启nginx</h3>
-<pre><code class="language-shell">sudo /etc/init.d/nginx restart
+<pre><code class="language-bash">sudo /etc/init.d/nginx restart
 </code></pre>
 <h3>添加 hosts</h3>
-<pre><code class="language-shell">127.0.0.1 www.mtao.aysaas.com
+<pre><code class="language-bash">127.0.0.1 www.mtao.aysaas.com
 127.0.0.1 static.mtao.aysaas.com
 127.0.0.1 fileio.mtao.aysaas.com
 </code></pre>
@@ -172,27 +172,27 @@ server {
 </blockquote>
 <h2>配置 PHP</h2>
 <h3>修改 /etc/php5/fpm/php.ini 的以下配置</h3>
-<pre><code>error_reporting = E_ALL
+<pre><code class="language-bash">error_reporting = E_ALL
 display_errors = On
 html_errors = On
 date.timezone = Asia/Shanghai
 </code></pre>
 <h3>修改 /etc/php5/fpm/pool.d/www.conf 的以下配置</h3>
-<pre><code>listen = 127.0.0.1:9000
+<pre><code class="language-bash">listen = 127.0.0.1:9000
 
 </code></pre>
 <h3>重启 php-fpm</h3>
-<pre><code>sudo /etc/init.d/php5-fpm restart
+<pre><code class="language-bash">sudo /etc/init.d/php5-fpm restart
 </code></pre>
 <h2>fileio 本地测试</h2>
 <h3>在项目根目录建立相 upload 目录,及赋予相应的读写权限</h3>
-<pre><code class="language-shell">cd ~/workspace/project/saas
+<pre><code class="language-bash">cd ~/workspace/project/saas
 mkdir upload
 chmod 777 upload
 </code></pre>
 <h2>队列(非必须)</h2>
 <h3>安装</h3>
-<pre><code>sudo apt-get install ruby1.9.3
+<pre><code class="language-bash">sudo apt-get install ruby1.9.3
 sudo gem install resque
 sudo apt-get install redis-server
 resque-web -N AYSaaS
@@ -200,22 +200,22 @@ resque-web -N AYSaaS
 <p>&gt;访问 <a href="http://0.0.0.0:5678">http://0.0.0.0:5678</a> 可以查看队列状态</p>
 <h3>启动 worker</h3>
 <h4>本地开发</h4>
-<pre><code>VVERBOSE=1 QUEUE=* APP_INCLUDE=bootstrap.php php vendor/chrisboulton/php-resque/resque.php
+<pre><code class="language-bash">VVERBOSE=1 QUEUE=* APP_INCLUDE=bootstrap.php php vendor/chrisboulton/php-resque/resque.php
 
 </code></pre>
 <h4>服务器</h4>
-<pre><code>sudo su -l www-data -c 'cd /var/www/project_path &amp;&amp; ENV=production QUEUE=* APP_INCLUDE=bootstrap.php nohup php vendor/chrisboulton/php-resque/resque.php &gt; log/queue.log 2&gt;&amp;1 &amp;'
+<pre><code class="language-bash">sudo su -l www-data -c 'cd /var/www/project_path &amp;&amp; ENV=production QUEUE=* APP_INCLUDE=bootstrap.php nohup php vendor/chrisboulton/php-resque/resque.php &gt; log/queue.log 2&gt;&amp;1 &amp;'
 </code></pre>
 <h2>文档预览</h2>
 <h3>依赖</h3>
-<pre><code>sudo apt-get install libjpeg-dev libgif-dev libfreetype6-dev ttf-wqy-microhei ttf-wqy-zenhei
+<pre><code class="language-bash">sudo apt-get install libjpeg-dev libgif-dev libfreetype6-dev ttf-wqy-microhei ttf-wqy-zenhei
 
 </code></pre>
 <h3>转换doc-&gt;pdf 安装 libreOffice (ubuntu 桌面版默认已经装好)</h3>
-<pre><code>sudo apt-get install libreOffice
+<pre><code class="language-bash">sudo apt-get install libreOffice
 </code></pre>
 <h3>转换pdf-&gt;swf  安装 swftools</h3>
-<pre><code>sudo add-apt-repository ppa:guilhem-fr/swftools
+<pre><code class="language-bash">sudo add-apt-repository ppa:guilhem-fr/swftools
 sudo apt-get update
 sudo apt-get install swftools
 </code></pre>

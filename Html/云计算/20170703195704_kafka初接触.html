@@ -36,16 +36,21 @@ AMQP服务器端：用来接收生产者发送的消息并将这些消息路由�
 <p><a href="http://apache.fayea.com/kafka/0.10.2.1/kafka_2.12-0.10.2.1.tgz">http://apache.fayea.com/kafka/0.10.2.1/kafka_2.12-0.10.2.1.tgz</a></p>
 <h2>操作</h2>
 <h3>start zookeeper</h3>
-<p>bin/zookeeper-server-start.sh config/zookeeper.properties</p>
+<pre><code class="language-bash">bin/zookeeper-server-start.sh config/zookeeper.properties
+</code></pre>
 <h3>start kafka server</h3>
-<p>bin/kafka-server-start.sh config/server.properties</p>
+<pre><code class="language-bash">bin/kafka-server-start.sh config/server.properties
+</code></pre>
 <h3>create a topic</h3>
-<p>bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic test</p>
+<pre><code class="language-bash">bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic test
+</code></pre>
 <h3>show topic bin/kafka-topics.sh --list --zookeeper localhost:2181</h3>
 <h3>send some message</h3>
-<p>bin/kafka-console-producer.sh --broker-list localhost:9092 --topic test</p>
+<pre><code class="language-bash">bin/kafka-console-producer.sh --broker-list localhost:9092 --topic test
+</code></pre>
 <h3>Start a consumer</h3>
-<p>bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test --from-beginning</p>
+<pre><code class="language-bash">bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test --from-beginning
+</code></pre>
 <h2>监控</h2>
 <h2>分区消费模型</h2>
 <p>生产和消费一对一的关系，offset较为重要</p>

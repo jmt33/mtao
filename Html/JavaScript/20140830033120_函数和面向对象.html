@@ -17,7 +17,7 @@
 			<h1>面向对象</h1>
 <h2>定义:</h2>
 <p>对象是由 new 运算符加上要实例化的对象的名字创建的。例如，下面的代码创建 Object 对象的实例：</p>
-<pre><code>var obj = new Object();
+<pre><code class="language-javascript">var obj = new Object();
 alert(typeof obj); //object
 alert(typeof Object); //function
 </code></pre>
@@ -54,7 +54,7 @@ isNan();
 </blockquote>
 <h2>函数创建:</h2>
 <p>在javascript中函数就是类</p>
-<pre><code>//第一种方式
+<pre><code class="language-javascript">//第一种方式
 function fn1()
 {
     alert('test1');
@@ -64,7 +64,7 @@ function fn1()
 var n = function() {};
 </code></pre>
 <h2>函数表达式</h2>
-<pre><code>a=function(b){};
+<pre><code class="language-javascript">a=function(b){};
 a(b);
 //等同于
 (function(b){})(b) //匿名函数立即执行
@@ -72,7 +72,7 @@ a(b);
 <blockquote><p>直到函数真正运行后才能调用</p>
 </blockquote>
 <h2>函数参数:</h2>
-<pre><code>function fun2()
+<pre><code class="language-javascript">function fun2()
 {
     //arguments对象，是一个数组，可以解析出参数
     alert(arguments[1]);
@@ -85,7 +85,7 @@ a(b);
 fun2(1,2,3);
 </code></pre>
 <h2>函数递归:</h2>
-<pre><code>//算出n的阶乘
+<pre><code class="language-javascript">//算出n的阶乘
 function digui(n) {
     return n ? n*digui(n-1) : 1;
 }
@@ -99,7 +99,7 @@ digui(2);
 
 </code></pre>
 <h2>函数的属性：</h2>
-<pre><code>function fun4(a, b, c) {
+<pre><code class="language-javascript">function fun4(a, b, c) {
     
 }
 //length 属性
@@ -119,7 +119,7 @@ fun6(); //输出 函数fun6,因为 fun6调用了它
 </code></pre>
 <h2>函数的闭包：</h2>
 <p>不被计算的变量函数，也就是说，函数可以使用函数之外使用的变量</p>
-<pre><code>//一个简单的闭包
+<pre><code class="language-javascript">//一个简单的闭包
 var ms = '我是全局变量';
 function msg()
 {
@@ -128,14 +128,14 @@ function msg()
 msg();
 </code></pre>
 <h2>函数的嵌套</h2>
-<pre><code>function test1() {
+<pre><code class="language-javascript">function test1() {
     function test2() {
         alert('外面访问不到我');
     }    
 }
 test2(); 报错；可以理解为局部变量
 </code></pre>
-<pre><code>//复杂的闭包调用
+<pre><code class="language-javascript">//复杂的闭包调用
 function each() {
     var i = 0;
     for (; i &lt; 10; i++) {}
@@ -147,7 +147,7 @@ var fn = each();
 fn(); //10
 
 </code></pre>
-<pre><code>//闭包内存泄露写法
+<pre><code class="language-javascript">//闭包内存泄露写法
 
 function each() {
     var i = 0, inner, a = [];
@@ -194,7 +194,7 @@ if (a) {
 }
 </code></pre>
 <h2>对象：</h2>
-<pre><code>var fun = function fun1() {
+<pre><code class="language-javascript">var fun = function fun1() {
 }
 
 alert(fun); //function
@@ -206,7 +206,7 @@ alert(new fun()); //object 变成了对象
 
 </code></pre>
 <p>所有全局变量都是window对象的属性</p>
-<pre><code>function demo(name, age) {
+<pre><code class="language-javascript">function demo(name, age) {
     this.name = name;
     this.age=age;
     alert(this);
@@ -224,7 +224,7 @@ obj.method(); //this执行obj对象
 <blockquote><p>构造函数A的prototype属性是一个对象
 这个对象具有的所有属性，A的实例也具有</p>
 </blockquote>
-<pre><code>function Demo() {};
+<pre><code class="language-javascript">function Demo() {};
 var d = new Demo();
 // Demo.prototype={
 //     name: 'mtao'
@@ -235,7 +235,7 @@ alert(d.name); //mtao
 
 </code></pre>
 <p>简单继承</p>
-<pre><code>function fun1()
+<pre><code class="language-javascript">function fun1()
 {
     this.name = 'mtao';
 }
@@ -249,7 +249,7 @@ var fun = new fun2();
 alert(fun.name); //mtao
 </code></pre>
 <p>改变this指针</p>
-<pre><code>function fun1()
+<pre><code class="language-javascript">function fun1()
 {
     this.name = 'mtao';
 }
@@ -259,7 +259,7 @@ o.fun();
 alert(o.name);
 </code></pre>
 <p>等同于</p>
-<pre><code>//这里用call 方法写
+<pre><code class="language-javascript">//这里用call 方法写
 function fun1(a, b) {
     this.name = 'mtao';
 }
@@ -271,7 +271,7 @@ fun1.apply(o, [1,2]);
 
 alert(o.name);
 </code></pre>
-<pre><code>//object 是所有类的根，是最基本的对象
+<pre><code class="language-javascript">//object 是所有类的根，是最基本的对象
 alert(Demo instanceof Object);
 // Array
 // String
@@ -304,13 +304,13 @@ function msg() {
 msg('adf', 12, 32, 14);
 </code></pre>
 <p>函数方法覆盖</p>
-<pre><code>var fn = new Object();
+<pre><code class="language-javascript">var fn = new Object();
 Object.prototype.toString = function() {
     alert('ddd');
 };
 alert("" + fn);
 </code></pre>
-<pre><code>var str = new String();
+<pre><code class="language-javascript">var str = new String();
 alert(str instanceof String);
 var a = [];
 alert(a instanceof Array); //判断是不是数组构造函数的
@@ -320,7 +320,7 @@ alert
 <h2>面向对象特性在js中运用：</h2>
 <h2>封装</h2>
 <p>&gt;相关的信息存储在对象的能力</p>
-<pre><code>//闭包模拟私有
+<pre><code class="language-javascript">//闭包模拟私有
 function demo(name, age)
 {
     this.name = name;
@@ -351,7 +351,7 @@ function demo(name, age)
 <p>&gt;由另一个类得来类的属性和方法的能力</p>
 <h2>多态</h2>
 <p>&gt;编写能以多种方法运行的函数或方法的能力</p>
-<pre><code>//arguments 运用
+<pre><code class="language-javascript">//arguments 运用
 </code></pre>
 <p>...................................</p>
 
