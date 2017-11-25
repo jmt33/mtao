@@ -3,9 +3,9 @@
     <head>
         <meta charset=utf-8>
         <title>Mongodb高级 - Mongodb</title>
-        <link href="http://jmt33.github.io/mtao/static/css/tango.css" rel="stylesheet"></link>
-        <link href="http://jmt33.github.io/mtao/static/css/style.css" rel="stylesheet"></link>
-		<link href="http://jmt33.github.io/mtao/static/css/prism.css" rel="stylesheet"></link>
+        <link href="../../static/css/tango.css" rel="stylesheet"></link>
+        <link href="../../static/css/style.css" rel="stylesheet"></link>
+		<link href="../../static/css/prism.css" rel="stylesheet"></link>
     </head>
     <body>
         <div id="container">
@@ -164,13 +164,13 @@ while(cursor.hasNext()) {
 </tbody>
 </table>
 <h3>简单的</h3>
-<pre><code>db.zips.aggregate([
+<pre><code class="language-bash">db.zips.aggregate([
 	{$match: { pop : { $gt : 7000, $lte : 90000 } }},
 	{$group: { _id: null, count: { $sum: 1 } }}
 ]);
 </code></pre>
 <h3>我们的</h3>
-<pre><code>[
+<pre><code class="language-bash">[
     {
         "$match": {
             "$and": [
@@ -268,7 +268,7 @@ while(cursor.hasNext()) {
 <li>Reduce</li>
 </ul>
 <h3>语义分析</h3>
-<pre><code>db.collection.mapReduce(
+<pre><code class="language-bash">db.collection.mapReduce(
 	&lt;map&gt;,
 	&lt;reduce&gt;,
 	{
@@ -284,7 +284,7 @@ while(cursor.hasNext()) {
 )
 </code></pre>
 <h3>example</h3>
-<pre><code>db.getCollection('zips').mapReduce(
+<pre><code class="language-bash">db.getCollection('zips').mapReduce(
    function() {
         return this;
    },

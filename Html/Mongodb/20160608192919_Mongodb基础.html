@@ -3,9 +3,9 @@
     <head>
         <meta charset=utf-8>
         <title>Mongodb基础 - Mongodb</title>
-        <link href="http://jmt33.github.io/mtao/static/css/tango.css" rel="stylesheet"></link>
-        <link href="http://jmt33.github.io/mtao/static/css/style.css" rel="stylesheet"></link>
-		<link href="http://jmt33.github.io/mtao/static/css/prism.css" rel="stylesheet"></link>
+        <link href="../../static/css/tango.css" rel="stylesheet"></link>
+        <link href="../../static/css/style.css" rel="stylesheet"></link>
+		<link href="../../static/css/prism.css" rel="stylesheet"></link>
     </head>
     <body>
         <div id="container">
@@ -114,33 +114,33 @@
 <h3>Regular expression</h3>
 <p>正则表达式类型。用于存储正则表达式。</p>
 <h2>命令行 - javascript shell</h2>
-<pre><code>mongo
+<pre><code class="language-bash">mongo
 </code></pre>
 <h2>六、常用操作</h2>
 <h3>创建数据库</h3>
 <h4>创建一个名字为mydb的数据库，语义如下</h4>
-<pre><code>use mydb
+<pre><code class="language-bash">use mydb
 switched to db mydb
 </code></pre>
 <h4>使用db检查当前选定数据库</h4>
-<pre><code>db
+<pre><code class="language-bash">db
 mydb
 </code></pre>
 <h4>使用命令<code>show dbs</code>来检查数据库列表</h4>
-<pre><code>show dbs
+<pre><code class="language-bash">show dbs
 local     0.78125GB
 test      0.23012GB
 </code></pre>
 <h3>删除数据库</h3>
 <p>如果你想删除刚刚创建的mydb数据库</p>
-<pre><code>use mydb
+<pre><code class="language-bash">use mydb
 switched to db mydb
 db.dropDatabase()
 { "dropped" : "mydb", "ok" : 1 }
 </code></pre>
 <h3>创建集合</h3>
 <h4>语法格式</h4>
-<pre><code>db.createCollection(name, options)
+<pre><code class="language-bash">db.createCollection(name, options)
 </code></pre>
 <p>在该命令中，<code>name</code> 是所要创建的集合名称。<code>options</code> 是一个用来指定集合配置的文档。</p>
 <table>
@@ -160,62 +160,61 @@ db.dropDatabase()
 <tbody>
 <tr><td>capped </td><td>布尔 </td><td>（可选）如果为 true，则创建固定集合。固定集合是指有着固定大小的集合，当达到最大值时，它会自动覆盖最早的文档。<em>当该值为 true 时，必须指定 size 参数。</em></td></tr>
 <tr><td>autoIndexID </td><td>布尔 </td><td>（可选）如为 true，自动在 _id 字段创建索引。默认为 false。</td></tr>
-<tr><td>size </td><td>数值 </td><td>（可选）为固定集合指定一个最大值（以字节计）。</td></tr>
-<tr><td>如果 capped 为 true，也需要指定该字段。</td></tr>
+<tr><td>size </td><td>数值 </td><td>（可选）为固定集合指定一个最大值（以字节计）。如果 capped 为 true，也需要指定该字段。</td></tr>
 <tr><td>max </td><td>数值 </td><td>（可选）指定固定集合中包含文档的最大数量</td></tr>
 </tbody>
 </table>
 <h4>范例</h4>
 <p>不带参数的</p>
-<pre><code>use test
+<pre><code class="language-bash">use test
 switched to db test
 db.createCollection("user")
 { "ok" : 1 }
 </code></pre>
 <p>带参数的</p>
-<pre><code>db.createCollection("user", { capped : true, autoIndexID : true, size : 6142800, max : 10000 } )
+<pre><code class="language-bash">db.createCollection("user", { capped : true, autoIndexID : true, size : 6142800, max : 10000 } )
 { "ok" : 1 }
 </code></pre>
 <h3>删除集合</h3>
 <h4>语法格式</h4>
-<pre><code>db.COLLECTION_NAME.drop()
+<pre><code class="language-bash">db.COLLECTION_NAME.drop()
 </code></pre>
 <h4>范例</h4>
-<pre><code> use mydb
+<pre><code class="language-bash"> use mydb
  db.user.drop()
 </code></pre>
 <h3>新增</h3>
 <h4>语法格式</h4>
-<pre><code>db.COLLECTION_NAME.insert(document)
+<pre><code class="language-bash">db.COLLECTION_NAME.insert(document)
 </code></pre>
 <h4>范例</h4>
 <p>一条</p>
-<pre><code>db.user.insert({name:'mtao', sex:'boy', age:20})
+<pre><code class="language-bash">db.user.insert({name:'mtao', sex:'boy', age:20})
 </code></pre>
 <p>多条</p>
-<pre><code>db.user.insert([{name:'tom', sex:'boy', age:30}, {name:'allen', sex:'girl',age:45}])
+<pre><code class="language-bash">db.user.insert([{name:'tom', sex:'boy', age:30}, {name:'allen', sex:'girl',age:45}])
 </code></pre>
 <h3>修改</h3>
 <h4>语法格式</h4>
-<pre><code>db.COLLECTION_NAME.update(SELECTIOIN_CRITERIA, UPDATED_DATA)
+<pre><code class="language-bash">db.COLLECTION_NAME.update(SELECTIOIN_CRITERIA, UPDATED_DATA)
 </code></pre>
 <h4>范例</h4>
 <p>只更新单条</p>
-<pre><code>db.user.update({title:'mtao'},{'$set':{age:33}})
+<pre><code class="language-bash">db.user.update({title:'mtao'},{'$set':{age:33}})
 </code></pre>
 <p>更新多条</p>
-<pre><code>db.user.update({title:'mtao'},{'$set':{sex:'boy'}},{multi:true})
+<pre><code class="language-bash">db.user.update({title:'mtao'},{'$set':{sex:'boy'}},{multi:true})
 </code></pre>
 <h3>查询</h3>
 <h4>语法格式</h4>
-<pre><code>db.COLLECTION_NAME.find()
+<pre><code class="language-bash">db.COLLECTION_NAME.find()
 </code></pre>
 <p>如果你想使用<code>pretty</code>方法</p>
-<pre><code>db.COLLECTION_NAME.find().pretty()
+<pre><code class="language-bash">db.COLLECTION_NAME.find().pretty()
 </code></pre>
 <h4>范例</h4>
 <p>显示所有</p>
-<pre><code>db.user.find()
+<pre><code class="language-bash">db.user.find()
 </code></pre>
 <h4>简单的条件查询</h4>
 <table>

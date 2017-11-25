@@ -3,9 +3,9 @@
     <head>
         <meta charset=utf-8>
         <title>LNMP环境搭建 - Linux</title>
-        <link href="http://jmt33.github.io/mtao/static/css/tango.css" rel="stylesheet"></link>
-        <link href="http://jmt33.github.io/mtao/static/css/style.css" rel="stylesheet"></link>
-		<link href="http://jmt33.github.io/mtao/static/css/prism.css" rel="stylesheet"></link>
+        <link href="../../static/css/tango.css" rel="stylesheet"></link>
+        <link href="../../static/css/style.css" rel="stylesheet"></link>
+		<link href="../../static/css/prism.css" rel="stylesheet"></link>
     </head>
     <body>
         <div id="container">
@@ -92,9 +92,9 @@ server {
     server_name static.mtao.aysaas.com;
 
     root /home/mtao/project/saas/public;
-    
-    location ~* \.(eot|ttf|woff)$ { 
-        add_header Access-Control-Allow-Origin *; 
+
+    location ~* \.(eot|ttf|woff)$ {
+        add_header Access-Control-Allow-Origin *;
     }
     location / {
         access_log off;
@@ -145,7 +145,7 @@ server {
     ##     fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
     ##     include        fastcgi_params;
     ## }
-    
+
     location ~ ^(?&lt;script&gt;.+\.php)(?&lt;path_info&gt;.*)$ { ## 匹配  index.php/user
         include fastcgi_params;
         fastcgi_index index.php;
@@ -209,7 +209,6 @@ resque-web -N AYSaaS
 <h2>文档预览</h2>
 <h3>依赖</h3>
 <pre><code class="language-bash">sudo apt-get install libjpeg-dev libgif-dev libfreetype6-dev ttf-wqy-microhei ttf-wqy-zenhei
-
 </code></pre>
 <h3>转换doc-&gt;pdf 安装 libreOffice (ubuntu 桌面版默认已经装好)</h3>
 <pre><code class="language-bash">sudo apt-get install libreOffice
